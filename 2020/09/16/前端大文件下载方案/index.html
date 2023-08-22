@@ -17,18 +17,18 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"hayahayao.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.18.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"hayahayao.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.18.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="前端大文件下载方案 tags:   Streams API  Service Worker StreamSaver.js JSZip   在业务中遇到需要用户下载一个很巨大的 zip 包的场景，内容通常是一堆很小的（图片）文件打包到一起。传统的下载方案是直接修改 window.location.href&#x3D;后端提供的下载链接，之后后端一边去下载要打包的文件，一边把打包好的东西写入这个链接。 存在的问">
+    <meta name="description" content="前端大文件下载方案 tags:   Streams API  Service Worker StreamSaver.js JSZip">
 <meta property="og:type" content="article">
 <meta property="og:title" content="前端大文件下载方案">
 <meta property="og:url" content="https://hayahayao.github.io/2020/09/16/%E5%89%8D%E7%AB%AF%E5%A4%A7%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD%E6%96%B9%E6%A1%88/index.html">
 <meta property="og:site_name" content="さおりのBlog">
-<meta property="og:description" content="前端大文件下载方案 tags:   Streams API  Service Worker StreamSaver.js JSZip   在业务中遇到需要用户下载一个很巨大的 zip 包的场景，内容通常是一堆很小的（图片）文件打包到一起。传统的下载方案是直接修改 window.location.href&#x3D;后端提供的下载链接，之后后端一边去下载要打包的文件，一边把打包好的东西写入这个链接。 存在的问">
+<meta property="og:description" content="前端大文件下载方案 tags:   Streams API  Service Worker StreamSaver.js JSZip">
 <meta property="og:locale">
 <meta property="og:image" content="https://user-gold-cdn.xitu.io/2019/12/23/16f304e310ea9e49?imageslim">
 <meta property="article:published_time" content="2020-09-16T03:26:00.000Z">
-<meta property="article:modified_time" content="2023-08-22T18:13:38.122Z">
+<meta property="article:modified_time" content="2023-08-22T18:18:37.297Z">
 <meta property="article:author" content="hayahayao">
 <meta property="article:tag" content="frontend">
 <meta name="twitter:card" content="summary">
@@ -194,7 +194,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-08-23 02:13:38" itemprop="dateModified" datetime="2023-08-23T02:13:38+08:00">2023-08-23</time>
+      <time title="Modified: 2023-08-23 02:18:37" itemprop="dateModified" datetime="2023-08-23T02:18:37+08:00">2023-08-23</time>
     </span>
 
   
@@ -215,6 +215,8 @@
 <li><a target="_blank" rel="noopener" href="https://github.com/Stuk/jszip">JSZip</a></li>
 </ul>
 </blockquote>
+<span id="more"></span>
+
 <p>在业务中遇到需要用户下载一个很巨大的 zip 包的场景，内容通常是一堆很小的（图片）文件打包到一起。传统的下载方案是直接修改 <code>window.location.href=后端提供的下载链接</code>，之后后端一边去下载要打包的文件，一边把打包好的东西写入这个链接。</p>
 <p>存在的问题是，如果文件很大，这个链接需要一直保持，相当于这个接口一直开着没有结束（运维同学很不开心）；而且一旦中间出了什么问题，已经下载的东西也全部废了，下次还要重新开始（可以通过设置 http range 头等方法实现断点续传）。</p>
 <p>那么，反正后端也没有存这个大文件，也是现用现生成的，可不可以把这个工作转移到前端？如果把请求一堆小文件的工作转移到浏览器，那就绕开了下载接口的时间限制，而且我们知道哪些文件已经下载了，是不是也可以通过一些操作保留住已经下载的文件？</p>
@@ -309,7 +311,7 @@
     </span>
     <span class="author" itemprop="copyrightHolder">hayahayao</span>
   </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
   </div>
 
     </div>

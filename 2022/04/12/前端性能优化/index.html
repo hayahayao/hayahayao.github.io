@@ -17,17 +17,17 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"hayahayao.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.18.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"hayahayao.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.18.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="前端性能优化性能指标FCPLCP产品的关键路径自行埋点 如何分析性能Performance Lighthouse全链路埋点分析过后，希望能够得到一个加载的流程图，标明每个步骤的用时 然后就可以针对性地解决用时长的那些步骤 一些常见的用时长的步骤：  静态资源加载&amp;解析执行 图片的加载 接口调用  常见的性能优化手段减小资源体积js&#x2F;css资源 分包，提取公共代码 异步（动态）组件">
+    <meta name="description" content="前端性能优化">
 <meta property="og:type" content="article">
 <meta property="og:title" content="前端性能优化">
 <meta property="og:url" content="https://hayahayao.github.io/2022/04/12/%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/index.html">
 <meta property="og:site_name" content="さおりのBlog">
-<meta property="og:description" content="前端性能优化性能指标FCPLCP产品的关键路径自行埋点 如何分析性能Performance Lighthouse全链路埋点分析过后，希望能够得到一个加载的流程图，标明每个步骤的用时 然后就可以针对性地解决用时长的那些步骤 一些常见的用时长的步骤：  静态资源加载&amp;解析执行 图片的加载 接口调用  常见的性能优化手段减小资源体积js&#x2F;css资源 分包，提取公共代码 异步（动态）组件">
+<meta property="og:description" content="前端性能优化">
 <meta property="og:locale">
 <meta property="article:published_time" content="2022-04-12T13:22:00.000Z">
-<meta property="article:modified_time" content="2023-08-22T18:13:34.314Z">
+<meta property="article:modified_time" content="2023-08-22T18:19:46.486Z">
 <meta property="article:author" content="hayahayao">
 <meta property="article:tag" content="frontend">
 <meta name="twitter:card" content="summary">
@@ -192,7 +192,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-08-23 02:13:34" itemprop="dateModified" datetime="2023-08-23T02:13:34+08:00">2023-08-23</time>
+      <time title="Modified: 2023-08-23 02:19:46" itemprop="dateModified" datetime="2023-08-23T02:19:46+08:00">2023-08-23</time>
     </span>
 
   
@@ -204,7 +204,9 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h1 id="前端性能优化"><a href="#前端性能优化" class="headerlink" title="前端性能优化"></a>前端性能优化</h1><h2 id="性能指标"><a href="#性能指标" class="headerlink" title="性能指标"></a>性能指标</h2><h3 id="FCP"><a href="#FCP" class="headerlink" title="FCP"></a>FCP</h3><h3 id="LCP"><a href="#LCP" class="headerlink" title="LCP"></a>LCP</h3><h3 id="产品的关键路径"><a href="#产品的关键路径" class="headerlink" title="产品的关键路径"></a>产品的关键路径</h3><p>自行埋点</p>
+    <div class="post-body" itemprop="articleBody"><h1 id="前端性能优化"><a href="#前端性能优化" class="headerlink" title="前端性能优化"></a>前端性能优化</h1><span id="more"></span>
+
+<h2 id="性能指标"><a href="#性能指标" class="headerlink" title="性能指标"></a>性能指标</h2><h3 id="FCP"><a href="#FCP" class="headerlink" title="FCP"></a>FCP</h3><h3 id="LCP"><a href="#LCP" class="headerlink" title="LCP"></a>LCP</h3><h3 id="产品的关键路径"><a href="#产品的关键路径" class="headerlink" title="产品的关键路径"></a>产品的关键路径</h3><p>自行埋点</p>
 <h2 id="如何分析性能"><a href="#如何分析性能" class="headerlink" title="如何分析性能"></a>如何分析性能</h2><h3 id="Performance-Lighthouse"><a href="#Performance-Lighthouse" class="headerlink" title="Performance Lighthouse"></a>Performance Lighthouse</h3><h3 id="全链路埋点"><a href="#全链路埋点" class="headerlink" title="全链路埋点"></a>全链路埋点</h3><p>分析过后，希望能够得到一个加载的流程图，标明每个步骤的用时</p>
 <p>然后就可以针对性地解决用时长的那些步骤</p>
 <p>一些常见的用时长的步骤：</p>
@@ -302,7 +304,7 @@
     </span>
     <span class="author" itemprop="copyrightHolder">hayahayao</span>
   </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
   </div>
 
     </div>
