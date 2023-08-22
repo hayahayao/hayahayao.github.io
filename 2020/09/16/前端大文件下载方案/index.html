@@ -19,16 +19,16 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"hayahayao.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.18.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="前端大文件下载方案 tags:   Streams API  Service Worker StreamSaver.js JSZip">
+    <meta name="description" content="Streams API  Service Worker StreamSaver.js JSZip">
 <meta property="og:type" content="article">
 <meta property="og:title" content="前端大文件下载方案">
 <meta property="og:url" content="https://hayahayao.github.io/2020/09/16/%E5%89%8D%E7%AB%AF%E5%A4%A7%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD%E6%96%B9%E6%A1%88/index.html">
 <meta property="og:site_name" content="さおりのBlog">
-<meta property="og:description" content="前端大文件下载方案 tags:   Streams API  Service Worker StreamSaver.js JSZip">
+<meta property="og:description" content="Streams API  Service Worker StreamSaver.js JSZip">
 <meta property="og:locale">
 <meta property="og:image" content="https://user-gold-cdn.xitu.io/2019/12/23/16f304e310ea9e49?imageslim">
 <meta property="article:published_time" content="2020-09-16T03:26:00.000Z">
-<meta property="article:modified_time" content="2023-08-22T18:18:37.297Z">
+<meta property="article:modified_time" content="2023-08-22T18:24:02.035Z">
 <meta property="article:author" content="hayahayao">
 <meta property="article:tag" content="frontend">
 <meta name="twitter:card" content="summary">
@@ -108,7 +108,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E7%AB%AF%E5%A4%A7%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD%E6%96%B9%E6%A1%88"><span class="nav-number">1.</span> <span class="nav-text">前端大文件下载方案</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#JSZip"><span class="nav-number">1.1.</span> <span class="nav-text">JSZip</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#StreamSaver-js"><span class="nav-number">1.2.</span> <span class="nav-text">StreamSaver.js</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8E-JSZip-%E7%BB%93%E5%90%88%E4%BD%BF%E7%94%A8%EF%BC%9F"><span class="nav-number">1.2.1.</span> <span class="nav-text">与 JSZip 结合使用？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mitm-sw-%E9%85%8D%E7%BD%AE"><span class="nav-number">1.2.2.</span> <span class="nav-text">mitm + sw 配置</span></a></li></ol></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#JSZip"><span class="nav-number">1.</span> <span class="nav-text">JSZip</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#StreamSaver-js"><span class="nav-number">2.</span> <span class="nav-text">StreamSaver.js</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8E-JSZip-%E7%BB%93%E5%90%88%E4%BD%BF%E7%94%A8%EF%BC%9F"><span class="nav-number">2.1.</span> <span class="nav-text">与 JSZip 结合使用？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mitm-sw-%E9%85%8D%E7%BD%AE"><span class="nav-number">2.2.</span> <span class="nav-text">mitm + sw 配置</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -194,7 +194,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-08-23 02:18:37" itemprop="dateModified" datetime="2023-08-23T02:18:37+08:00">2023-08-23</time>
+      <time title="Modified: 2023-08-23 02:24:02" itemprop="dateModified" datetime="2023-08-23T02:24:02+08:00">2023-08-23</time>
     </span>
 
   
@@ -206,8 +206,7 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h1 id="前端大文件下载方案"><a href="#前端大文件下载方案" class="headerlink" title="前端大文件下载方案"></a>前端大文件下载方案</h1><blockquote>
-<p>tags: </p>
+    <div class="post-body" itemprop="articleBody"><blockquote>
 <ul>
 <li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/Streams_API">Streams API</a> </li>
 <li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/Service_Worker_API">Service Worker</a></li>

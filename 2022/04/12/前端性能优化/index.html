@@ -19,15 +19,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"hayahayao.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.18.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="前端性能优化">
+    <meta name="description" content="性能指标分析&amp;优化手段">
 <meta property="og:type" content="article">
 <meta property="og:title" content="前端性能优化">
 <meta property="og:url" content="https://hayahayao.github.io/2022/04/12/%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/index.html">
 <meta property="og:site_name" content="さおりのBlog">
-<meta property="og:description" content="前端性能优化">
+<meta property="og:description" content="性能指标分析&amp;优化手段">
 <meta property="og:locale">
 <meta property="article:published_time" content="2022-04-12T13:22:00.000Z">
-<meta property="article:modified_time" content="2023-08-22T18:19:46.486Z">
+<meta property="article:modified_time" content="2023-08-22T18:25:26.730Z">
 <meta property="article:author" content="hayahayao">
 <meta property="article:tag" content="frontend">
 <meta name="twitter:card" content="summary">
@@ -106,7 +106,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96"><span class="nav-number">1.</span> <span class="nav-text">前端性能优化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87"><span class="nav-number">1.1.</span> <span class="nav-text">性能指标</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#FCP"><span class="nav-number">1.1.1.</span> <span class="nav-text">FCP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LCP"><span class="nav-number">1.1.2.</span> <span class="nav-text">LCP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%A7%E5%93%81%E7%9A%84%E5%85%B3%E9%94%AE%E8%B7%AF%E5%BE%84"><span class="nav-number">1.1.3.</span> <span class="nav-text">产品的关键路径</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%88%86%E6%9E%90%E6%80%A7%E8%83%BD"><span class="nav-number">1.2.</span> <span class="nav-text">如何分析性能</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Performance-Lighthouse"><span class="nav-number">1.2.1.</span> <span class="nav-text">Performance Lighthouse</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%A8%E9%93%BE%E8%B7%AF%E5%9F%8B%E7%82%B9"><span class="nav-number">1.2.2.</span> <span class="nav-text">全链路埋点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E6%89%8B%E6%AE%B5"><span class="nav-number">1.3.</span> <span class="nav-text">常见的性能优化手段</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%8F%E5%B0%8F%E8%B5%84%E6%BA%90%E4%BD%93%E7%A7%AF"><span class="nav-number">1.3.1.</span> <span class="nav-text">减小资源体积</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#js-css%E8%B5%84%E6%BA%90"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">js&#x2F;css资源</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9B%BE%E7%89%87%E8%B5%84%E6%BA%90"><span class="nav-number">1.3.1.2.</span> <span class="nav-text">图片资源</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9B%B4%E5%A5%BD%E5%9C%B0%E5%88%A9%E7%94%A8%E7%BC%93%E5%AD%98"><span class="nav-number">1.3.2.</span> <span class="nav-text">更好地利用缓存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E5%B1%82"><span class="nav-number">1.3.3.</span> <span class="nav-text">网络层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%A9%E7%94%A8%E6%88%B7%E2%80%9C%E8%A7%89%E5%BE%97%E5%BF%AB%E2%80%9D"><span class="nav-number">1.3.4.</span> <span class="nav-text">让用户“觉得快”</span></a></li></ol></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87"><span class="nav-number">1.</span> <span class="nav-text">性能指标</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#FCP"><span class="nav-number">1.1.</span> <span class="nav-text">FCP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LCP"><span class="nav-number">1.2.</span> <span class="nav-text">LCP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%A7%E5%93%81%E7%9A%84%E5%85%B3%E9%94%AE%E8%B7%AF%E5%BE%84"><span class="nav-number">1.3.</span> <span class="nav-text">产品的关键路径</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%88%86%E6%9E%90%E6%80%A7%E8%83%BD"><span class="nav-number">2.</span> <span class="nav-text">如何分析性能</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Performance-Lighthouse"><span class="nav-number">2.1.</span> <span class="nav-text">Performance Lighthouse</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%A8%E9%93%BE%E8%B7%AF%E5%9F%8B%E7%82%B9"><span class="nav-number">2.2.</span> <span class="nav-text">全链路埋点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E6%89%8B%E6%AE%B5"><span class="nav-number">3.</span> <span class="nav-text">常见的性能优化手段</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%8F%E5%B0%8F%E8%B5%84%E6%BA%90%E4%BD%93%E7%A7%AF"><span class="nav-number">3.1.</span> <span class="nav-text">减小资源体积</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#js-css%E8%B5%84%E6%BA%90"><span class="nav-number">3.1.1.</span> <span class="nav-text">js&#x2F;css资源</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9B%BE%E7%89%87%E8%B5%84%E6%BA%90"><span class="nav-number">3.1.2.</span> <span class="nav-text">图片资源</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9B%B4%E5%A5%BD%E5%9C%B0%E5%88%A9%E7%94%A8%E7%BC%93%E5%AD%98"><span class="nav-number">3.2.</span> <span class="nav-text">更好地利用缓存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E5%B1%82"><span class="nav-number">3.3.</span> <span class="nav-text">网络层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%A9%E7%94%A8%E6%88%B7%E2%80%9C%E8%A7%89%E5%BE%97%E5%BF%AB%E2%80%9D"><span class="nav-number">3.4.</span> <span class="nav-text">让用户“觉得快”</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -192,7 +192,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-08-23 02:19:46" itemprop="dateModified" datetime="2023-08-23T02:19:46+08:00">2023-08-23</time>
+      <time title="Modified: 2023-08-23 02:25:26" itemprop="dateModified" datetime="2023-08-23T02:25:26+08:00">2023-08-23</time>
     </span>
 
   
@@ -204,7 +204,10 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h1 id="前端性能优化"><a href="#前端性能优化" class="headerlink" title="前端性能优化"></a>前端性能优化</h1><span id="more"></span>
+    <div class="post-body" itemprop="articleBody"><blockquote>
+<p>性能指标<br>分析&amp;优化手段</p>
+</blockquote>
+<span id="more"></span>
 
 <h2 id="性能指标"><a href="#性能指标" class="headerlink" title="性能指标"></a>性能指标</h2><h3 id="FCP"><a href="#FCP" class="headerlink" title="FCP"></a>FCP</h3><h3 id="LCP"><a href="#LCP" class="headerlink" title="LCP"></a>LCP</h3><h3 id="产品的关键路径"><a href="#产品的关键路径" class="headerlink" title="产品的关键路径"></a>产品的关键路径</h3><p>自行埋点</p>
 <h2 id="如何分析性能"><a href="#如何分析性能" class="headerlink" title="如何分析性能"></a>如何分析性能</h2><h3 id="Performance-Lighthouse"><a href="#Performance-Lighthouse" class="headerlink" title="Performance Lighthouse"></a>Performance Lighthouse</h3><h3 id="全链路埋点"><a href="#全链路埋点" class="headerlink" title="全链路埋点"></a>全链路埋点</h3><p>分析过后，希望能够得到一个加载的流程图，标明每个步骤的用时</p>
