@@ -11,7 +11,7 @@
   --table-row-odd-bg-color: #f9f9f9;
   --table-row-hover-bg-color: #f5f5f5;
   --menu-item-bg-color: #f5f5f5;
-  --theme-color: #222;
+  --theme-color: #7a586e;
   --btn-default-bg: #222;
   --btn-default-color: #fff;
   --btn-default-border-color: #222;
@@ -2340,7 +2340,7 @@ header.header {
   vertical-align: middle;
 }
 .links-of-author a::before {
-  background: #4d220f;
+  background: #71ff18;
   display: inline-block;
   margin-right: 3px;
   transform: translateY(-2px);
