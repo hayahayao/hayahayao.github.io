@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="ce">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hayahayao.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="函数式编程 《JavaScript 轻量级函数式编程》读书笔记 中文版  函数基础实参和形参  arguments：输入的值，实参 parameters：函数中的命名变量，形参  参数数量  Arity：一个函数声明的形参数量可以在运行时通过函数的 length 属性获取 实参数量：arguments.length  ES6 的 ... 操作符  在形参列表，它把实参整合；在实参列表，它把实参展开">
+<meta property="og:type" content="article">
+<meta property="og:title" content="读书笔记-Javascript轻量级函数式编程">
+<meta property="og:url" content="https://hayahayao.github.io/2020/08/18/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-Javascript%E8%BD%BB%E9%87%8F%E7%BA%A7%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/index.html">
+<meta property="og:site_name" content="さおりのBlog">
+<meta property="og:description" content="函数式编程 《JavaScript 轻量级函数式编程》读书笔记 中文版  函数基础实参和形参  arguments：输入的值，实参 parameters：函数中的命名变量，形参  参数数量  Arity：一个函数声明的形参数量可以在运行时通过函数的 length 属性获取 实参数量：arguments.length  ES6 的 ... 操作符  在形参列表，它把实参整合；在实参列表，它把实参展开">
+<meta property="og:locale">
+<meta property="article:published_time" content="2020-08-18T03:36:00.000Z">
+<meta property="article:modified_time" content="2023-08-22T17:35:07.977Z">
+<meta property="article:author" content="hayahayao">
+<meta property="article:tag" content="note">
+<meta property="article:tag" content="Functional Programming">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://hayahayao.github.io/2020/08/18/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-Javascript%E8%BD%BB%E9%87%8F%E7%BA%A7%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'ce'
+  };
+</script>
+
+  <title>读书笔记-Javascript轻量级函数式编程 | さおりのBlog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">さおりのBlog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">燃えて散った花となれ。</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="ce">
+    <link itemprop="mainEntityOfPage" href="https://hayahayao.github.io/2020/08/18/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-Javascript%E8%BD%BB%E9%87%8F%E7%BA%A7%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="hayahayao">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="さおりのBlog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          读书笔记-Javascript轻量级函数式编程
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-08-18 11:36:00" itemprop="dateCreated datePublished" datetime="2020-08-18T11:36:00+08:00">2020-08-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-08-23 01:35:07" itemprop="dateModified" datetime="2023-08-23T01:35:07+08:00">2023-08-23</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="函数式编程"><a href="#函数式编程" class="headerlink" title="函数式编程"></a>函数式编程</h1><blockquote>
+<p>《JavaScript 轻量级函数式编程》读书笔记</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/ikcamp/Functional-Light-JS">中文版</a></p>
+</blockquote>
+<h2 id="函数基础"><a href="#函数基础" class="headerlink" title="函数基础"></a>函数基础</h2><p>实参和形参</p>
+<ul>
+<li>arguments：输入的值，实参</li>
+<li>parameters：函数中的命名变量，形参</li>
+</ul>
+<p>参数数量</p>
+<ul>
+<li>Arity：一个函数声明的形参数量<br>可以在运行时通过函数的 <code>length</code> 属性获取</li>
+<li>实参数量：<code>arguments.length</code></li>
+</ul>
+<p>ES6 的 <code>...</code> 操作符</p>
+<ul>
+<li>在形参列表，它把实参整合；在实参列表，它把实参展开</li>
+<li>函数参数用解构数组&#x2F;对象</li>
+<li>在函数式编程中，我们希望我们的函数在任何情况下都是一元的（Arity 为 1），可以使用对象解构传参实现</li>
+</ul>
+<p>解构</p>
+<blockquote>
+<p>声明性代码通常比命令式代码更干净</p>
+</blockquote>
+<p>特定多态：通过不同的输入值让一个函数重载拥有不同的行为（在不同的情况下使函数具有不同的输出）。但是这样的设计的维护成本会比较高</p>
+<p>函数输出</p>
+<ul>
+<li>使用函数式编程，每个函数必须明确的 <code>return</code> 一个值</li>
+<li>我们经常使用提前 <code>return</code> 来控制代码流，但这会造成难以理解，最好不要用 <code>return</code> 来实现流控制，而是使用明确的表达逻辑的方式</li>
+<li>纯函数，避免副作用</li>
+</ul>
+<p>高阶函数：接受或返回一个甚至多个函数的函数（将其他函数视为值进行操作，一等公民，可作为函数的参数&#x2F;返回值）</p>
+<p>闭包</p>
+<ul>
+<li>当一个函数内部存在另一个函数的作用域时，对当前函数进行操作。当内部函数从外部函数引用变量，这被称作闭包</li>
+<li>闭包可以记录并且访问它作用域外的变量，甚至当这个函数在不同的作用域被执行</li>
+<li>闭包不仅限于获取变量的原始值：它不仅仅是快照，而是直接链接；你可以更新该值，并在下次访问时获取更新后的值</li>
+<li>如果你需要设置两个输入，一个你已经知道，另一个需要后面才能知道，可以使用闭包来记录第一个输入值</li>
+<li>同样可以通过闭包来记住函数</li>
+</ul>
+<p>句法</p>
+<ul>
+<li>最好给所有函数都命名，避免匿名函数。-&gt; 堆栈轨迹调用；可靠的自我引用和可读性；更好地理解函数的目的&#x2F;设计</li>
+<li>箭头函数是词法匿名的，所以具有上述缺点，但语法简洁，能简化&#x2F;优化代码片段中的空间</li>
+<li>函数式编程中不要使用 <code>this</code>，因为 <code>this</code> 相当于使用了隐式输入</li>
+</ul>
+<h2 id="管理函数的输入"><a href="#管理函数的输入" class="headerlink" title="管理函数的输入"></a>管理函数的输入</h2><blockquote>
+<p>函数式编程者习惯于在重复做同一种事情的地方找到模式，并试着将这些行为转换为逻辑可重用的实用函数</p>
+</blockquote>
+<p>偏函数：在函数调用现场（function call-site），将实参应用（apply）于形参。偏函数是一个减少函数参数个数（arity）的过程</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// fn：被偏应用实参的函数</span></span><br><span class="line"><span class="comment">// presetArgs：提前传入的实参</span></span><br><span class="line"><span class="comment">// laterArgs；调用时传入的实参</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">partial</span>(<span class="params">fn, ...presetArgs</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">function</span> <span class="title function_">partiallyApplied</span>(<span class="params">...laterArgs</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">fn</span>(...presetArgs, ...laterArgs)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>bind(..)</code>：预设 <code>this</code> 关键字的上下文，以及偏应用实参</p>
+<p>将实参顺序颠倒</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">reverseArgs</span>(<span class="params">fn</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">function</span> <span class="title function_">argsReversed</span>(<span class="params">...args</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">fn</span>(...args.<span class="title function_">reverse</span>())</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>从右边开始偏应用实参（右偏应用实参）</p>
+<p>这个函数不能保证让一个特定的形参接受特定的被偏应用的值，只能确保将被这些值（一个或几个）当作原函数最右边的实参（一个或几个）传入</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">partialRight</span>(<span class="params">fn, ...presetArgs</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="title function_">reverseArgs</span>(</span><br><span class="line">    <span class="title function_">partial</span>(<span class="title function_">reverseArgs</span>(fn), ...presetArgs.<span class="title function_">reverse</span>())</span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>柯里化：将一个期望接收多个实参的函数拆解成连续的链式函数，每个链式函数接收单一实参并返回另一个接收下一个实参的函数</p>
+<p>此函数默认基于如下条件：在拿到原函数期望的全部实参之前，我们能够通过检查将要被柯里化的函数的 <code>length</code> 属性来得知柯里化需要迭代多少次</p>
+<p>如果需要用在一个 <code>length</code> 属性不明确的函数上（形参声明包含默认形参值&#x2F;形参解构&#x2F;可变参数函数等），需要明确传入 <code>arity</code> 参数来确保 <code>curry(..)</code> 函数的正常运行</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">curry</span>(<span class="params">fn, arity = fn.length</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> (<span class="keyword">function</span> <span class="title function_">nextCurried</span>(<span class="params">prevArgs</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">function</span> <span class="title function_">curried</span>(<span class="params">nextArg</span>) &#123;</span><br><span class="line">      <span class="keyword">var</span> args = prevArgs.<span class="title function_">contact</span>([nextArg])</span><br><span class="line">      <span class="keyword">if</span> (args.<span class="property">length</span> &gt;= arity) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="title function_">fn</span>(...args)</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="title function_">nextCurried</span>(args)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)([]) <span class="comment">// attention here</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>柯里化和偏应用</p>
+<ul>
+<li>都是用来减少函数的参数数量的技术；柯里化是偏应用的一种特殊形式，其参数数量降低为 1</li>
+<li>柯里化：每次函数调用传入一个实参，并生成另一个特定性更强的函数，之后我们可以在程序中获取并使用那个新函数</li>
+<li>偏应用：预先指定所有将被偏应用的实参，产出一个等待接收剩下所有实参的函数</li>
+<li>柯里化和偏应用都使用闭包来保存实参，直到收齐所有实参后再执行原函数</li>
+<li>柯里化和偏应用可以将指定分离实参的时机和地方独立开来</li>
+<li>当函数只有一个形参时，我们能够比较容易地组合它们</li>
+</ul>
+<p>松散柯里化：允许在每次柯里化调用中指定多个实参，允许传入超过 arity 的实参</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">looseCurry</span>(<span class="params">fn, arity = fn.length</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> (<span class="keyword">function</span> <span class="title function_">nextCurried</span>(<span class="params">prevArgs</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">function</span> <span class="title function_">curried</span>(<span class="params">...nextArgs</span>) &#123;</span><br><span class="line">      <span class="keyword">var</span> args = prevArgs.<span class="title function_">concat</span>(nextArgs)</span><br><span class="line">      <span class="keyword">if</span> (args.<span class="property">length</span> &gt;= arity) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="title function_">fn</span>(...args)</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="title function_">nextCurried</span>(args)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)([])</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>反柯里化</p>
+<p>返回的结果是：如果传入原函数期望数量的实参，则函数的行为和原函数相同；而如果少传了实参，得到的是仍在等待传入更多实参的部分柯里化函数</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">uncurry</span>(<span class="params">fn</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">function</span> <span class="title function_">uncurried</span>(<span class="params">...args</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> ret = fn</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; args.<span class="property">length</span>; i++) &#123;</span><br><span class="line">      ret = <span class="title function_">ret</span>(args[i])</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ret</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>单参数函数：包装一个函数调用，确保被包装的函数只接受一个实参。即强制把一个函数处理成单参数函数</p>
+<p>应用：例如 <code>map(..)</code> 函数调用时会传入三个实参，而只想接收一个</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">unary</span>(<span class="params">fn</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">function</span> <span class="title function_">onlyOneArg</span>(<span class="params">arg</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">fn</span>(arg)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// e.g.</span></span><br><span class="line">[<span class="string">&#x27;1&#x27;</span>, <span class="string">&#x27;2&#x27;</span>, <span class="string">&#x27;3&#x27;</span>].<span class="title function_">map</span>(<span class="built_in">parseFloat</span>) <span class="comment">// [1, 2, 3]</span></span><br><span class="line">[<span class="string">&#x27;1&#x27;</span>, <span class="string">&#x27;2&#x27;</span>, <span class="string">&#x27;3&#x27;</span>].<span class="title function_">map</span>(<span class="built_in">parseInt</span>) <span class="comment">// [1, NaN, NaN]</span></span><br><span class="line">[<span class="string">&#x27;1&#x27;</span>, <span class="string">&#x27;2&#x27;</span>, <span class="string">&#x27;3&#x27;</span>].<span class="title function_">map</span>(<span class="title function_">unary</span>(<span class="built_in">parseInt</span>)) <span class="comment">// [1, 2, 3]</span></span><br></pre></td></tr></table></figure>
+
+<p>identity 函数</p>
+<ul>
+<li>可以被用作判空的断言</li>
+<li>可以将其作为替代一个转换函数的默认函数</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">identity</span>(<span class="params">v</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> v</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>恒定参数</p>
+<p>可以用于 Certain API（禁止直接给方法传值，必须传入函数，比如 JS Promise）</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">constant</span>(<span class="params">v</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">function</span> <span class="title function_">value</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> v</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>扩展参数：调整一个函数，让它把能接收的单一数组扩展成各自独立的实参</p>
+<p>也被称为 <code>apply(..)</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">spreadArgs</span>(<span class="params">fn</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">function</span> <span class="title function_">spreadFn</span>(<span class="params">argsArr</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">fn</span>(...argsArr)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>聚集参数</p>
+<p>也被称为 <code>unapply(..)</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">gatherArgs</span>(<span class="params">fn</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">function</span> <span class="title function_">gatheredFn</span>(<span class="params">...argsArr</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">fn</span>(argsArr)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>无论是柯里化还是偏应用，我们都用了上面的许多繁琐的技巧来修正这些形参的顺序，而这些繁琐的代码会把我们自己的代码混淆得一团糟…在第二章介绍了用解构实现命名实参，那么偏应用&#x2F;柯里化中也可以有对应的实用函数</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">partialProps</span>(<span class="params">fn, presetArgsObj</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">function</span> <span class="title function_">partiallyApplied</span>(<span class="params">laterArgsObj</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">fn</span>(<span class="title class_">Object</span>.<span class="title function_">assign</span>(&#123;&#125;, presetArgsObj, laterArgsObj))</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">curryProps</span>(<span class="params">fn, arity = <span class="number">1</span></span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> (<span class="keyword">function</span> <span class="title function_">nextCurried</span>(<span class="params">prevArgsObj</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">function</span> <span class="title function_">curried</span>(<span class="params">nextArgObj = &#123;&#125;</span>) &#123;</span><br><span class="line">      <span class="keyword">var</span> [key] = <span class="title class_">Object</span>.<span class="title function_">keys</span>(nextArgObj) <span class="comment">// nextArgObj has only one value</span></span><br><span class="line">      <span class="keyword">var</span> allArgsObj = <span class="title class_">Object</span>.<span class="title function_">assign</span>(&#123;&#125;, prevArgsObj, &#123; [key]: nextArgObj[key] &#125;)</span><br><span class="line">      <span class="keyword">if</span> (<span class="title class_">Object</span>.<span class="title function_">keys</span>(allArgsObj).<span class="property">length</span> &gt;= arity) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="title function_">fn</span>(allArgsObj)</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="title function_">nextCurried</span>(allArgsObj)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)(&#123;&#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>现在可以想传哪个位置的实参就传哪个了，但是我们需要掌握函数 <code>fn(..</code> 的函数签名，并且可以定义该函数的行为，使其解构第一个参数时，上面的技术才能起作用。那如果一个函数的形参是各自独立（没有经过形参解构），而且不改变它的函数签名，该怎么办呢</p>
+<p>yep，just like <code>spreadArgs(...)</code></p>
+<p>但是存在一个问题，<code>spreadArgs(...)</code> 中参数的顺序是明确的，然而对象属性的顺序不太明确且不可靠…一个最直观的想法是再传入一个类似 <code>[&#39;x&#39;, &#39;y&#39;, &#39;z&#39;]</code> 这样的数组通知我们的实用函数明确的参数顺序，但是这好弱智！下面给出了一种 hack 技巧可以根据解析函数代码本身（由 <code>.toString()</code> 方法可以获得）得到每个单独的命名形参</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">spreadArgProps</span>(<span class="params"></span></span><br><span class="line"><span class="params">  fn,</span></span><br><span class="line"><span class="params">  propOrder = </span></span><br><span class="line"><span class="params">          fn.toString()</span></span><br><span class="line"><span class="params">          .replace(/^(?:(?:<span class="keyword">function</span>.*\(([^]*?)\))|(?:([^\(\)]+?)\s*=&gt;)|(?:\(([^]*?)\)\s*=&gt;))[^]+$/, <span class="string">&quot;$1$2$3&quot;</span>)</span></span><br><span class="line"><span class="params">          .split(/\s*,\s*/)</span></span><br><span class="line"><span class="params">          .map(v =&gt; v.replace( /[=\s].*$/, <span class="string">&quot;&quot;</span> ))</span></span><br><span class="line"><span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">function</span> <span class="title function_">spreadFn</span>(<span class="params">argsObj</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">fn</span>(...propOrder.<span class="title function_">map</span>(<span class="function"><span class="params">k</span> =&gt;</span> argsObj[k]))</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>无形参风格（point-free）&#x2F;隐性编程（tacit programming）：通过移除不必要的形参-实参映射来减少视觉上的干扰，提高代码的可读性和可理解性</p>
+<p>使用无形参风格的关键，是找到代码中，有哪些地方的函数直接将其形参作为内部函数调用的实参</p>
+<p>取反函数</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">not</span>(<span class="params">predicate</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">function</span> <span class="title function_">negated</span>(<span class="params">...args</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> !<span class="title function_">predicate</span>(...args)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>when(..)</code> 实用函数：用于表示 <code>if</code> 条件句</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">when</span>(<span class="params">predicate, fn</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">function</span> <span class="title function_">conditional</span>(<span class="params">...args</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="title function_">predicate</span>(...args)) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="title function_">fn</span>(...args)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="组合函数"><a href="#组合函数" class="headerlink" title="组合函数"></a>组合函数</h2><blockquote>
+<p>函数有多种多样的形状和大小。我们能够定义某种组合方式，来让它们成为一种新的组合函数，程序中不同的部分都可以使用这个函数。这种将函数一起使用的过程叫做组合。</p>
+</blockquote>
+<p><code>compose2(..)</code> 实用函数：自动创建两个函数的组合（从右向左组合）</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">compose2</span>(<span class="params">fn2, fn1</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">function</span> <span class="title function_">composed</span>(<span class="params">origValue</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">fn2</span>(<span class="title function_">fn1</span>(origValue))</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通用组合函数</p>
+<p>这里的顺序依然是从右向左的，可以结合上一章所介绍的 <code>partialRight(..)</code> 实用函数把 <code>compose(..)</code> 的参数右偏，这样就可以先传入一些内层，之后再不断包外层函数（原本在参数列表左侧）</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">compose</span>(<span class="params">...fns</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">function</span> <span class="title function_">composed</span>(<span class="params">result</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> list = fns.<span class="title function_">slice</span>()</span><br><span class="line">    <span class="keyword">while</span> (list.<span class="property">length</span> &gt; <span class="number">0</span>) &#123;</span><br><span class="line">      result = list.<span class="title function_">pop</span>()(result)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>不同的实现</p>
+<p><strong>reduce</strong></p>
+<p>上面的原始版本 <code>compose(..)</code> 使用一个循环并且饥渴的（立刻）执行计算，将一个调用的结果传递给下一个调用。这不就是 <code>reduce(..)</code>！</p>
+<p><code>reduce(..)</code> 循环发生在最后的 <code>composed(..)</code> 运行时，并且每一个中间的 <code>result(..)</code> 将会在下一次调用时作为输入值传递给下一个迭代</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">compose</span>(<span class="params">...fns</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">function</span> <span class="title function_">composed</span>(<span class="params">result</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> fns.<span class="title function_">reverse</span>().<span class="title function_">reduce</span>(<span class="keyword">function</span> <span class="title function_">reducer</span>(<span class="params">result, fn</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="title function_">fn</span>(result)</span><br><span class="line">    &#125;, result)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>但是，这种实现存在迭代问题是最内层的组合函数（也就是组合中的第一个函数）只能接受一个参数，如果组合中的每一个函数都是一元的，这个方案问题不大。但如果需要给第一个调用传递多参数…</p>
+<blockquote>
+<p>惰性运算：直接返回 <code>reduce(..)</code> 调用的结果，该结果自身就是个函数，不是一个计算过的值。该函数让我们能够传入任意数目的参数，在整个组合过程中，将这些参数传入到第一个函数调用中，然后一次铲除结果给到后面的调用</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">compose</span>(<span class="params">...fns</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> fns.<span class="title function_">reverse</span>().<span class="title function_">reduce</span>(<span class="keyword">function</span> <span class="title function_">reducer</span>(<span class="params">fn1, fn2</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">function</span> <span class="title function_">composed</span>(<span class="params">...args</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="title function_">fn2</span>(<span class="title function_">fn1</span>(...args))</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>递归</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">compose</span>(<span class="params">...fns</span>) &#123;</span><br><span class="line">  <span class="keyword">var</span> [fn1, fn2, ...rest] = fns.<span class="title function_">reverse</span>()</span><br><span class="line">  <span class="keyword">var</span> composedFn = <span class="keyword">function</span> <span class="title function_">composed</span>(<span class="params">...args</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">fn2</span>(<span class="title function_">fn1</span>(...args))</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (rest.<span class="property">length</span> === <span class="number">0</span>) <span class="keyword">return</span> composedFn</span><br><span class="line">  <span class="keyword">return</span> <span class="title function_">compose</span>(...rest.<span class="title function_">reverse</span>(), composedFn)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>重排序组合：以函数执行的顺序来排列参数</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">pipe</span>(<span class="params">...fns</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">function</span> <span class="title function_">piped</span>(<span class="params">result</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> list = fns.<span class="title function_">slice</span>()</span><br><span class="line">    <span class="keyword">while</span> (list.<span class="property">length</span> &gt; <span class="number">0</span>) &#123;</span><br><span class="line">      result = list.<span class="title function_">shift</span>()(result)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 或者，只是将 compose(..) 的参数反转就可以</span></span><br><span class="line"><span class="keyword">var</span> pipe = <span class="title function_">reverseArgs</span>(compose)</span><br></pre></td></tr></table></figure>
+
+<p>抽象：对两个或多个任务公共部分的剥离。通用部分只定义一次，从而避免重复。为了展现每个任务的特殊部分，通用部分需要被参数化</p>
+<blockquote>
+<p>DRY: don’t repeat yourself. 力求能在程序的任何任务中有唯一的定义</p>
+<p>我们不是为了隐藏细节而抽象，而是为了通过分离来突出关注点。</p>
+<p>函数组合并不是通过 DRY 的原则来节省代码量，而是从<em>怎么做</em>中分离出<em>是什么</em></p>
+</blockquote>
+<h2 id="减少副作用"><a href="#减少副作用" class="headerlink" title="减少副作用"></a>减少副作用</h2><p><strong>副作用</strong></p>
+<ul>
+<li>有副作用的函数可读性更低，因为它需要更多的阅读来理解程序（不确定运行一个函数会不会影响其他地方，所以必须要去读函数内部逻辑）</li>
+<li>所有决定函数输出的原因应该被设置的直接并明显，函数的使用者能直接看到原因和结果</li>
+<li>并不是禁止引用所有自由变量，比如引用函数&#x2F; <code>Math.PI</code> 这种 <em>“常量”</em> 引用是可以的。因为它们在整个程序中都不改变，我们不需要担心将它们作为变化的状态追踪它们；同样，他们不会损害程序的可读性，而且它们也不会因为变量以不可预测的方式变化而成为错误的源头</li>
+<li>随机数是不纯的</li>
+<li>IO 是副作用</li>
+<li>一系列有副作用的函数可能会在异步调用时顺序出问题（特别是回调！），从而对外部造成奇怪的影响</li>
+</ul>
+<p><strong>限制潜在问题</strong></p>
+<ul>
+<li>幂等<ul>
+<li>数学中的幂等：在第一次调用后，如果你将该输出一次又一次地输入到操作中，其输出永远不会改变的操作</li>
+<li>编程中的幂等：要求 <code>f(x)</code> 每次调用的结果和第一次调用的结果没有任何改变</li>
+<li>在任何可能的情况下通过幂等的操作限制副作用要比不做限制的更新好得多</li>
+</ul>
+</li>
+<li>纯函数：没有副作用的函数，是一种幂等函数<ul>
+<li>给定相同的输入总是产生相同的输出</li>
+<li>具有引用透明性：一个函数调用可以被它的输出值所代替，并且整个程序的行为不会改变</li>
+<li>编程中的幂等</li>
+<li>一个纯函数可以引用自由变量，只要这些自由变量不是侧因（e.g.闭包）</li>
+<li>纯函数和不纯的函数的合成总是产生不纯的函数</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>减少副作用的目的并不是它们在程序中<em>不能</em>被观察到，而是设计一个程序，让副作用尽可能的少，因为这使代码更容易理解。一个没有观察到的<em>发生</em>的副作用的程序，在这个目标上，并不像一个<em>不能</em>观察它们的程序那么有效</p>
+<p>也就是说，对于那些不得不发生的副作用，我们应该尽可能确定程序的任何部分都<em>不能</em>观察到它们，而不仅仅是<em>不</em>观察它们</p>
+</blockquote>
+<p><strong>纯化</strong></p>
+<p>纯度仅仅需要深入到皮肤，也就是说，函数的纯度是从外部判断的，只要一个函数的使用表现为纯的，它就是纯的</p>
+<ul>
+<li>使用词法自由变量导致的副作用：<ul>
+<li>如果可以选择修改周围的代码，那么可以使用作用域来封装它们</li>
+<li>如果无法在容器函数的内部封装修改代码（比如来自第三方库的函数），那么可以创建一个隔离副作用的接口函数：<ol>
+<li>捕获受影响的当前状态</li>
+<li>设置初始输入状态</li>
+<li>运行不纯的函数</li>
+<li>捕获副作用状态</li>
+<li>恢复原来的状态</li>
+<li>返回捕获的副作用状态</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>直接输入值（对象、数组等）的突变导致的副作用：再次创建一个接口函数来替代原始的不纯的函数去交互</li>
+<li><code>this</code> 导致的：<ul>
+<li><code>this</code> 是函数隐式的输入</li>
+<li>创建一个接口函数，强制函数使用可预测的 <code>this</code> 上下文</li>
+</ul>
+</li>
+</ul>
+<h2 id="值的不可变性"><a href="#值的不可变性" class="headerlink" title="值的不可变性"></a>值的不可变性</h2><ul>
+<li>原始值（number&#x2F;string&#x2F;boolean&#x2F;null&#x2F;undefined）：本身就是不可变的</li>
+<li>JS 的 boxing 特性：当访问原始数据类型时（特别是 <code>number</code>&#x2F;<code>string</code>&#x2F;<code>boolean</code>），在这种情况下，JS 会自动的把它们包装成这个值对应的对象（<code>Number</code>&#x2F;<code>String</code>&#x2F;<code>Boolean</code>）</li>
+<li>注意，字符串也是不可变的，<code>s[1] = &#39;E&#39;</code> 这种赋值会静默失败</li>
+</ul>
+<p>值的不可变性：当需要改变程序中的状态时，我们不能改变已存在的数据，而是必须创建和跟踪一个新的数据（比如数组，就以拷贝代替改变，不改变原数组而是拷贝出来再改变）</p>
+<blockquote>
+<p>常量：一个无法重新赋值的变量<br>常量与值的本质无关，无论常量承载何值，该变量都不能使用其他的值被进行重新赋值</p>
+<p>我们应该担心的，并不是变量是否被重新赋值，而是<em>值是否会发生改变</em></p>
+</blockquote>
+<p><code>Object.freeze(..)</code> 只是将对象的顶层设为不可变，基本上相当于使用 <code>const</code> 声明对象的每个属性</p>
+<ul>
+<li><code>const arr = [1, 2, 3]</code> 得到的数组依然可变</li>
+<li><code>Object.freeze([1, 2, 3])</code> 的确是不可变的数组</li>
+</ul>
+<p><strong>性能</strong></p>
+<p>每次都重新复制一个数组，肯定会影响性能。如果只是比较少的状态变化，这样的性能损失可以接受（毕竟减少了 debug 时间！）；但如果需要频繁改变状态，那么每次都复制肯定是不行的。</p>
+<p>解决办法是可以像 git 版本控制原理那样，用一个链表记录状态的变化过程。<a target="_blank" rel="noopener" href="http://facebook.github.io/immutable-js">Immutable.js</a> 提供了这样的不可变数据结构。</p>
+<blockquote>
+<p>无论世界上接收到的值是否可变，我们都应以它们是不可变的来对待，以此来避免副作用并使函数保持纯度</p>
+<p>值不变在代码可读性上的意义，不在于不改变数据，而在于以不可变的眼光看待数据这样的约束。</p>
+</blockquote>
+<h2 id="闭包-vs-对象"><a href="#闭包-vs-对象" class="headerlink" title="闭包 vs 对象"></a>闭包 vs 对象</h2><blockquote>
+<p>一个没有闭包的编程语言可以用对象来模拟闭包；一个没有对象的编程语言可以用闭包来模拟对象<br>我们可以认为闭包和对象是一样东西的两种表达方式</p>
+</blockquote>
+<ul>
+<li>都可以表达状态集合</li>
+<li>也都可以包含函数或者方法</li>
+<li>啊哈，封装！</li>
+</ul>
+<blockquote>
+<p>闭包将单个函数与一系列状态结合起来，而对象却在保有相同状态的基础上，允许任意数量的函数来操作这些状态<br>（当然，我们也可以在闭包返回的单个函数里写个 switch 之类的，来达到和对象的多个函数相同的实现效果）</p>
+</blockquote>
+<p>对象和闭包在可变这点上没有关系，因为我们关心的是<em>值</em>的可变性，值可变是值本身的特性，不在于在哪里或者如何被赋值的</p>
+<p><strong>同构</strong></p>
+<blockquote>
+<p>两件事物 A 和 B 如果你能够映射（转化）A 到 B 并且能够通过反向映射回 A 那么它们就是同构</p>
+<p>如果 JS 有同构的话是怎么样的？它可能是一集合的 JS 代码转化为了另一集合的 JS 代码，并且（重要的是）如果你愿意的话，你可以把转化后的代码转为之前的。</p>
+</blockquote>
+<p>闭包和对象是状态（及其相关功能）的同构表示</p>
+<p><strong>区别</strong></p>
+<ul>
+<li>闭包的结构是不可变的（所以如果像复制数组这种操作，只能封装更多的闭包）；对象默认是完全可变的</li>
+<li>闭包通过词法作用域提供“私有”状态；而对象将一切作为公共属性暴露（闭包这种信息隐藏反而不利于跟踪使用状态；同时，闭包具有控制内部变量只能被闭包内部代码操作的特性，这一点比之前讨论的 <code>const</code> 好用</li>
+<li>像上一章提到的状态拷贝，在对象上很容易实现；而闭包上就很麻烦，需要额外定义很多拥有提取或拷贝隐藏值权限的函数…</li>
+<li>对象在性能上通常比闭包好，因为 JS 对象通常在内存甚至计算角度是更加轻量的</li>
+</ul>
+<h2 id="列表操作"><a href="#列表操作" class="headerlink" title="列表操作"></a>列表操作</h2><p>非函数式编程的列表处理：</p>
+<ul>
+<li><code>forEach(..)</code>：有副作用！</li>
+<li><code>some(..)</code>&#x2F;<code>every(..)</code>：虽然鼓励使用纯函数，但不可避免地将列表简化为 <code>true</code> 或 <code>false</code> 的值，本质上就像搜索和匹配</li>
+</ul>
+<h3 id="映射-map"><a href="#映射-map" class="headerlink" title="映射 map(...)"></a>映射 <code>map(...)</code></h3><p>映射：将一个值转换为另一个值（从一个地方映射到另一个新的地方）</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">map</span>(<span class="params">mapperFn, arr</span>) &#123;</span><br><span class="line">  <span class="keyword">var</span> newList = []</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> idx = <span class="number">0</span>; idx &lt; arr.<span class="property">length</span>; idx++) &#123;</span><br><span class="line">    newList.<span class="title function_">push</span>(<span class="title function_">mapperFn</span>(arr[idx], idx, arr))</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> newList</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里 <code>mapperFn(..)</code> 的参数和原生一致是三个，如果希望只传第一个进去，可以用之前介绍过的 <code>unary(..)</code> </p>
+<p><code>map(..)</code> 使得可以方便的做列表的链式操作</p>
+<p><code>map(..)</code> 的每个转换应该独立与其他的转换，没有从左往右的执行顺序</p>
+<blockquote>
+<p>函子是采用运算函数有效用操作的值<br>函子在每个单独的值上执行操作函数，函子实用函数创建的新值是所有单个操作函数执行结果的组合</p>
+<p><code>map(..)</code> 函数采用关联值（数组）和映射函数（操作函数），并为数组中的每一个独立元素执行映射函数。最后，它返回由所有新映射值组成的新数组</p>
+</blockquote>
+<h3 id="过滤-filter"><a href="#过滤-filter" class="headerlink" title="过滤 filter(..)"></a>过滤 <code>filter(..)</code></h3><p><code>filter(..)</code> 中那个返回 <code>true/false</code> 来做决定（每一项在新数组中保留还是剔除）的函数有一个特别的称谓：谓词函数</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">filter</span>(<span class="params">predicateFn, arr</span>) &#123;</span><br><span class="line">  <span class="keyword">var</span> newList = []</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> idx = <span class="number">0</span>; idx &lt; arr.<span class="property">length</span>; idx++) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="title function_">predicateFn</span>(arr[idx], idx, arr)) &#123;</span><br><span class="line">      newList.<span class="title function_">push</span>(arr[idx])</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> newList</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>为了解决语义问题（传入的谓词函数命名问题），我们定义</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> filterFn = filter</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">filterOut</span>(<span class="params">predicateFn, arr</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="title function_">filterIn</span>(<span class="title function_">not</span>(predicateFn), arr)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// so...</span></span><br><span class="line"><span class="title function_">isOdd</span>(<span class="number">3</span>) <span class="comment">// true</span></span><br><span class="line"><span class="title function_">isEven</span>(<span class="number">2</span>) <span class="comment">// true</span></span><br><span class="line"><span class="title function_">filterIn</span>(isOdd, [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]) <span class="comment">// [1, 3, 5]</span></span><br><span class="line"><span class="title function_">filterOut</span>(isEven, [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]) <span class="comment">// [1, 3, 5]</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="缩减-reduce"><a href="#缩减-reduce" class="headerlink" title="缩减 reduce(..)"></a>缩减 <code>reduce(..)</code></h3><p>&#x3D; 组合&#x2F;缩减&#x2F;折叠 &#x3D; 将两个值合并成一个值</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">reduce</span>(<span class="params">reducerFn, initialValue, arr</span>) &#123;</span><br><span class="line">  <span class="keyword">var</span> acc, startIdx</span><br><span class="line">  <span class="keyword">if</span> (<span class="variable language_">arguments</span>.<span class="property">length</span> == <span class="number">3</span>) &#123;</span><br><span class="line">    acc = initialValue</span><br><span class="line">    startIdx = <span class="number">0</span></span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (arr.<span class="property">length</span> &gt; <span class="number">0</span>) &#123;</span><br><span class="line">    acc = arr[<span class="number">0</span>]</span><br><span class="line">    startIdx = <span class="number">1</span></span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&#x27;Must provide at least one value.&#x27;</span>)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> idx = startIdx; idx &lt; arr.<span class="property">length</span>; idx++) &#123;</span><br><span class="line">    acc = <span class="title function_">reducerFn</span>(acc, arr[idx], idx, arr)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> acc</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们可以将 <code>reduce(..)</code> 认为是将函数从左到右组合（just like <code>pipe(..)</code>），可以这样使用</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="title function_">binary</span> = fn =&gt; <span class="function">(<span class="params">arg1, arg2</span>) =&gt;</span> <span class="title function_">fn</span>(arg1, arg2)</span><br><span class="line"><span class="keyword">var</span> pipeReducer = <span class="title function_">binary</span>(pipe)</span><br><span class="line"><span class="keyword">var</span> fn = [<span class="number">3</span>, <span class="number">17</span>, <span class="number">6</span>, <span class="number">4</span>]</span><br><span class="line">  .<span class="title function_">map</span>(<span class="function"><span class="params">v</span> =&gt;</span> <span class="function"><span class="params">n</span> =&gt;</span> v * n)</span><br><span class="line">  .<span class="title function_">reduce</span>(pipeReducer)</span><br></pre></td></tr></table></figure>
+
+<p>JS 还提供了 <code>reduceRight(..)</code></p>
+<p><strong>map 也是 reduce</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="title function_">double</span> = v =&gt; v * <span class="number">2</span></span><br><span class="line"></span><br><span class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>].<span class="title function_">map</span>(double) <span class="comment">// [2, 4, 6, 8, 10]</span></span><br><span class="line"></span><br><span class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>].<span class="title function_">reduce</span>(<span class="function">(<span class="params">list, v</span>) =&gt;</span> (list.<span class="title function_">push</span>(<span class="title function_">double</span>(v)), list), []) <span class="comment">// [2, 4, 6, 8, 10]</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>filter 也是 reduce</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="title function_">isOdd</span> = v =&gt; v % <span class="number">2</span> == <span class="number">1</span></span><br><span class="line"></span><br><span class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>].<span class="title function_">filter</span>(isOdd) <span class="comment">// [1, 3, 5]</span></span><br><span class="line"></span><br><span class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>].<span class="title function_">reduce</span>(<span class="function">(<span class="params">list, v</span>) =&gt;</span> (</span><br><span class="line">  <span class="title function_">isOdd</span>(v) ? list.<span class="title function_">push</span>(v) : <span class="literal">undefined</span>,</span><br><span class="line">  list</span><br><span class="line">), []) <span class="comment">// [1, 3, 5]</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="去重"><a href="#去重" class="headerlink" title="去重"></a>去重</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 使用 indexOf 筛选时，是从左向右</span></span><br><span class="line"><span class="comment">// 找到的位置与 idx 相等说明该项是第一次出现</span></span><br><span class="line"><span class="keyword">var</span> <span class="title function_">unique</span> = </span><br><span class="line">  arr =&gt;</span><br><span class="line">    arr.<span class="title function_">filter</span>(</span><br><span class="line">      <span class="function">(<span class="params">v, idx</span>) =&gt;</span></span><br><span class="line">        arr.<span class="title function_">indexOf</span>(v) === idx</span><br><span class="line">    )</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 当列表项不能在新列表中找到时，将其插入到新的列表中</span></span><br><span class="line"><span class="keyword">var</span> <span class="title function_">unique</span> = </span><br><span class="line">  arr =&gt;</span><br><span class="line">    arr.<span class="title function_">reduce</span>(</span><br><span class="line">      <span class="function">(<span class="params">list, v</span>) =&gt;</span> </span><br><span class="line">        list.<span class="title function_">indexOf</span>(v) === -<span class="number">1</span> ? (list.<span class="title function_">push</span>(v), list) : list</span><br><span class="line">    , [])</span><br></pre></td></tr></table></figure>
+
+<h3 id="扁平化"><a href="#扁平化" class="headerlink" title="扁平化"></a>扁平化</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="title function_">flatten</span> = </span><br><span class="line">  arr =&gt; </span><br><span class="line">    arr.<span class="title function_">reduce</span>(</span><br><span class="line">      <span class="function">(<span class="params">list, v</span>) =&gt;</span> </span><br><span class="line">        list.<span class="title function_">concat</span>(<span class="title class_">Array</span>.<span class="title function_">isArray</span>(v) ? <span class="title function_">flatten</span>(v) : v)</span><br><span class="line">    , [])</span><br></pre></td></tr></table></figure>
+
+<p><code>flatten(..)</code> 的常用用法之一是当你映射一组元素列表，并将每一项值从原来的值转换为数组（如果不想要返回的二维数组）</p>
+<h3 id="Zip"><a href="#Zip" class="headerlink" title="Zip"></a>Zip</h3><p>交替选择两个输入只能列表的值，并将得到的值组成子列表</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">zip</span>(<span class="params">arr1, arr2</span>) &#123;</span><br><span class="line">  <span class="keyword">var</span> zipped = []</span><br><span class="line">  arr1 = arr1.<span class="title function_">slice</span>()</span><br><span class="line">  arr2 = arr2.<span class="title function_">slice</span>()</span><br><span class="line">  <span class="keyword">while</span> (arr1.<span class="property">length</span> &gt; <span class="number">0</span> &amp;&amp; arr2.<span class="property">length</span> &gt; <span class="number">0</span>) &#123;</span><br><span class="line">    zipped.<span class="title function_">push</span>([arr1.<span class="title function_">shift</span>(), arr2.<span class="title function_">shift</span>()])</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> zipped</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>这个实现明显存在一些非函数式编程的思想。这里有一个命令式的 <code>while</code> 循环并且采用 <code>shift()</code> 和 <code>push(..)</code> 改变列表。虽然在纯函数中使用了非纯的行为（通常是为了性能），但只要其产生的副作用完全包含在这个函数内部，这种实现就是安全纯净的</p>
+</blockquote>
+<h3 id="合并"><a href="#合并" class="headerlink" title="合并"></a>合并</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">mergeLists</span>(<span class="params">arr1, arr2</span>) &#123;</span><br><span class="line">  <span class="keyword">var</span> merged = []</span><br><span class="line">  arr1 = arr1.<span class="title function_">slice</span>()</span><br><span class="line">  arr2 = arr2.<span class="title function_">slice</span>()</span><br><span class="line">  <span class="keyword">while</span> (arr1.<span class="property">length</span> &gt; <span class="number">0</span> || arr2.<span class="property">length</span> &gt; <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (arr1.<span class="property">length</span> &gt; <span class="number">0</span>) &#123;</span><br><span class="line">      merged.<span class="title function_">push</span>(arr1.<span class="title function_">shift</span>())</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (arr2.<span class="property">length</span> &gt; <span class="number">0</span>) &#123;</span><br><span class="line">      merged.<span class="title function_">push</span>(arr2.<span class="title function_">shift</span>())</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> merged</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="编程风格"><a href="#编程风格" class="headerlink" title="编程风格"></a>编程风格</h3><p>JS 中通常使用链式调用，而函数式编程喜欢嵌套式的调用，但是用于 <code>compose(..)</code> 都不太合适…</p>
+<p>链式组合方法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="title function_">partialThis</span> = </span><br><span class="line">  (<span class="params">fn, ...presetArgs</span>) =&gt; </span><br><span class="line">    <span class="comment">// 故意用 function 为了获得 this 绑定</span></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">partiallyApplied</span>(<span class="params">...laterArgs</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> fn.<span class="title function_">apply</span>(<span class="variable language_">this</span>, [...presetArgs, ...laterArgs])</span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">var</span> <span class="title function_">composeChainedMethods</span> = </span><br><span class="line">  (<span class="params">...fns</span>) =&gt;</span><br><span class="line">    <span class="function"><span class="params">result</span> =&gt;</span></span><br><span class="line">      <span class="comment">// result 是前一步传入的 this</span></span><br><span class="line">      fns.<span class="title function_">reduceRight</span>(<span class="function">(<span class="params">result, fn</span>) =&gt;</span> fn.<span class="title function_">call</span>(result), result)</span><br><span class="line"></span><br><span class="line"><span class="title function_">composeChainedMethods</span>(</span><br><span class="line">  <span class="title function_">partialThis</span>(<span class="title class_">Array</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">reduce</span>, sum, <span class="number">0</span>),</span><br><span class="line">  <span class="title function_">partialThis</span>(<span class="title class_">Array</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">map</span>, double),</span><br><span class="line">  <span class="title function_">partialThis</span>(<span class="title class_">Array</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">filter</span>, isOdd)</span><br><span class="line">)</span><br><span class="line">([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]) <span class="comment">// 18</span></span><br></pre></td></tr></table></figure>
+
+<p>独立组合实用函数</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="title function_">filter</span> = (<span class="params">arr, predicateFn</span>) =&gt; arr.<span class="title function_">filter</span>(predicateFn)</span><br><span class="line"><span class="keyword">var</span> <span class="title function_">map</span> = (<span class="params">arr, mapperFn</span>) =&gt; arr.<span class="title function_">map</span>(mapperFn)</span><br><span class="line"><span class="keyword">var</span> <span class="title function_">reduce</span> = (<span class="params">arr, reducerFn, initialValue</span>) =&gt; arr.<span class="title function_">reduce</span>(reduceFn, initialValue)</span><br><span class="line"></span><br><span class="line"><span class="comment">// arr 是第一个，需要右偏一下</span></span><br><span class="line"><span class="title function_">compose</span>(</span><br><span class="line">  <span class="title function_">partialRight</span>(reduce, sum, <span class="number">0</span>),</span><br><span class="line">  <span class="title function_">partialRight</span>(map, double),</span><br><span class="line">  <span class="title function_">partialRight</span>(filter, isOdd)</span><br><span class="line">)</span><br><span class="line">([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]) <span class="comment">// 18</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 不过一般函数式编程类库都是直接把 arr 放最后一个了</span></span><br><span class="line"><span class="comment">// 顺便还柯里化一下</span></span><br><span class="line"><span class="keyword">var</span> filter = <span class="title function_">curry</span>(</span><br><span class="line">  <span class="function">(<span class="params">predicateFn, arr</span>) =&gt;</span></span><br><span class="line">    arr.<span class="title function_">filter</span>(predicateFn)</span><br><span class="line">)</span><br><span class="line"><span class="keyword">var</span> map = <span class="title function_">curry</span>(</span><br><span class="line">  <span class="function">(<span class="params">mapperFn, arr</span>) =&gt;</span></span><br><span class="line">    arr.<span class="title function_">map</span>(mapperFn)</span><br><span class="line">)</span><br><span class="line"><span class="keyword">var</span> reduce = <span class="title function_">curry</span>(</span><br><span class="line">  <span class="function">(<span class="params">reducerFn, initialValue, arr</span>) =&gt;</span></span><br><span class="line">    arr.<span class="title function_">reduce</span>(reducerFn, initialValue)</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 完美！</span></span><br><span class="line"><span class="title function_">compose</span>(</span><br><span class="line">  <span class="title function_">reduce</span>(sum)(<span class="number">0</span>),</span><br><span class="line">  <span class="title function_">map</span>(double),</span><br><span class="line">  <span class="title function_">filter</span>(idOdd)</span><br><span class="line">)</span><br><span class="line">([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]) <span class="comment">// 18</span></span><br></pre></td></tr></table></figure>
+
+<p>发现上面的定义都很套路！都是派发相应的原生数组方法，那不就可以再写个函数做这件事！</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="title function_">unboundMethod</span> = </span><br><span class="line">  (<span class="params">methodName, argCount = <span class="number">2</span></span>) =&gt;</span><br><span class="line">    <span class="title function_">curry</span>(</span><br><span class="line">      <span class="function">(<span class="params">...args</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">var</span> obj = args.<span class="title function_">pop</span>()</span><br><span class="line">        <span class="keyword">return</span> obj[methodName](...args)</span><br><span class="line">      &#125;,</span><br><span class="line">      argCount <span class="comment">// 第二个参数是 arity</span></span><br><span class="line">    )</span><br><span class="line"><span class="keyword">var</span> filter = <span class="title function_">unboundMethod</span>(<span class="string">&#x27;filter&#x27;</span>, <span class="number">2</span>)</span><br><span class="line"><span class="keyword">var</span> map = <span class="title function_">unboundMethod</span>(<span class="string">&#x27;map&#x27;</span>, <span class="number">2</span>)</span><br><span class="line"><span class="keyword">var</span> reduce = <span class="title function_">unboundMethod</span>(<span class="string">&#x27;reduce&#x27;</span>, <span class="number">3</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 直到这时才确定 curry 里面的第一个函数的 obj = args.pop()</span></span><br><span class="line"><span class="comment">// 事实上是 this！（也就是 Array Object）</span></span><br><span class="line"><span class="comment">// methodName 被闭包保存起来了</span></span><br><span class="line"><span class="title function_">compose</span>(</span><br><span class="line">  <span class="title function_">reduce</span>(sum)(<span class="number">0</span>),</span><br><span class="line">  <span class="title function_">map</span>(double),</span><br><span class="line">  <span class="title function_">filter</span>(idOdd)</span><br><span class="line">)</span><br><span class="line">([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]) <span class="comment">// 18</span></span><br></pre></td></tr></table></figure>
+
+<p>当然咧，也有办法把我们的独立函数（上面定义的 去重 扁平 zip 等等）变成可以链式调用的数组方法（当然不是直接改 <code>Array.prototype</code> ！）。一个思路是把独立函数适配成一个缩减函数，然后传给 <code>reduce(..)</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 原独立函数的定义</span></span><br><span class="line"><span class="keyword">var</span> <span class="title function_">flatten</span> = </span><br><span class="line">  arr =&gt; </span><br><span class="line">    arr.<span class="title function_">reduce</span>(</span><br><span class="line">      <span class="function">(<span class="params">list, v</span>) =&gt;</span> </span><br><span class="line">        list.<span class="title function_">concat</span>(<span class="title class_">Array</span>.<span class="title function_">isArray</span>(v) ? <span class="title function_">flatten</span>(v) : v)</span><br><span class="line">    , [])</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">flattenReducer</span>(<span class="params">list, v</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> list.<span class="title function_">concat</span>(</span><br><span class="line">    <span class="title class_">Array</span>.<span class="title function_">isArray</span>(v) ? v.<span class="title function_">reduce</span>(flattenReducer, []) : v</span><br><span class="line">  )</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">[[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], <span class="number">4</span>, <span class="number">5</span>, [<span class="number">6</span>, [<span class="number">7</span>, <span class="number">8</span>]]]</span><br><span class="line">.<span class="title function_">reduce</span>(flattenReducer, [])</span><br></pre></td></tr></table></figure>
+
+<p>条件确保实用函数</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="title function_">guard</span> = </span><br><span class="line">  fn =&gt;</span><br><span class="line">    <span class="function"><span class="params">arg</span> =&gt;</span></span><br><span class="line">      arg != <span class="literal">null</span> ? <span class="title function_">fn</span>(arg) : arg</span><br></pre></td></tr></table></figure>
+
+<p><strong>链式组合风格</strong>：声明式的，很容易看出详尽的执行步骤和顺序；但每一个列表操作都需要循环整个列表，意味着不必要的性能损失</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">someList</span><br><span class="line">.<span class="title function_">filter</span>(..)</span><br><span class="line">.<span class="title function_">filter</span>(..)</span><br><span class="line">.<span class="title function_">map</span>(..)</span><br><span class="line">.<span class="title function_">map</span>(..)</span><br><span class="line">.<span class="title function_">map</span>(..)</span><br><span class="line">.<span class="title function_">reduce</span>(..)</span><br></pre></td></tr></table></figure>
+
+<p><strong>交替独立风格</strong>：操作自下而上列出，同样会多次循环列表</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">map</span>(</span><br><span class="line">  fn3,</span><br><span class="line">  <span class="title function_">map</span>(</span><br><span class="line">    fn2,</span><br><span class="line">    <span class="title function_">map</span>(fn1, someList)</span><br><span class="line">  )</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p><strong>融合</strong>：合并相邻的操作，从而减少列表的迭代次数</p>
+<p>一个简单的例子，对于连续的 <code>map(..)</code> 链式，可以很容易想到，把几个内层函数 <code>compose(..)</code> or <code>pipe(..)</code> 起来，从而只需遍历一次列表</p>
+<h2 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h2><blockquote>
+<p>递归深谙函数式编程之精髓，最被广泛引证的原因是，在调用栈中，递归把（大部分）显式状态跟踪换为了隐式状态。通常，但问题需要条件分支和回溯计算时，递归非常有用，此外在纯迭代环境中管理这种状态，是相当棘手的；最起码，这些代码是不可或缺且晦涩难懂。但是在堆栈上调用每一级的分支作为其自己的作用域，很明显，这通常会影响到代码的可读性。</p>
+<p>正如 Σ 是为运算而声明（符号是数学的声明式语言！），递归是为算法而声明</p>
+</blockquote>
+<h3 id="尾调用"><a href="#尾调用" class="headerlink" title="尾调用"></a>尾调用</h3><p>如果一个回调从函数 <code>baz()</code> 转到函数 <code>bar()</code> 的时候，而回调是在函数 <code>baz()</code> 的最底部执行——也就是尾调用——那么 <code>baz()</code> 的堆栈帧就不再需要了。也就意味着，内存可以被回收，或只需简单的执行 <code>bar()</code> 函数</p>
+<p>正确的尾调用（PTC）：由 ES6 明确规定的尾调用特定形式，只要正确的使用了尾调用就不会发生栈溢出。PTC 长下面这样：函数调用在最后一步，并且必须有返回</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// PTC</span></span><br><span class="line"><span class="keyword">return</span> <span class="title function_">foo</span>(..);</span><br><span class="line"></span><br><span class="line"><span class="comment">// this is also right</span></span><br><span class="line"><span class="keyword">return</span> x ? <span class="title function_">foo</span>(..) : <span class="title function_">bar</span>(..);</span><br></pre></td></tr></table></figure>
+
+<p>如果你的递归比较复杂，不是尾递归（比如二分法），就需要想办法重构递归：</p>
+<p><strong>更换堆栈</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 一个不符合 PTC 规范的例子</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">sum</span>(<span class="params">num1, ...nums</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (nums.<span class="property">length</span> == <span class="number">0</span>) <span class="keyword">return</span> num1</span><br><span class="line">  <span class="keyword">return</span> num1 + <span class="title function_">sum</span>(...nums)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>重构策略的关键点在于，我们可以通过把<em>置后</em>处理累加改为<em>提前</em>处理，来消除对堆栈的依赖，然后将该部分结果作为参数传递到递归调用。换句话说，我们不用在当前运用函数的堆栈帧中保留 <code>num1+sum(..num1)</code> 的总和，而是把它传递到下一个递归的堆栈帧中，这样就能释放当前递归的堆栈帧。</p>
+</blockquote>
+<p>也就是说，我们可以把 sum 计算的结果作为参数传进 sum：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">sum</span>(<span class="params">result, num1, ...nums</span>) &#123;</span><br><span class="line">  result = result + num1</span><br><span class="line">  <span class="keyword">if</span> (nums.<span class="property">length</span> == <span class="number">0</span>) <span class="keyword">return</span> result</span><br><span class="line">  <span class="keyword">return</span> <span class="title function_">sum</span>(result, ...nums)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>但是调用者需要在调用时额外传一个 <code>result = 0</code> 进去！通常的处理是再用一个函数包裹它，对外暴露一个接口函数（各种方法实现，平级函数&#x2F;内部函数&#x2F;IIFE 包裹等等）。但是这样可读性已经明显降低…</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">sum</span>(<span class="params">num1, num2, ...nums</span>) &#123;</span><br><span class="line">  num1 = num1 + num2 <span class="comment">// 啊哈，直接把 num1 当成初始的 result</span></span><br><span class="line">  <span class="keyword">if</span> (nums.<span class="property">length</span> == <span class="number">0</span>) <span class="keyword">return</span> num1</span><br><span class="line">  <span class="keyword">return</span> <span class="title function_">sum</span>(num1, ...nums)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>另一个例子</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">maxEven</span>(<span class="params">num1, ...restNums</span>) &#123;</span><br><span class="line">  <span class="keyword">var</span> maxRest = restNums.<span class="property">length</span> &gt; <span class="number">0</span> ? <span class="title function_">maxEven</span>(...restNums) : <span class="literal">undefined</span></span><br><span class="line">  <span class="keyword">return</span> (num1 % <span class="number">2</span> != <span class="number">0</span> || num1 &lt; maxRest) ? maxRest : num1</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">maxEven</span>(<span class="params">num1, num2, ...nums</span>) &#123;</span><br><span class="line">  num1 = (num1 % <span class="number">2</span> == <span class="number">0</span> &amp;&amp; !(<span class="title function_">maxEven</span>(num2) &gt; num1)) ? num1 : (num2 % <span class="number">2</span> == <span class="number">0</span> ? num2 : <span class="literal">undefined</span>)</span><br><span class="line">  <span class="keyword">return</span> nums.<span class="property">length</span> == <span class="number">0</span> ? num1 : <span class="title function_">maxEven</span>(num1, ...nums)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 第一次调 maxEven(num2) 不是为了 PTC 优化，而只是想避免重复写 % 逻辑（这里只递归一级就返回了）</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>后继传递格式</strong></p>
+<blockquote>
+<p>后继传递格式（CPS）：组织代码，使得每个函数在其结束时接受另一个执行函数</p>
+</blockquote>
+<p>比如进行相互递归的这个例子</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">fib_</span>(<span class="params">n</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (n == <span class="number">1</span>) <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">return</span> <span class="title function_">fib</span>(n - <span class="number">2</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">fib</span>(<span class="params">n</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (n == <span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">return</span> <span class="title function_">fib</span>(n - <span class="number">1</span>) + <span class="title function_">fib_</span>(n)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// CPS</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">fib</span>(<span class="params">n, cont = identity</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (n &lt;= <span class="number">1</span>) <span class="keyword">return</span> <span class="title function_">cont</span>(n)</span><br><span class="line">  <span class="keyword">return</span> <span class="title function_">fib</span>(</span><br><span class="line">    n - <span class="number">2</span>,</span><br><span class="line">    <span class="function"><span class="params">n2</span> =&gt;</span> <span class="title function_">fib</span>( <span class="comment">// 这个函数接受 fib(n-2) 的结果作为 n2</span></span><br><span class="line">      n - <span class="number">1</span>,</span><br><span class="line">      <span class="function"><span class="params">n1</span> =&gt;</span> <span class="title function_">cont</span>(n2 + n1) <span class="comment">// 这个函数接受 fib(n-1) 的结果作为 n1，得到 n1 n2 后相加传入下个后续函数</span></span><br><span class="line">    )</span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>弹簧床</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">trampoline</span>(<span class="params">fn</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">function</span> <span class="title function_">trampolined</span>(<span class="params">...args</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> result = <span class="title function_">fn</span>(...args)</span><br><span class="line">    <span class="keyword">while</span> (<span class="keyword">typeof</span> result == <span class="string">&#x27;function&#x27;</span>) &#123;</span><br><span class="line">      result = <span class="title function_">result</span>()</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> sum = <span class="title function_">trampoline</span>(</span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">sum</span>(<span class="params">num1, num2, ...nums</span>) &#123;</span><br><span class="line">    num1 = num1 + num2</span><br><span class="line">    <span class="keyword">if</span> (nums.<span class="property">length</span> == <span class="number">0</span>) <span class="keyword">return</span> num1</span><br><span class="line">    <span class="keyword">return</span> <span class="function">() =&gt;</span> <span class="title function_">sum</span>(num1, ...nums)</span><br><span class="line">  &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<h2 id="异步的函数式"><a href="#异步的函数式" class="headerlink" title="异步的函数式"></a>异步的函数式</h2><blockquote>
+<p>异步编程最为重要的一点是通过抽象时间来简化状态变化的管理。</p>
+</blockquote>
+<p>promise 以时间无关的方式来作为一个单一的值。此外，获取 promise 的返回值是异步的，但却是通过同步的方法来赋值。或者说，promise 给 <code>=</code> 操作符扩展随时间动态赋值的功能，通过可靠的（时间无关）方式。</p>
+<p>惰性数据结构 懒操作</p>
+<p>observables(RxJS Most)</p>
+<ul>
+<li>数组的 <code>map(..)</code> 方法会用当前数组中的每一个值运行一次映射函数，然后放到返回的数组里（积极的数据结构）</li>
+<li>observable 数组里则是为每一个值运行一次映射函数，无论这个值何时加入，然后把它返回到 observable 里（持续惰性的）</li>
+</ul>
+<h2 id="Transducing"><a href="#Transducing" class="headerlink" title="Transducing"></a>Transducing</h2><p>transduer 就是可组合的 reducer，也就是可以 compose 一系列 reduce 操作，避免反复遍历列表（而 map filter 等可以转成 reduce）</p>
+<p>推导过程如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 例子</span></span><br><span class="line"><span class="comment">// 这样反复遍历性能很差，而且可读性也很差</span></span><br><span class="line">words</span><br><span class="line">.<span class="title function_">map</span>(strUppercase)</span><br><span class="line">.<span class="title function_">filter</span>(isLongEnough)</span><br><span class="line">.<span class="title function_">filter</span>(isShortEnough)</span><br><span class="line">.<span class="title function_">reduce</span>(strConcat, <span class="string">&#x27;&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 把 map/filter 表示为 reduce</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">mapReducer</span>(<span class="params">mapperFn</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">function</span> <span class="title function_">reducer</span>(<span class="params">list, val</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> list.<span class="title function_">concat</span>([<span class="title function_">mapperFn</span>(val)])</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">filterReducer</span>(<span class="params">predicateFn</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">function</span> <span class="title function_">reducer</span>(<span class="params">list, val</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="title function_">predicateFn</span>(val)) <span class="keyword">return</span> list.<span class="title function_">concat</span>([val])</span><br><span class="line">    <span class="keyword">return</span> list</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 有个共享功能！</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">listCombination</span>(<span class="params">list, val</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> list.<span class="title function_">concat</span>([val])</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 把 listCombination 这个小工具参数化进我们的 reducers</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">mapReducer</span>(<span class="params">mapperFn, combinationFn</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">function</span> <span class="title function_">reducer</span>(<span class="params">list, val</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">combinationFn</span>(list, <span class="title function_">mapperFn</span>(val))</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">filterReducer</span>(<span class="params">predicateFn, combinationFn</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">function</span> <span class="title function_">reducer</span>(<span class="params">list, val</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="title function_">predicateFn</span>(val)) <span class="keyword">return</span> <span class="title function_">combinationFn</span>(list, val)</span><br><span class="line">    <span class="keyword">return</span> list</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// curry 一下</span></span><br><span class="line"><span class="keyword">var</span> curriedMapReducer = <span class="title function_">curry</span>(<span class="keyword">function</span> <span class="title function_">mapReducer</span>(<span class="params">mapperFn, combinationFn</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">function</span> <span class="title function_">reducer</span>(<span class="params">list, val</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">combinationFn</span>(list, <span class="title function_">mapperFn</span>(val))</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">var</span> curriedFilterReducer = <span class="title function_">curry</span>(<span class="keyword">function</span> <span class="title function_">filterReducer</span>(<span class="params">predicateFn, combinationFn</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">function</span> <span class="title function_">reducer</span>(<span class="params">list, val</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="title function_">predicateFn</span>(val)) <span class="keyword">return</span> <span class="title function_">combinationFn</span>(list, val)</span><br><span class="line">    <span class="keyword">return</span> list</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 接下来是就是奇迹发生</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 让我们看看柯里化没传全参数的样子</span></span><br><span class="line"><span class="comment">// 嗯，它们每个都期望得到一个 listCombination 并产生一个独立的 reducer</span></span><br><span class="line"><span class="keyword">var</span> x = <span class="title function_">curriedMapReducer</span>(strUppercase)</span><br><span class="line"><span class="keyword">var</span> y = <span class="title function_">curriedFilterReducer</span>(isLongEnough)</span><br><span class="line"><span class="keyword">var</span> z = <span class="title function_">curriedFilterReducer</span>(isShortEnough)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 但是，如果调用 y(z)，会发生什么？</span></span><br><span class="line"><span class="comment">// 我们得到的 reducer 函数内部看起来会像这样</span></span><br><span class="line"><span class="comment">// 当然，这样是错的，因为我们的 z 只想接收一个参数</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">reducer</span>(<span class="params">list, val</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="title function_">isLongEnough</span>(val)) <span class="keyword">return</span> <span class="title function_">z</span>(list, val) <span class="comment">// here</span></span><br><span class="line">  <span class="keyword">return</span> list</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 但是 y(z(listCombination)) 这样呢</span></span><br><span class="line"><span class="keyword">var</span> shortEnoughReducer = <span class="title function_">z</span>(listCombination) <span class="comment">// 正常滴</span></span><br><span class="line"><span class="keyword">var</span> longAndShortEnoughReducer = <span class="title function_">y</span>(shortEnoughReducer) <span class="comment">// 为什么叫这个名字？</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 看看它们的内部</span></span><br><span class="line"><span class="comment">// shortEnoughReducer</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">reducer</span>(<span class="params">list, val</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="title function_">isShortEnough</span>(val)) <span class="keyword">return</span> <span class="title function_">listCombination</span>(list, val)</span><br><span class="line">  <span class="keyword">return</span> list</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// longAndShortEnoughReducer</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">reducer</span>(<span class="params">list, val</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="title function_">isLongEnough</span>(val)) <span class="keyword">return</span> <span class="title function_">shortEnoughReducer</span>(list, val) <span class="comment">// here!!!</span></span><br><span class="line">  <span class="keyword">return</span> list</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 事实是，上面这样写就能运行！而且是正确的！</span></span><br><span class="line"><span class="comment">// 因为 reducer(..) 的形状和 listCombination(..) 是一样的</span></span><br><span class="line"><span class="comment">// 可以理解为，都是“接收一个列表和一个值，返回一个新列表”</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 那就可以这样把所有的 reducers compose 起来了！</span></span><br><span class="line"><span class="comment">// 需要注意的一点是，最终的执行顺序就是 strUppercase isLongEnough isShortEnough</span></span><br><span class="line"><span class="comment">// 因为每个 reducer 里面反转了顺序</span></span><br><span class="line"><span class="keyword">var</span> composition = <span class="title function_">compose</span>(</span><br><span class="line">  <span class="title function_">curriedMapReducer</span>(strUppercase),</span><br><span class="line">  <span class="title function_">curriedFilterReducer</span>(isLongEnough),</span><br><span class="line">  <span class="title function_">curriedFilterReducer</span>(isShortEnough)</span><br><span class="line">)</span><br><span class="line">words.<span class="title function_">reduce</span>(<span class="title function_">composition</span>(listCombination), [])</span><br></pre></td></tr></table></figure>
+
+<p>最后的一些讨论：</p>
+<ul>
+<li>我们的 <code>listCombination(..)</code> 内部用了纯的 <code>concat(..)</code>，但是这样性能肯定不好。是不是可以直接换成性能更好但不纯的 <code>push(..)</code> 呢？答案是可以。因为我们知道 <code>listCombination(..)</code> 只会在 transducing 内部使用，没有违反对外是纯函数这一准则，内部可以为了性能而变得不纯</li>
+<li>如果两个“形状”不一样的组合函数呢？</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 我们可以“组合”这两个 reduce 吗？</span></span><br><span class="line">words</span><br><span class="line">.<span class="title function_">reduce</span>(<span class="title function_">transducer</span>(listCombination), [])</span><br><span class="line">.<span class="title function_">reduce</span>(strConcat, <span class="string">&#x27;&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 直接把 strConcat 放进我们的 compose 中是不行的，因为它的“形状”不适用于那个 compose</span></span><br><span class="line"><span class="comment">// 但让我们看看这两个“形状”</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">strConcat</span>(<span class="params">str1, str2</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> str1 + str2</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">listCombination</span>(<span class="params">list, val</span>) &#123;</span><br><span class="line">  list.<span class="title function_">push</span>(val)</span><br><span class="line">  <span class="keyword">return</span> list</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 嗯？在概念上这两个功能是一样的：将两个值组合成一个</span></span><br><span class="line"><span class="comment">// strConcat 也是一个组合函数！</span></span><br><span class="line"><span class="comment">// 我们最终的目标是获得字符串！那就可以直接用 strConcat 代替 listCombination</span></span><br><span class="line">words.<span class="title function_">reduce</span>(<span class="title function_">transducer</span>(strConcat), <span class="string">&#x27;&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// BOOM! This is transducing!</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Monad"><a href="#Monad" class="headerlink" title="Monad"></a>Monad</h2><blockquote>
+<p>函子（functor）：包括一个值和一个用来对构成函子对数据执行操作的类 map 实用函数。</p>
+<p>Monad：一个包含一些额外行为的函子。它更像是一种根据不同值的需要而用不同方式实现的接口，每一种实现都是一种不同类型的 Monad。Monad 是一个用更具有声明式的方式围绕一个值来组织行为的方法。</p>
+</blockquote>
+<h3 id="Maybe"><a href="#Maybe" class="headerlink" title="Maybe"></a>Maybe</h3><p>如果一个值是非空的，它是 <code>Just(..)</code> 的实例；如果该值是空的，它则是 <code>Nothing()</code> 的实例</p>
+<p>Maybe Monad 的价值在于不论我们有 <code>Just(..)</code> 实例还是 <code>Nothing(..)</code> 实例，我们使用的方法都是一样的。Maybe 这个抽象概念的作用是隐式地封装了操作和无操作的二元性</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="title class_">Maybe</span> = &#123;</span><br><span class="line">  <span class="title class_">Just</span>,</span><br><span class="line">  <span class="title class_">Nothing</span>,</span><br><span class="line">  <span class="attr">of</span>: <span class="title class_">Just</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">Just</span>(<span class="params">val</span>) &#123;</span><br><span class="line">  <span class="comment">// 无论 Just 实例拿到的是怎样的一个 val，Just 都不会改变它，所有的方法都会创建一个新的 Monad 实例而不是改变它</span></span><br><span class="line">  <span class="keyword">return</span> &#123; map, chain, ap, inspect &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">map</span>(<span class="params">fn</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title class_">Just</span>(<span class="title function_">fn</span>(val))</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">chain</span>(<span class="params">fn</span>) &#123; <span class="comment">// 也叫 bind/flatMap</span></span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">fn</span>(val)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">ap</span>(<span class="params">anotherMonad</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> anotherMonad.<span class="title function_">map</span>(val)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">inspect</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">`Just(<span class="subst">$&#123;val&#125;</span>)`</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">Nothing</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    <span class="attr">map</span>: <span class="title class_">Nothing</span>,</span><br><span class="line">    <span class="attr">chain</span>: <span class="title class_">Nothing</span>,</span><br><span class="line">    <span class="attr">ap</span>: <span class="title class_">Nothing</span>,</span><br><span class="line">    inspect</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">inspect</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;Nothing&#x27;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>Monad 的核心思想是，它必须对所有值都是有效的，不能对值做任何检查——甚至是空值检查</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 在外部进行空值检查的例子</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">isEmpty</span>(<span class="params">val</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> val === <span class="literal">null</span> || val === <span class="literal">undefined</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> safeProp = <span class="title function_">curry</span>(<span class="keyword">function</span> <span class="title function_">safeProp</span>(<span class="params">prop, obj</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="title function_">isEmpty</span>(obj[prop])) <span class="keyword">return</span> <span class="title class_">Maybe</span>.<span class="title class_">Nothing</span>()</span><br><span class="line">  <span class="keyword">return</span> <span class="title class_">Maybe</span>.<span class="title function_">of</span>(obj[prop])</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="title class_">Maybe</span>.<span class="title function_">of</span>(someObj)</span><br><span class="line">.<span class="title function_">chain</span>(<span class="title function_">safeProp</span>(<span class="string">&#x27;something&#x27;</span>))</span><br><span class="line">.<span class="title function_">chain</span>(<span class="title function_">safeProp</span>(<span class="string">&#x27;else&#x27;</span>))</span><br><span class="line">.<span class="title function_">chain</span>(<span class="title function_">safeProp</span>(<span class="string">&#x27;entirely&#x27;</span>))</span><br><span class="line">.<span class="title function_">map</span>(<span class="variable language_">console</span>.<span class="property">log</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="Humble"><a href="#Humble" class="headerlink" title="Humble"></a>Humble</h3><p>是一个产生 Maybe Monad 实例的工厂函数，可以加入各种条件判断…</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/note/" rel="tag"># note</a>
+              <a href="/tags/Functional-Programming/" rel="tag"># Functional Programming</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/06/04/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E6%8C%87%E5%8C%97/" rel="prev" title="读书笔记-函数式编程指北">
+      <i class="fa fa-chevron-left"></i> 读书笔记-函数式编程指北
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/09/16/%E5%89%8D%E7%AB%AF%E5%A4%A7%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD%E6%96%B9%E6%A1%88/" rel="next" title="前端大文件下载方案">
+      前端大文件下载方案 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B"><span class="nav-number">1.</span> <span class="nav-text">函数式编程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E5%9F%BA%E7%A1%80"><span class="nav-number">1.1.</span> <span class="nav-text">函数基础</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%A1%E7%90%86%E5%87%BD%E6%95%B0%E7%9A%84%E8%BE%93%E5%85%A5"><span class="nav-number">1.2.</span> <span class="nav-text">管理函数的输入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%84%E5%90%88%E5%87%BD%E6%95%B0"><span class="nav-number">1.3.</span> <span class="nav-text">组合函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%8F%E5%B0%91%E5%89%AF%E4%BD%9C%E7%94%A8"><span class="nav-number">1.4.</span> <span class="nav-text">减少副作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%80%BC%E7%9A%84%E4%B8%8D%E5%8F%AF%E5%8F%98%E6%80%A7"><span class="nav-number">1.5.</span> <span class="nav-text">值的不可变性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AD%E5%8C%85-vs-%E5%AF%B9%E8%B1%A1"><span class="nav-number">1.6.</span> <span class="nav-text">闭包 vs 对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%97%E8%A1%A8%E6%93%8D%E4%BD%9C"><span class="nav-number">1.7.</span> <span class="nav-text">列表操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%98%A0%E5%B0%84-map"><span class="nav-number">1.7.1.</span> <span class="nav-text">映射 map(...)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%87%E6%BB%A4-filter"><span class="nav-number">1.7.2.</span> <span class="nav-text">过滤 filter(..)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%A9%E5%87%8F-reduce"><span class="nav-number">1.7.3.</span> <span class="nav-text">缩减 reduce(..)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%BB%E9%87%8D"><span class="nav-number">1.7.4.</span> <span class="nav-text">去重</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%81%E5%B9%B3%E5%8C%96"><span class="nav-number">1.7.5.</span> <span class="nav-text">扁平化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Zip"><span class="nav-number">1.7.6.</span> <span class="nav-text">Zip</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%88%E5%B9%B6"><span class="nav-number">1.7.7.</span> <span class="nav-text">合并</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E7%A8%8B%E9%A3%8E%E6%A0%BC"><span class="nav-number">1.7.8.</span> <span class="nav-text">编程风格</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%92%E5%BD%92"><span class="nav-number">1.8.</span> <span class="nav-text">递归</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%BE%E8%B0%83%E7%94%A8"><span class="nav-number">1.8.1.</span> <span class="nav-text">尾调用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%82%E6%AD%A5%E7%9A%84%E5%87%BD%E6%95%B0%E5%BC%8F"><span class="nav-number">1.9.</span> <span class="nav-text">异步的函数式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Transducing"><span class="nav-number">1.10.</span> <span class="nav-text">Transducing</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Monad"><span class="nav-number">1.11.</span> <span class="nav-text">Monad</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Maybe"><span class="nav-number">1.11.1.</span> <span class="nav-text">Maybe</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Humble"><span class="nav-number">1.11.2.</span> <span class="nav-text">Humble</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">hayahayao</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">hayahayao</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

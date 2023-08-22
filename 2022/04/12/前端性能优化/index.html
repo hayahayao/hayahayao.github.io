@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="ce">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hayahayao.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="前端性能优化性能指标FCPLCP产品的关键路径自行埋点 如何分析性能Performance Lighthouse全链路埋点分析过后，希望能够得到一个加载的流程图，标明每个步骤的用时 然后就可以针对性地解决用时长的那些步骤 一些常见的用时长的步骤：  静态资源加载&amp;解析执行 图片的加载 接口调用  常见的性能优化手段减小资源体积js&#x2F;css资源 分包，提取公共代码 异步（动态）组件">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端性能优化">
+<meta property="og:url" content="https://hayahayao.github.io/2022/04/12/%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/index.html">
+<meta property="og:site_name" content="さおりのBlog">
+<meta property="og:description" content="前端性能优化性能指标FCPLCP产品的关键路径自行埋点 如何分析性能Performance Lighthouse全链路埋点分析过后，希望能够得到一个加载的流程图，标明每个步骤的用时 然后就可以针对性地解决用时长的那些步骤 一些常见的用时长的步骤：  静态资源加载&amp;解析执行 图片的加载 接口调用  常见的性能优化手段减小资源体积js&#x2F;css资源 分包，提取公共代码 异步（动态）组件">
+<meta property="og:locale">
+<meta property="article:published_time" content="2022-04-12T13:22:00.000Z">
+<meta property="article:modified_time" content="2023-08-22T17:33:51.696Z">
+<meta property="article:author" content="hayahayao">
+<meta property="article:tag" content="frontend">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://hayahayao.github.io/2022/04/12/%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'ce'
+  };
+</script>
+
+  <title>前端性能优化 | さおりのBlog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">さおりのBlog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">燃えて散った花となれ。</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="ce">
+    <link itemprop="mainEntityOfPage" href="https://hayahayao.github.io/2022/04/12/%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="hayahayao">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="さおりのBlog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          前端性能优化
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-04-12 21:22:00" itemprop="dateCreated datePublished" datetime="2022-04-12T21:22:00+08:00">2022-04-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-08-23 01:33:51" itemprop="dateModified" datetime="2023-08-23T01:33:51+08:00">2023-08-23</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="前端性能优化"><a href="#前端性能优化" class="headerlink" title="前端性能优化"></a>前端性能优化</h1><h2 id="性能指标"><a href="#性能指标" class="headerlink" title="性能指标"></a>性能指标</h2><h3 id="FCP"><a href="#FCP" class="headerlink" title="FCP"></a>FCP</h3><h3 id="LCP"><a href="#LCP" class="headerlink" title="LCP"></a>LCP</h3><h3 id="产品的关键路径"><a href="#产品的关键路径" class="headerlink" title="产品的关键路径"></a>产品的关键路径</h3><p>自行埋点</p>
+<h2 id="如何分析性能"><a href="#如何分析性能" class="headerlink" title="如何分析性能"></a>如何分析性能</h2><h3 id="Performance-Lighthouse"><a href="#Performance-Lighthouse" class="headerlink" title="Performance Lighthouse"></a>Performance Lighthouse</h3><h3 id="全链路埋点"><a href="#全链路埋点" class="headerlink" title="全链路埋点"></a>全链路埋点</h3><p>分析过后，希望能够得到一个加载的流程图，标明每个步骤的用时</p>
+<p>然后就可以针对性地解决用时长的那些步骤</p>
+<p>一些常见的用时长的步骤：</p>
+<ul>
+<li>静态资源加载&amp;解析执行</li>
+<li>图片的加载</li>
+<li>接口调用</li>
+</ul>
+<h2 id="常见的性能优化手段"><a href="#常见的性能优化手段" class="headerlink" title="常见的性能优化手段"></a>常见的性能优化手段</h2><h3 id="减小资源体积"><a href="#减小资源体积" class="headerlink" title="减小资源体积"></a>减小资源体积</h3><h4 id="js-css资源"><a href="#js-css资源" class="headerlink" title="js&#x2F;css资源"></a>js&#x2F;css资源</h4><ul>
+<li>分包，提取公共代码</li>
+<li>异步（动态）组件，非首屏需要的代码不加载</li>
+<li>babel的精细化配置，仿vue-cli的modern mode</li>
+</ul>
+<p>分析工具：<br>webpack analyze plugin</p>
+<h4 id="图片资源"><a href="#图片资源" class="headerlink" title="图片资源"></a>图片资源</h4><ul>
+<li>图片压缩<ul>
+<li>上传时压缩</li>
+<li>与设计达成图片体积限制共识</li>
+</ul>
+</li>
+<li>图片转webp格式<ul>
+<li>对于固定的代码如webp检测，如何自动注入？</li>
+<li>postcss，自动生成对应的css？</li>
+</ul>
+</li>
+</ul>
+<h3 id="更好地利用缓存"><a href="#更好地利用缓存" class="headerlink" title="更好地利用缓存"></a>更好地利用缓存</h3><ul>
+<li>合理分包，划分出“经常改动的代码”“基本不会变的代码”，配合contenthash和资源的ETag，实现每次部署后只有改动的那些代码对应的文件变了，而其他文件都还可以用缓存的</li>
+<li>基于DLL实现依赖共享，如vue等基础框架包 团队公共sdk包等<ul>
+<li>如何合理拆分DLL</li>
+<li>如何进行DLL的版本控制</li>
+</ul>
+</li>
+<li>客户端的离线包机制</li>
+</ul>
+<h3 id="网络层"><a href="#网络层" class="headerlink" title="网络层"></a>网络层</h3><ul>
+<li>preconnect</li>
+<li>gzip压缩</li>
+<li>http2</li>
+</ul>
+<h3 id="让用户“觉得快”"><a href="#让用户“觉得快”" class="headerlink" title="让用户“觉得快”"></a>让用户“觉得快”</h3><ul>
+<li>把Loading放在html模板中<ul>
+<li>如何避免手写html模板？如何维护跨端项目的两份代码？</li>
+</ul>
+</li>
+<li>加载完首屏之后对其他可能用到的资源进行预加载，包括图片&#x2F;js&#x2F;css等<ul>
+<li>配合异步组件，如何自动化这个过程？</li>
+</ul>
+</li>
+</ul>
+<p>这部分如何衡量收益</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/frontend/" rel="tag"># frontend</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/11/12/%E6%B5%8F%E8%A7%88%E5%99%A8%E8%AF%86%E5%88%AB/" rel="prev" title="浏览器识别">
+      <i class="fa fa-chevron-left"></i> 浏览器识别
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96"><span class="nav-number">1.</span> <span class="nav-text">前端性能优化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87"><span class="nav-number">1.1.</span> <span class="nav-text">性能指标</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#FCP"><span class="nav-number">1.1.1.</span> <span class="nav-text">FCP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LCP"><span class="nav-number">1.1.2.</span> <span class="nav-text">LCP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%A7%E5%93%81%E7%9A%84%E5%85%B3%E9%94%AE%E8%B7%AF%E5%BE%84"><span class="nav-number">1.1.3.</span> <span class="nav-text">产品的关键路径</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%88%86%E6%9E%90%E6%80%A7%E8%83%BD"><span class="nav-number">1.2.</span> <span class="nav-text">如何分析性能</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Performance-Lighthouse"><span class="nav-number">1.2.1.</span> <span class="nav-text">Performance Lighthouse</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%A8%E9%93%BE%E8%B7%AF%E5%9F%8B%E7%82%B9"><span class="nav-number">1.2.2.</span> <span class="nav-text">全链路埋点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E6%89%8B%E6%AE%B5"><span class="nav-number">1.3.</span> <span class="nav-text">常见的性能优化手段</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%8F%E5%B0%8F%E8%B5%84%E6%BA%90%E4%BD%93%E7%A7%AF"><span class="nav-number">1.3.1.</span> <span class="nav-text">减小资源体积</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#js-css%E8%B5%84%E6%BA%90"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">js&#x2F;css资源</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9B%BE%E7%89%87%E8%B5%84%E6%BA%90"><span class="nav-number">1.3.1.2.</span> <span class="nav-text">图片资源</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9B%B4%E5%A5%BD%E5%9C%B0%E5%88%A9%E7%94%A8%E7%BC%93%E5%AD%98"><span class="nav-number">1.3.2.</span> <span class="nav-text">更好地利用缓存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E5%B1%82"><span class="nav-number">1.3.3.</span> <span class="nav-text">网络层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%A9%E7%94%A8%E6%88%B7%E2%80%9C%E8%A7%89%E5%BE%97%E5%BF%AB%E2%80%9D"><span class="nav-number">1.3.4.</span> <span class="nav-text">让用户“觉得快”</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">hayahayao</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">hayahayao</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

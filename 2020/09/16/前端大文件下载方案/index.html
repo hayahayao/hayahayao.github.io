@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="ce">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hayahayao.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="前端大文件下载方案 tags:   Streams API  Service Worker StreamSaver.js JSZip   在业务中遇到需要用户下载一个很巨大的 zip 包的场景，内容通常是一堆很小的（图片）文件打包到一起。传统的下载方案是直接修改 window.location.href&#x3D;后端提供的下载链接，之后后端一边去下载要打包的文件，一边把打包好的东西写入这个链接。 存在的问">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端大文件下载方案">
+<meta property="og:url" content="https://hayahayao.github.io/2020/09/16/%E5%89%8D%E7%AB%AF%E5%A4%A7%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD%E6%96%B9%E6%A1%88/index.html">
+<meta property="og:site_name" content="さおりのBlog">
+<meta property="og:description" content="前端大文件下载方案 tags:   Streams API  Service Worker StreamSaver.js JSZip   在业务中遇到需要用户下载一个很巨大的 zip 包的场景，内容通常是一堆很小的（图片）文件打包到一起。传统的下载方案是直接修改 window.location.href&#x3D;后端提供的下载链接，之后后端一边去下载要打包的文件，一边把打包好的东西写入这个链接。 存在的问">
+<meta property="og:locale">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2019/12/23/16f304e310ea9e49?imageslim">
+<meta property="article:published_time" content="2020-09-16T03:26:00.000Z">
+<meta property="article:modified_time" content="2023-08-22T17:34:11.366Z">
+<meta property="article:author" content="hayahayao">
+<meta property="article:tag" content="frontend">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2019/12/23/16f304e310ea9e49?imageslim">
+
+<link rel="canonical" href="https://hayahayao.github.io/2020/09/16/%E5%89%8D%E7%AB%AF%E5%A4%A7%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD%E6%96%B9%E6%A1%88/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'ce'
+  };
+</script>
+
+  <title>前端大文件下载方案 | さおりのBlog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">さおりのBlog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">燃えて散った花となれ。</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="ce">
+    <link itemprop="mainEntityOfPage" href="https://hayahayao.github.io/2020/09/16/%E5%89%8D%E7%AB%AF%E5%A4%A7%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD%E6%96%B9%E6%A1%88/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="hayahayao">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="さおりのBlog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          前端大文件下载方案
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-09-16 11:26:00" itemprop="dateCreated datePublished" datetime="2020-09-16T11:26:00+08:00">2020-09-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-08-23 01:34:11" itemprop="dateModified" datetime="2023-08-23T01:34:11+08:00">2023-08-23</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="前端大文件下载方案"><a href="#前端大文件下载方案" class="headerlink" title="前端大文件下载方案"></a>前端大文件下载方案</h1><blockquote>
+<p>tags: </p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/Streams_API">Streams API</a> </li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/Service_Worker_API">Service Worker</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/jimmywarting/StreamSaver.js">StreamSaver.js</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Stuk/jszip">JSZip</a></li>
+</ul>
+</blockquote>
+<p>在业务中遇到需要用户下载一个很巨大的 zip 包的场景，内容通常是一堆很小的（图片）文件打包到一起。传统的下载方案是直接修改 <code>window.location.href=后端提供的下载链接</code>，之后后端一边去下载要打包的文件，一边把打包好的东西写入这个链接。</p>
+<p>存在的问题是，如果文件很大，这个链接需要一直保持，相当于这个接口一直开着没有结束（运维同学很不开心）；而且一旦中间出了什么问题，已经下载的东西也全部废了，下次还要重新开始（可以通过设置 http range 头等方法实现断点续传）。</p>
+<p>那么，反正后端也没有存这个大文件，也是现用现生成的，可不可以把这个工作转移到前端？如果把请求一堆小文件的工作转移到浏览器，那就绕开了下载接口的时间限制，而且我们知道哪些文件已经下载了，是不是也可以通过一些操作保留住已经下载的文件？</p>
+<h2 id="JSZip"><a href="#JSZip" class="headerlink" title="JSZip"></a>JSZip</h2><p>在知道 Streams API 这种高级玩意之前，我一直以为浏览器中的 js 代码是不能做流操作的，也就是不能一边下一边往本地写。那么一个最直接的想法就是把文件都下到内存中，之后调用 <a target="_blank" rel="noopener" href="https://github.com/Stuk/jszip">JSZip</a> 统一打包，再调用 <a target="_blank" rel="noopener" href="https://github.com/eligrey/FileSaver.js/">FileSaver.js</a> 触发保存操作。文件数据一直是以 blob 方式传递的，简单的代码示意如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; saveAs &#125; <span class="keyword">from</span> <span class="string">&#x27;file-saver&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">JSZip</span> <span class="keyword">from</span> <span class="string">&#x27;jszip&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> urls = [xxx] <span class="comment">// 一堆需要下载的文件 url</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="variable constant_">ZIP</span> = <span class="keyword">new</span> <span class="title function_">JSZIP</span>()</span><br><span class="line"><span class="title class_">Promise</span>.<span class="title function_">all</span>(urls.<span class="title function_">map</span>(<span class="function">(<span class="params">url, index</span>) =&gt;</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="title function_">fetch</span>(url).<span class="title function_">then</span>(<span class="function"><span class="params">response</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (response.<span class="property">status</span> === <span class="number">200</span>) &#123;</span><br><span class="line">            zip.<span class="title function_">file</span>(url, response.<span class="title function_">blob</span>()) <span class="comment">// blob 哦</span></span><br><span class="line">            <span class="title function_">resolve</span>()</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;))).<span class="title function_">then</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    zip.<span class="title function_">generateAsync</span>(&#123; <span class="attr">type</span>: <span class="string">&#x27;blob&#x27;</span> &#125;).<span class="title function_">then</span>(<span class="function"><span class="params">content</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="title function_">saveAs</span>(content, <span class="string">&#x27;hello.zip&#x27;</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>很容易想象，这种方式对内存消耗非常大，而且随着文件数量的增长，打包 zip 这个过程会越来越慢，时间当然也不是线性增长那么简单。实际测试结果也如此（不过实际测试，能处理的文件大小超出了我的想象，几个 G 都不是问题，就是慢而已）。</p>
+<h2 id="StreamSaver-js"><a href="#StreamSaver-js" class="headerlink" title="StreamSaver.js"></a>StreamSaver.js</h2><p>前置阅读：<a target="_blank" rel="noopener" href="https://juejin.im/post/6844904029244358670">从 Fetch 到 Streams —— 以流的角度处理网络请求</a></p>
+<p>啊，流，完美的解决方案。</p>
+<p>有了读写流的能力，还需要解决的一个问题就是如何维持一个持续的通道，保证能够一边在下载，一边把下载的东西写到本地。</p>
+<p>啊哈，我们也可以模仿后端，制造一个（不存在的）下载链接，然后用 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/Service_Worker_API">Service Worker</a> 去拦截对这个链接的请求，持续往这里面写就可以了！</p>
+<p>这就是 <a target="_blank" rel="noopener" href="https://github.com/jimmywarting/StreamSaver.js">StreamSaver.js</a> 所做的事情。简单的代码示意如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">StreamSaver</span> <span class="keyword">from</span> <span class="string">&#x27;streamsaver&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">ZipStream</span> <span class="keyword">from</span> <span class="string">&#x27;./zip-stream.js&#x27;</span> <span class="comment">// 作者提供的 zip 工具</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> urls = [xxx] <span class="comment">// 一堆需要下载的文件 url</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> fileStream = <span class="title class_">StreamSaver</span>.<span class="title function_">createWriteStream</span>(<span class="string">&#x27;hello.zip&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> readableZipStream = <span class="keyword">new</span> <span class="title class_">ZipStream</span>(&#123;</span><br><span class="line">    <span class="keyword">async</span> <span class="title function_">pull</span>(<span class="params">control</span>) &#123;</span><br><span class="line">        <span class="keyword">const</span> it = url.<span class="title function_">next</span>()</span><br><span class="line">        <span class="keyword">if</span> (it.<span class="property">done</span>) &#123;</span><br><span class="line">            control.<span class="title function_">close</span>()</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">const</span> response = <span class="keyword">await</span> <span class="title function_">fetch</span>(url)</span><br><span class="line">            control.<span class="title function_">enqueue</span>(&#123;</span><br><span class="line">                <span class="attr">name</span>: url,</span><br><span class="line">                <span class="attr">stream</span>: <span class="function">() =&gt;</span> response.<span class="property">body</span> <span class="comment">// 这个是 ReadableStream 类型！web 标准万岁！</span></span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (<span class="variable language_">window</span>.<span class="property">WritableStream</span> &amp;&amp; readableZipStream.<span class="property">pipeTo</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> readableZipStream.<span class="title function_">pipeTo</span>(fileStream).<span class="title function_">then</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">            that.<span class="property">dialogExportProcess</span> = <span class="literal">false</span>;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>上述的代码实现了每次下载一个文件 -&gt; 向流中写入一个文件这样类似单线程（？）的处理过程，那么能否实现如<a target="_blank" rel="noopener" href="https://juejin.im/post/6844904029244358670">从 Fetch 到 Streams —— 以流的角度处理网络请求</a>这篇中所说，结合 JSZip，在一次 <code>pull</code> 过程中下载好几个，然后用 JSZip 把这好几个文件压成一块流一口气写入呢？</p>
+<h3 id="与-JSZip-结合使用？"><a href="#与-JSZip-结合使用？" class="headerlink" title="与 JSZip 结合使用？"></a>与 JSZip 结合使用？</h3><p><img src="https://user-gold-cdn.xitu.io/2019/12/23/16f304e310ea9e49?imageslim" alt="与 JSZip 结合使用"></p>
+<p>首先，使用文章里描述的 <code>generateInternalStream()</code> 这个方法是行不通的，JSZip 的 <code>StreamHelper</code> API 只是模拟了流的实现，但返回值并不是符合 Stream API 标准的 <code>ReadableStream</code>&#x2F;<code>WritableStream</code> 类型。</p>
+<p>不过 blob 总是可行的，如果在 JSZip 里面用 blob 处理，到时候再用 <code>blob.stream()</code> 这种方法转成 <code>ReadableStream</code> 写入流中，似乎听上去不错。不过我在实际操作的过程中遇到的一个问题就是，<code>control.enqueue()</code> 时文件名怎么处理？我试着写成以 &#x2F; 结尾表示我要写入一个文件夹，不过似乎并不能达到预想效果🤔…</p>
+<h3 id="mitm-sw-配置"><a href="#mitm-sw-配置" class="headerlink" title="mitm + sw 配置"></a>mitm + sw 配置</h3><p>最后写一下实际使用 StreamSaver 时所需的 sw 配置。</p>
+<p>直接跑作者给出的示例代码会发现，运行下载之后页面上会多出两个这样的 iframe</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">iframe</span> <span class="attr">hidden</span>=<span class="string">&quot;&quot;</span> <span class="attr">src</span>=<span class="string">&quot;https://jimmywarting.github.io/StreamSaver.js/mitm.html?version=2.0.0&quot;</span> <span class="attr">name</span>=<span class="string">&quot;iframe&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">iframe</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">iframe</span> <span class="attr">hidden</span>=<span class="string">&quot;&quot;</span> <span class="attr">src</span>=<span class="string">&quot;https://jimmywarting.github.io/StreamSaver.js/null/637501/archive.zip&quot;</span> <span class="attr">name</span>=<span class="string">&quot;iframe&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">iframe</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>emm，第二个看起来像是下载链接的样子（当然是我们制造的，实际打开里面什么都没有），第一个的话打开发现里面有一些 js 代码，似乎是注册了 sw 的样子。</p>
+<p>但是这域名，这前缀，都是啥？能不能搞到自己本地？到时候项目上线还带着别人的 github.io 可不行…</p>
+<p>来看下作者的解释：</p>
+<blockquote>
+<p>So the one and only other solution is to do what the server does: Send a stream with Content-Disposition header to tell the browser to save the file. But we don’t have a server or the content isn’t on a server! So the solution is to create a service worker that can intercept request and use respondWith() and act as a server.</p>
+<p>But a service workers are only allowed in secure contexts and it requires some effort to put up. Most of the time you are working in the main thread and the service worker are only alive for &lt; 5 minutes before it goes idle.</p>
+<p>1.So StreamSaver creates a own man in the middle that installs the service worker in a secure context hosted on github static pages. either from a iframe (in secure context) or a new popup if your page is insecure.</p>
+<p>2.Transfer the stream (or DataChannel) over to the service worker using postMessage.</p>
+<p>3.And then the worker creates a download link that we then open.</p>
+<p>if a “transferable” readable stream was not passed to the service worker then the mitm will also try to keep the service worker alive by pinging it every x second to prevent it from going idle.</p>
+</blockquote>
+<p>嗯，这个 mitm.html 确实是在完成 service worker 注册的工作。而 service worker 注册有很多限制：（为方便说明，下文中 mitm.html 代表“注册 service worker 的位置“，sw.js 代表“service worker 所在的位置“）</p>
+<ul>
+<li>只能在 HTTPS&#x2F;localhost 环境下注册（否则报错如 <code>Failed to register a ServiceWorker: An SSL certificate error occurred when fetching the script.</code>）</li>
+<li>要注册的 sw.js 文件必须和注册它的 mitm.html 同源（否则报错如 <code>Failed to register ServiceWorker. The origin of the provider scriptURL(&#39;sw.js 所在的域&#39;) does not match the current origin (&#39;mitm.html 所在的域&#39;).</code>）</li>
+<li>service worker 的作用域不能超出 sw.js 自己所在位置（否则报错如 <code>Failed to register a ServiceWorker: The path of the provided scope (&#39;mitm.html 所在的路径&#39;) is not under the max scope allowed (&#39;sw.js 所在的路径&#39;). Adjust the scope, move the Service Worker script, or use the Service-Worker-Allowed HTTP header to allow the scope.</code>）</li>
+</ul>
+<p>所以作者默认把 sw 注册在了他自己的的 github 静态页面上，而如果我们想在自己的域名上注册 sw，就需要注意上面三点限制：</p>
+<ul>
+<li>https 环境限制：如为 http，可以把网站改成 https 然后手动信任下证书</li>
+<li>同源限制：如果不同源，可以采用配置 nginx 代理让它们看上去是同源的</li>
+<li>作用域限制：如果不想修改这两个文件的位置，可以通过 nginx 在 sw.js 的 response header 中加入 <code>Service-Worker-Allowed</code> 这个头</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/frontend/" rel="tag"># frontend</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/08/18/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-Javascript%E8%BD%BB%E9%87%8F%E7%BA%A7%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" rel="prev" title="读书笔记-Javascript轻量级函数式编程">
+      <i class="fa fa-chevron-left"></i> 读书笔记-Javascript轻量级函数式编程
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/11/12/%E6%B5%8F%E8%A7%88%E5%99%A8%E8%AF%86%E5%88%AB/" rel="next" title="浏览器识别">
+      浏览器识别 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E7%AB%AF%E5%A4%A7%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD%E6%96%B9%E6%A1%88"><span class="nav-number">1.</span> <span class="nav-text">前端大文件下载方案</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#JSZip"><span class="nav-number">1.1.</span> <span class="nav-text">JSZip</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#StreamSaver-js"><span class="nav-number">1.2.</span> <span class="nav-text">StreamSaver.js</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8E-JSZip-%E7%BB%93%E5%90%88%E4%BD%BF%E7%94%A8%EF%BC%9F"><span class="nav-number">1.2.1.</span> <span class="nav-text">与 JSZip 结合使用？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mitm-sw-%E9%85%8D%E7%BD%AE"><span class="nav-number">1.2.2.</span> <span class="nav-text">mitm + sw 配置</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">hayahayao</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">hayahayao</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

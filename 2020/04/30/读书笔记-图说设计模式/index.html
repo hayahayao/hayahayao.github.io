@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="ce">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hayahayao.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="设计模式 图说设计模式 一书的读书笔记  看懂UML类图和时序图UML类图其中用箭头表示的类之间的关系有以下六种    关系 箭头 描述    泛化 generalization 空心箭头实线 继承（is-a）非抽象类，A-&gt;B &#x3D; A继承自B   实现 realize 空心箭头虚线 继承（is-a）抽象类，A-&gt;B &#x3D; A继承自B   聚合 aggregation">
+<meta property="og:type" content="article">
+<meta property="og:title" content="读书笔记-图说设计模式">
+<meta property="og:url" content="https://hayahayao.github.io/2020/04/30/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-%E5%9B%BE%E8%AF%B4%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/index.html">
+<meta property="og:site_name" content="さおりのBlog">
+<meta property="og:description" content="设计模式 图说设计模式 一书的读书笔记  看懂UML类图和时序图UML类图其中用箭头表示的类之间的关系有以下六种    关系 箭头 描述    泛化 generalization 空心箭头实线 继承（is-a）非抽象类，A-&gt;B &#x3D; A继承自B   实现 realize 空心箭头虚线 继承（is-a）抽象类，A-&gt;B &#x3D; A继承自B   聚合 aggregation">
+<meta property="og:locale">
+<meta property="og:image" content="https://design-patterns.readthedocs.io/zh_CN/latest/_images/SimpleFactory.jpg">
+<meta property="og:image" content="https://design-patterns.readthedocs.io/zh_CN/latest/_images/FactoryMethod.jpg">
+<meta property="og:image" content="https://design-patterns.readthedocs.io/zh_CN/latest/_images/AbatractFactory.jpg">
+<meta property="og:image" content="https://design-patterns.readthedocs.io/zh_CN/latest/_images/Builder.jpg">
+<meta property="og:image" content="https://design-patterns.readthedocs.io/zh_CN/latest/_images/Singleton.jpg">
+<meta property="og:image" content="https://design-patterns.readthedocs.io/zh_CN/latest/_images/Adapter.jpg">
+<meta property="og:image" content="https://design-patterns.readthedocs.io/zh_CN/latest/_images/Adapter_classModel.jpg">
+<meta property="og:image" content="https://design-patterns.readthedocs.io/zh_CN/latest/_images/Bridge.jpg">
+<meta property="og:image" content="https://design-patterns.readthedocs.io/zh_CN/latest/_images/Decorator.jpg">
+<meta property="og:image" content="https://design-patterns.readthedocs.io/zh_CN/latest/_images/Facade.jpg">
+<meta property="og:image" content="https://design-patterns.readthedocs.io/zh_CN/latest/_images/Flyweight.jpg">
+<meta property="og:image" content="https://design-patterns.readthedocs.io/zh_CN/latest/_images/Proxy.jpg">
+<meta property="og:image" content="https://design-patterns.readthedocs.io/zh_CN/latest/_images/Command.jpg">
+<meta property="og:image" content="https://design-patterns.readthedocs.io/zh_CN/latest/_images/Mediator.jpg">
+<meta property="og:image" content="https://design-patterns.readthedocs.io/zh_CN/latest/_images/Obeserver.jpg">
+<meta property="og:image" content="https://design-patterns.readthedocs.io/zh_CN/latest/_images/State.jpg">
+<meta property="og:image" content="https://design-patterns.readthedocs.io/zh_CN/latest/_images/Strategy.jpg">
+<meta property="article:published_time" content="2020-04-30T05:35:00.000Z">
+<meta property="article:modified_time" content="2023-08-22T17:36:15.430Z">
+<meta property="article:author" content="hayahayao">
+<meta property="article:tag" content="note">
+<meta property="article:tag" content="Design Pattern">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://design-patterns.readthedocs.io/zh_CN/latest/_images/SimpleFactory.jpg">
+
+<link rel="canonical" href="https://hayahayao.github.io/2020/04/30/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-%E5%9B%BE%E8%AF%B4%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'ce'
+  };
+</script>
+
+  <title>读书笔记-图说设计模式 | さおりのBlog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">さおりのBlog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">燃えて散った花となれ。</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="ce">
+    <link itemprop="mainEntityOfPage" href="https://hayahayao.github.io/2020/04/30/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-%E5%9B%BE%E8%AF%B4%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="hayahayao">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="さおりのBlog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          读书笔记-图说设计模式
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-04-30 13:35:00" itemprop="dateCreated datePublished" datetime="2020-04-30T13:35:00+08:00">2020-04-30</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-08-23 01:36:15" itemprop="dateModified" datetime="2023-08-23T01:36:15+08:00">2023-08-23</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h1><blockquote>
+<p><a target="_blank" rel="noopener" href="https://design-patterns.readthedocs.io/zh_CN/latest/">图说设计模式</a> 一书的读书笔记</p>
+</blockquote>
+<h2 id="看懂UML类图和时序图"><a href="#看懂UML类图和时序图" class="headerlink" title="看懂UML类图和时序图"></a>看懂UML类图和时序图</h2><h3 id="UML类图"><a href="#UML类图" class="headerlink" title="UML类图"></a>UML类图</h3><p>其中用箭头表示的类之间的关系有以下六种</p>
+<table>
+<thead>
+<tr>
+<th>关系</th>
+<th>箭头</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>泛化 generalization</td>
+<td>空心箭头实线</td>
+<td>继承（is-a）非抽象类，A-&gt;B &#x3D; A继承自B</td>
+</tr>
+<tr>
+<td>实现 realize</td>
+<td>空心箭头虚线</td>
+<td>继承（is-a）抽象类，A-&gt;B &#x3D; A继承自B</td>
+</tr>
+<tr>
+<td>聚合 aggregation</td>
+<td>空心菱形箭头实线</td>
+<td>表示对象实体之间的关系，A-&gt;B &#x3D; A聚合到B上 &#x3D; B由A组成</td>
+</tr>
+<tr>
+<td>组合 composition</td>
+<td>实心菱形箭头实现</td>
+<td>与聚合同样语义，但是不同的是聚合里整体和部分不是强依赖的，整体不存在了部分仍然存在；而组合里整体不存在了部分也跟着消失</td>
+</tr>
+<tr>
+<td>关联 association</td>
+<td>直线</td>
+<td>描述对象间的结构关系，是一种静态的、天然的结构，默认不强调方向。通常实现为成员变量</td>
+</tr>
+<tr>
+<td>依赖 dependency</td>
+<td>带箭头的虚线</td>
+<td>描述一个对象在运行时会用到另一个对象的关系，临时性，应该总是保持单向依赖。通常实现为类构造方法以及类方法的传入参数</td>
+</tr>
+</tbody></table>
+<h3 id="时序图"><a href="#时序图" class="headerlink" title="时序图"></a>时序图</h3><h2 id="设计原则"><a href="#设计原则" class="headerlink" title="设计原则"></a>设计原则</h2><h3 id="单一职责原则"><a href="#单一职责原则" class="headerlink" title="单一职责原则"></a>单一职责原则</h3><p>一个类只负责一个功能领域中的相应职责</p>
+<p>专注降低类的复杂度，实现类要职责单一</p>
+<h3 id="开放关闭原则"><a href="#开放关闭原则" class="headerlink" title="开放关闭原则"></a>开放关闭原则</h3><p>设计要对扩展开放，对修改关闭</p>
+<p>所有面向对象原则的核心</p>
+<p>关键：系统的抽象化设计</p>
+<h3 id="里式替换原则"><a href="#里式替换原则" class="headerlink" title="里式替换原则"></a>里式替换原则</h3><p>所有引用基类（父类）的地方都必须能透明地使用其子类的对象、</p>
+<p>实现开闭原则的重要方式之一，设计不要破坏继承关系</p>
+<p>因此尽量使用基类类型定义对象，而在运行时再确定其子类类型，用子类对象来替换父类对象</p>
+<h3 id="依赖倒置原则"><a href="#依赖倒置原则" class="headerlink" title="依赖倒置原则"></a>依赖倒置原则</h3><p>抽象不应该依赖于细节，细节应当依赖于抽象</p>
+<p>系统抽象化的具体实现，是面向对象设计的主要实现机制之一</p>
+<p>要求面向接口编程，不针对具体实现编程</p>
+<p>在代码中传递参数时或在关联关系中，尽量引用高层的抽象基类，即使用接口和抽象类进行变量类型声明、参数类型声明、方法返回类型声明、以及数据类型的转换等，而不要用具体类做这些事情</p>
+<p>这样一来，如果系统发生变化，只需对抽象层进行扩展，而不必修改系统现有的业务逻辑，从而满足开闭原则的要求</p>
+<p>目标：开闭原则，基础：里式代换，手段：依赖倒置</p>
+<h3 id="接口隔离原则"><a href="#接口隔离原则" class="headerlink" title="接口隔离原则"></a>接口隔离原则</h3><p>使用多个专门的接口，而不使用单一的总接口，即客户端不应该依赖那些它不需要的接口</p>
+<p>客户需要什么样的接口，就提供什么样的接口，不需要的就删除掉</p>
+<p>类之间的依赖关系应建立在最小接口上，也就是说接口要尽量细化，同时接口中的方法应该尽量少，职责要尽可能单一</p>
+<p>实际使用时要注意控制接口的粒度，如果太小会导致系统中接口泛滥不利于维护，太大又违反接口隔离原则，灵活性较差。一般而言，接口中仅包含为某一类客户定制的方法即可</p>
+<h3 id="迪米特原则（最小知识原则）"><a href="#迪米特原则（最小知识原则）" class="headerlink" title="迪米特原则（最小知识原则）"></a>迪米特原则（最小知识原则）</h3><p>一个软件实体应当尽可能少地与其他实体发生相互作用</p>
+<p>要求当修改系统的某一个模块时，要尽量少地影响其他模块，从而使类与类之间保持松散的耦合关系，使系统扩展相对容易</p>
+<p>“不要和陌生人说话，只与你的直接朋友通信”：</p>
+<ul>
+<li>一个对象的朋友包括：this；以参数形式传入到当前对象方法中的对象；当前对象的成员对象；如果当前对象的成员对象是一个集合，那么集合中的元素也都是朋友；当前对象所创建的对象</li>
+<li>如果两个对象之间不必彼此直接通信，那么这两个对象就不应当发生任何直接的相互作用，如果其中的一个对象需要调用另一个对象的某一个方法的话，可以通过引入一个合理的第三者转发这个调用</li>
+<li>划分上：应当尽量创建松耦合的类</li>
+<li>结构设计上：每一个类都应当尽量降低其成员变量和成员函数的访问权限</li>
+<li>设计上：只要有可能，一个类型应当设计成不变类</li>
+<li>对其他类的引用上：一个对象对其他对象的引用应当降到最低</li>
+</ul>
+<h3 id="组合复用原则"><a href="#组合复用原则" class="headerlink" title="组合复用原则"></a>组合复用原则</h3><p>在软件设计中，尽量使用组合&#x2F;聚合（has-a）而不是继承（is-a）达到代码复用的目的</p>
+<p>因为继承使得基类与子类有较强的耦合性，通常情况下基类的内部细节对子类来说是可见的，这样基类的实现细节会暴露给子类，破坏了系统的封装性</p>
+<h2 id="创建型模式"><a href="#创建型模式" class="headerlink" title="创建型模式"></a>创建型模式</h2><p>对类的实例化过程进行抽象，将对象的创建和对象的使用分离</p>
+<p>外界对于这些对象只需要知道它们共同的接口，而不清楚具体的实现细节，使得整个系统的设计更加符合单一职责原则</p>
+<h3 id="简单工厂模式"><a href="#简单工厂模式" class="headerlink" title="简单工厂模式"></a>简单工厂模式</h3><p>专门定义一个工厂类，通过传入的参数不同返回不同类的实例（被创建的实例通常都具有共同的父类）</p>
+<p><img src="https://design-patterns.readthedocs.io/zh_CN/latest/_images/SimpleFactory.jpg" alt="../_images/SimpleFactory.jpg"></p>
+<p><strong>角色：</strong></p>
+<ul>
+<li>Factory 工厂：负责实现创建所有实例的内部逻辑</li>
+<li>Product 抽象产品：所创建的所有对象的父类，负责描述所有实例所共有的公共接口</li>
+<li>ConcreteProduct 具体产品角色：创建目标，所有创建的对象都充当这个角色的某个具体类的实例</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Factory</span> &#123;</span><br><span class="line">    <span class="title function_">createProduct</span>(<span class="params">proname</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (proname === <span class="string">&#x27;A&#x27;</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">ConcreteProductA</span>()</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (proname === <span class="string">&#x27;B&#x27;</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">ConcreteProductB</span>() </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>分析：</strong></p>
+<ul>
+<li><p>要点：当你需要什么，只需要传入一个正确的参数，就可以获取你所需要的对象，而无需知道其创建细节</p>
+</li>
+<li><p>优点：将对象的创建和对象本身业务处理分离，将对象的创建交给专门的工厂类负责</p>
+</li>
+<li><p>最大的问题：工厂类的职责相对过重，增加新的产品需要修改工厂类的判断逻辑，这一点与开闭原则相违背；而且产品较多时工厂方法代码将会非常复杂</p>
+</li>
+<li><p>适用情况：工厂类负责创建的对象比较少；客户端只需知道传入工厂类的参数，对于如何创建对象不关心</p>
+<p>（实际操作中还可以把调用时传入的参数存在 xml 等配置文件中，修改参数时无需修改任何源代码）</p>
+</li>
+</ul>
+<h3 id="工厂方法模式"><a href="#工厂方法模式" class="headerlink" title="工厂方法模式"></a>工厂方法模式</h3><p>对上述简单工厂模式进行修改，不再设计一个工厂类负责<em>所有</em>产品的创建，而是将具体产品的创建过程交给专门的工厂子类去完成。</p>
+<p>即，先定义一个抽象的工厂类，再定义具体的工厂子类生成具体的产品</p>
+<p>这种抽象化的结果使这种结构可以在不修改现有抽象&#x2F;具体工厂类的情况下引进新的产品，只需为新产品新建一个具体工厂类</p>
+<p>更符合开闭原则</p>
+<p><img src="https://design-patterns.readthedocs.io/zh_CN/latest/_images/FactoryMethod.jpg" alt="../_images/FactoryMethod.jpg"></p>
+<p><strong>角色：</strong></p>
+<ul>
+<li>Product 抽象产品</li>
+<li>ConcreteProduct 具体产品</li>
+<li>Factory 抽象工厂</li>
+<li>ConcreteFactory 具体工厂</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">ConcreteFactory</span> <span class="keyword">extends</span> <span class="title class_ inherited__">Factory</span>&#123;</span><br><span class="line">    <span class="title function_">factoryMethod</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">ConcreteProduct</span>()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>分析：</strong></p>
+<ul>
+<li>基于工厂角色和产品角色的多态性设计，使工厂可以自主确定创建何种产品对象，而如何创建这个对象的细节则完全封装在具体工厂内部。又被称为多态工厂模式，因为所有的具体工厂类都具有同一抽象父类</li>
+<li>优点：符合开闭原则，系统中加入新产品时无需修改抽象工厂和抽象产品&#x2F;客户端&#x2F;其他的具体工厂和具体产品，只需新增一个具体工厂和具体产品</li>
+<li>缺点：系统中类的数量会比较多，增加了系统复杂度；引入抽象层增加了理解难度</li>
+<li>适用情况：<ul>
+<li>一个类不知道它所需要的对象的类，只需知道创建具体产品的工厂类</li>
+<li>一个类通过其子类来指定创建哪个对象，符合多态性和里式替换原则</li>
+<li>客户端在使用时可以无需关心是哪一个工厂子类创建产品子类，需要时再动态指定</li>
+</ul>
+</li>
+</ul>
+<h3 id="抽象工厂模式"><a href="#抽象工厂模式" class="headerlink" title="抽象工厂模式"></a>抽象工厂模式</h3><blockquote>
+<p>产品等级结构：产品的继承结构</p>
+<p>产品族：由同一个工厂生产的，位于不同产品等级结构中的一组产品</p>
+</blockquote>
+<p>当系统所提供的工厂所需生产的具体产品并不是一个简单的对象，而是多个位于不同产品等级结构中属于不同类型的具体产品时需要使用抽象工厂模式</p>
+<p>工厂方法模式针对的是一个产品等级结构，而抽象工厂模式则需要面对多个产品等级结构</p>
+<p><img src="https://design-patterns.readthedocs.io/zh_CN/latest/_images/AbatractFactory.jpg" alt="../_images/AbatractFactory.jpg"></p>
+<p><strong>角色：</strong></p>
+<ul>
+<li>Product 具体产品</li>
+<li>AbstractProduct 抽象产品</li>
+<li>ConcreteFactory 具体工厂</li>
+<li>AbstractFactory 抽象工厂</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">ConcreteFactory1</span> <span class="keyword">extends</span> <span class="title class_ inherited__">AbstractFactory</span> &#123;</span><br><span class="line">    <span class="title function_">createProductA</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">ProductA1</span>()</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="title function_">createProductB</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">ProductB1</span>()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ConcreteFactory2</span> <span class="keyword">extends</span> <span class="title class_ inherited__">AbstractFactory</span> &#123;</span><br><span class="line">    <span class="title function_">createProductA</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">ProductA2</span>()</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="title function_">createProductB</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">ProductB2</span>()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>（A&#x2F;B代表一个产品族，抽象工厂可以处理多个产品族，而工厂方法只能处理一个产品族）</p>
+<p><strong>分析：</strong></p>
+<ul>
+<li>优点：隔离了具体类的生成，使得客户并不需要知道什么被创建；每次可以通过具体工厂类创建一个产品族中的多个对象，增加或替换产品族比较方便</li>
+<li>缺点：增加新的产品等级结构很复杂，需要修改抽象工厂和所有的具体工厂类，对开闭原则的支持呈现倾斜性（即增加新的产品族比较方便，但增加新的产品等级结构很复杂）</li>
+<li>适用情况：<ul>
+<li>系统中有多个产品族，每次只使用其中某一族；</li>
+<li>属于同一个产品族的产品将在一起使用；</li>
+<li>系统提供一个产品类的库，所有的产品以同样的接口出现，从而使客户端不依赖于具体实现</li>
+</ul>
+</li>
+</ul>
+<h3 id="建造者模式"><a href="#建造者模式" class="headerlink" title="建造者模式"></a>建造者模式</h3><p>复杂对象（汽车），有很多属性（汽车部件 ），对于用户而言无需知道这些细节，只想使用一辆完整汽车，因此将建造（组合部件）过程外部化到一个称作建造者的对象中</p>
+<p>用户只需指定复杂对象的类型和内容就可以构建它们，不需要知道内部的具体构建细节</p>
+<p><img src="https://design-patterns.readthedocs.io/zh_CN/latest/_images/Builder.jpg" alt="../_images/Builder.jpg"></p>
+<p><strong>角色：</strong></p>
+<ul>
+<li>Builder 抽象建造者：定义产品的创建方法和返回方法</li>
+<li>ConcreteBuilder 具体建造者</li>
+<li>Director 指挥者：隔离客户与生产过程，控制产品的生成过程。指挥者针对抽象建造者编程，客户只需要知道具体建造者的类型，即可通过指挥者调用建造者的相关方法，返回一个完整的产品对象</li>
+<li>Product 产品</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">ConcreteBuilder</span> <span class="keyword">extends</span> <span class="title class_ inherited__">Builder</span> &#123;</span><br><span class="line">    <span class="title function_">buildPartA</span>(<span class="params"></span>) &#123;</span><br><span class="line">        m_prod.<span class="title function_">setA</span>(<span class="string">&quot;A Style &quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="title function_">buildPartB</span>(<span class="params"></span>) &#123;</span><br><span class="line">        m_prod.<span class="title function_">setB</span>(<span class="string">&quot;B Style &quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="title function_">buildPartC</span>(<span class="params"></span>) &#123;</span><br><span class="line">        m_prod.<span class="title function_">setC</span>(<span class="string">&quot;C Style &quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Diector</span> &#123;</span><br><span class="line">    <span class="title function_">construct</span>(<span class="params"></span>) &#123;</span><br><span class="line">        m_pbuilder.<span class="title function_">buildPartA</span>()</span><br><span class="line">        m_pbuilder.<span class="title function_">buildPartB</span>()</span><br><span class="line">        m_pbuilder.<span class="title function_">buildPartC</span>()</span><br><span class="line">        <span class="keyword">return</span> m_pbuilder.<span class="title function_">getResult</span>()</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="title function_">setBuilder</span>(<span class="params">builder</span>) &#123;</span><br><span class="line">        m_pbuilder = builder</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 用户调用</span></span><br><span class="line"><span class="keyword">const</span> builder = <span class="keyword">new</span> <span class="title class_">ConcreteBuilder</span>()</span><br><span class="line"><span class="keyword">const</span> director = <span class="keyword">new</span> <span class="title class_">Diector</span>()</span><br><span class="line">director.<span class="title function_">setBuilder</span>(builder)</span><br><span class="line"><span class="keyword">const</span> product = director.<span class="title function_">construct</span>()</span><br></pre></td></tr></table></figure>
+
+<p><strong>分析：</strong></p>
+<ul>
+<li><p>优点：</p>
+<ul>
+<li>将产品本身与产品的创建过程解耦，使得相同的创建过程可以创建不同的产品对象；</li>
+<li>具体建造者之间相对独立，用户使用不同的具体建造者即可得到不同的产品对象；</li>
+<li>可以更加精细地控制产品的创建过程；</li>
+<li>增加新的具体建造者无需修改原有类库的代码，指挥者类针对的是抽象建造者编程，符合开闭原则</li>
+</ul>
+</li>
+<li><p>缺点：</p>
+<ul>
+<li>建造者模式适用于产品比较相似的情况，产品之间的差异性很大时不适合使用建造者模式；</li>
+<li>如果产品内部变化复杂，可能会导致需要定义很多具体建造者来实现这种变化，导致系统变得很庞大</li>
+</ul>
+</li>
+<li><p>适用环境：</p>
+<ul>
+<li>需要生成的产品对象有复杂的内部结构，通常包含多个成员属性；</li>
+<li>需要生成的产品对象的属性相互依赖，需要指定其生成顺序；</li>
+<li>对象的创建过程独立于创建该对象的类，引入指挥者；</li>
+<li>隔离复杂对象的创建和使用，并使得相同的创建过程可以创建不同的产品</li>
+</ul>
+</li>
+<li><p>简化：如果系统中只需一个具体建造者时，可省略抽象建造者，省略指挥者</p>
+</li>
+<li><p>与抽象工厂模式比较：</p>
+<ul>
+<li>建造者模式返回一个组装好的完成产品，而抽象工厂模式返回一系列相关的产品（产品族）；</li>
+<li>抽象工厂中客户端需要实例化工厂类然后调用工厂方法取得所需对象，建造者模式可以不调用建造者的相关方法，而是通过指挥者类；</li>
+<li>抽象工厂模式：汽车配件生产工厂，生产一个产品族的产品；建造者模式：汽车组装工厂，返回一辆完整的汽车</li>
+</ul>
+</li>
+</ul>
+<h3 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h3><p>保证一个类只有一个实例并且这个实例易于被访问：让类自身负责保存它的唯一实例，这个类可以保证没有其他实例被创建，并且它可以提供一个访问该实例的方法</p>
+<p>要点：某个类只能有一个实例；它必须自行创建这个实例；它必须自行向整个系统提供这个实例</p>
+<p><img src="https://design-patterns.readthedocs.io/zh_CN/latest/_images/Singleton.jpg" alt="../_images/Singleton.jpg"></p>
+<p><strong>角色：</strong></p>
+<ul>
+<li>Singleton 单例</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 最简单的单例模式</span></span><br><span class="line"><span class="keyword">let</span> timeTool = &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;处理时间工具库&#x27;</span>,</span><br><span class="line">    <span class="attr">getISODate</span>: <span class="keyword">function</span>(<span class="params"></span>) &#123;&#125;,</span><br><span class="line">    <span class="attr">getUTCDate</span>: <span class="keyword">function</span>(<span class="params"></span>) &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>最简单的单例模式实现，用 js 的对象字面量实例化一个对象，因为 let 不允许重复声明所以 <code>timeTool</code> 不能被重新覆盖</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 惰性单例</span></span><br><span class="line"><span class="comment">// 只在需要的时候进行单例的创建</span></span><br><span class="line"><span class="comment">// 如果再次调用，返回的永远是第一次实例化的单例对象</span></span><br><span class="line"><span class="keyword">let</span> timeTool = (<span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> _instance = <span class="literal">null</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">init</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="comment">// 私有变量</span></span><br><span class="line">        <span class="keyword">let</span> now = <span class="keyword">new</span> <span class="title class_">Date</span>()</span><br><span class="line">        <span class="comment">// 公用属性和方法</span></span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">name</span> = <span class="string">&#x27;处理时间工具库&#x27;</span></span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">getISODate</span> = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> now.<span class="title function_">toISOString</span>()</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">getUTCDate</span> = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> now.<span class="title function_">toUTCString</span>()</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (!_instance) &#123;</span><br><span class="line">            _instance = <span class="keyword">new</span> <span class="title function_">init</span>()</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> _instance</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)()</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// singleton in es6</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">SingletonApple</span> &#123;</span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params">name, creator, products</span>) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">name</span> = name</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">creator</span> = creator</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">products</span> = products</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">static</span> <span class="title function_">getInstance</span>(<span class="params">name, creator, products</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (!<span class="variable language_">this</span>.<span class="property">instance</span>) &#123;</span><br><span class="line">            <span class="variable language_">this</span>.<span class="property">instance</span> = <span class="keyword">new</span> <span class="title class_">SingletonApple</span>(name, creator, products)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">instance</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>es6 的 export 出的实例即是单例</p>
+<p><strong>分析：</strong></p>
+<ul>
+<li>优点：提供了对唯一实例的受控访问并可以节约系统资源</li>
+<li>缺点：因为缺少抽象层而难以扩展，且单例类职责过重</li>
+</ul>
+<h2 id="结构型模式"><a href="#结构型模式" class="headerlink" title="结构型模式"></a>结构型模式</h2><p>描述如何将类或者对象结合在一起形成更大的结构</p>
+<p>分为类结构型模式和对象结构型模式</p>
+<ul>
+<li>类结构型模式：关心类的组合，由多个类可以组合成一个更大的系统，在类结构型模式中一般只存在继承关系和实现关系</li>
+<li>对象结构型模式：关心类与对象的组合，通过关联关系使得在一个类中定义另一个类的实例对象，然后通过该对象调用其方法。（组合复用原则：在系统中应尽量使用关联关系来替代继承关系）</li>
+</ul>
+<h3 id="适配器模式"><a href="#适配器模式" class="headerlink" title="适配器模式"></a>适配器模式</h3><p>将一个借口转换成客户希望的另一个接口（现有的类可以满足客户类的功能需要，但接口不一定是客户类所期望的）</p>
+<p>适配器的实现就是把客户类的请求转化为对适配者的相应接口的调用</p>
+<p>对象适配器：</p>
+<p><img src="https://design-patterns.readthedocs.io/zh_CN/latest/_images/Adapter.jpg" alt="../_images/Adapter.jpg"></p>
+<p>类适配器：</p>
+<p><img src="https://design-patterns.readthedocs.io/zh_CN/latest/_images/Adapter_classModel.jpg" alt="../_images/Adapter_classModel.jpg"></p>
+<p><strong>角色：</strong></p>
+<ul>
+<li>Target 目标抽象类</li>
+<li>Adapeter 适配器类</li>
+<li>Adaptee 适配者类（被适配的原对象类）</li>
+<li>Client 客户类</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Adapter</span> <span class="keyword">extends</span> <span class="title class_ inherited__">Target</span> &#123;</span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params">adaptee</span>) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">m_pAdaptee</span> = adaptee</span><br><span class="line">        <span class="comment">// 准确来说，这个 m_pAdaptee 应当定义为私有变量</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="title function_">request</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">m_pAdaptee</span>.<span class="title function_">specificRequest</span>()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>分析：</strong></p>
+<ul>
+<li><p>优点：</p>
+<ul>
+<li>将目标类和适配者类解耦，通过引入一个适配器类来重用现有的适配者类，而无需修改原有代码</li>
+<li>增加了类的透明性和复用性，将具体的实现封装在适配者类中，对于客户端类来说是透明的，而且提高了适配者的复用性</li>
+<li>灵活性和扩展性都非常好，通过使用配置文件，可以很方便地更换适配器，也可以在不修改原有代码的基础上增加新的适配器类，完全符合“开闭原则”</li>
+<li>类适配器：因为适配器是适配者类的子类，因此可以在适配器类中置换一些适配者的方法，使得适配器的灵活性更强</li>
+<li>对象适配器：一个对象适配器可以把多个不同的适配者适配到同一个目标，也就是说，同一个适配器可以把适配者类和它的子类都适配到目标接口</li>
+</ul>
+</li>
+<li><p>缺点：</p>
+<ul>
+<li>类适配器：对于不支持多重继承的语言，一次最多只能适配一个适配者类，而且 Target 只能为抽象类不能为具体类，其使用有一定的局限性</li>
+<li>对象适配器：想置换适配者类的方法不容易</li>
+</ul>
+</li>
+<li><p>扩展：默认适配器模式</p>
+<p>先设计一个抽象类实现接口，并为该接口中的每个方法提供一个默认实现（空方法），那么该抽象类的子类可有选择地覆盖父类的某些方法来实现需求，适用于一个接口不想使用其所有的方法的情况</p>
+</li>
+</ul>
+<h3 id="桥接模式"><a href="#桥接模式" class="headerlink" title="桥接模式"></a>桥接模式</h3><p>将抽象部分与它的实现部分分离（由原来的继承关系改为关联关系，强关联改为弱关联），使他们都可以独立地变化</p>
+<p><img src="https://design-patterns.readthedocs.io/zh_CN/latest/_images/Bridge.jpg" alt="../_images/Bridge.jpg"></p>
+<p><strong>角色：</strong></p>
+<ul>
+<li>Abstraction 抽象类：定义一个实现类接口类型的对象并可以维护该对象</li>
+<li>RefinedAbstraction 扩充抽象类：扩充抽象类定义的接口，实现在抽象类中定义的抽象业务方法</li>
+<li>Implementor 实现类接口：仅提供基本操作</li>
+<li>ConcreteImplementor 具体实现类：实现了实现类的接口并具体实现它，在不同的具体实现类中提供基本操作的不同实现</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 由于 JavaScript 不支持抽象类，所以没有 Abstraction 和 Implementor</span></span><br><span class="line"><span class="comment">// 下面实现 RefinedAbstraction 和 ConcreteImplementor</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">RefinedAbstraction</span> &#123;</span><br><span class="line">    <span class="title function_">constuctor</span>(<span class="params">imp</span>) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">m_pImp</span> = imp</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="title function_">operation</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">m_pImp</span>.<span class="title function_">operationImp</span>()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ConcreteImplementor</span> &#123;</span><br><span class="line">    <span class="title function_">operationImp</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="comment">// 具体实现</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>分析：</strong></p>
+<ul>
+<li><p>优点：</p>
+<ul>
+<li>比如有两个变化维度的系统，采用桥接模式可以提高可扩充性（任意扩展一个维度都不需要修改原有系统）；</li>
+<li>有时类似多继承，但多继承方案违背了类的单一职责原则，复用性比较差，且类的个数非常庞大</li>
+</ul>
+</li>
+<li><p>缺点：增加系统的理解与设计难度，要求针对抽象进行设计与编程</p>
+</li>
+<li><p>适用：</p>
+<ul>
+<li>抽象化角色和具体化角色之间增加更多的灵活性，避免在两个层次之间建立静态的继承联系，则可以用桥接模式使它们在抽象层建立一个关联关系</li>
+<li>一个类存在两个独立变化的维度，且这两个维度都需要进行扩展</li>
+<li>系统需要对抽象化角色和实现化角色进行动态耦合</li>
+</ul>
+</li>
+</ul>
+<h3 id="装饰模式"><a href="#装饰模式" class="headerlink" title="装饰模式"></a>装饰模式</h3><p>动态地给一个对象增加一些额外的职责，不需要创造更多子类而将对象的功能加以扩展‘</p>
+<p>方式与适配器模式相同，把继承关系变成关联关系</p>
+<p><img src="https://design-patterns.readthedocs.io/zh_CN/latest/_images/Decorator.jpg" alt="../_images/Decorator.jpg"></p>
+<p><strong>角色：</strong></p>
+<ul>
+<li>Component 抽象构件</li>
+<li>ConcreteComponent 具体构件</li>
+<li>Decorator 抽象装饰类</li>
+<li>ConcreteDecorator 具体装饰类</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">ConcreteDecorator</span> &#123;</span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params">component</span>) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">m_pComponent</span> = component</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="title function_">addBehavior</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="comment">//增加新行为</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="title function_">operation</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">m_pComponent</span>.<span class="title function_">operation</span>()</span><br><span class="line">        <span class="variable language_">this</span>.<span class="title function_">addBehavior</span>()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>分析：</strong></p>
+<ul>
+<li>优点：比继承更灵活，可以通过不同的装饰类以及这些装饰类的排列组合，得到很多种不同行为的对象；修改时只需增加新的 ConcreteComponent 和 ConcreteDecorator，符合开闭原则</li>
+<li>缺点：会产生很多小对象，他们之间的区别在于相互连接的方式不同，而不是它们的类或者属性值不同，增加系统复杂度，加大理解难度；更灵活也就更容易出错，难以排查</li>
+<li>使用时尽量保持 ConcreteComponent 作为一个轻类，不要包含太多的逻辑和状态，而是通过装饰类对其进行扩展</li>
+</ul>
+<h3 id="外观模式"><a href="#外观模式" class="headerlink" title="外观模式"></a>外观模式</h3><p>外部与一个子系统的通信必须通过一个统一的外观对象进行，为子系统中的一组接口提供了一个一致的界面，外观模式定义了一个高层接口，这个接口使得这一子系统更加容易使用</p>
+<p><img src="https://design-patterns.readthedocs.io/zh_CN/latest/_images/Facade.jpg" alt="../_images/Facade.jpg"></p>
+<p><strong>角色：</strong></p>
+<ul>
+<li>Facade 外观</li>
+<li>SubSystem 子系统</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Facade</span> &#123;</span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">m_SystemA</span> = <span class="keyword">new</span> <span class="title class_">SystemA</span>()</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">m_SystemB</span> = <span class="keyword">new</span> <span class="title class_">SystemB</span>()</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">m_SystemC</span> = <span class="keyword">new</span> <span class="title class_">SystemC</span>()</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="title function_">wrapOpration</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">m_SystemA</span>.<span class="title function_">operationA</span>()</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">m_SystemB</span>.<span class="title function_">operationB</span>()</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">m_SystemC</span>.<span class="title function_">operationC</span>()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>分析：</strong></p>
+<ul>
+<li>划分子系统符合单一职责原则，而为了使子系统间的通信和相互依赖关系达到最小，就可以引入一个外观对象</li>
+<li>是迪米特法则的体现，降低原有系统的复杂度，降低客户类与子系统类的耦合度</li>
+<li>优点：<ul>
+<li>对客户屏蔽子系统组件，客户代码变得简单</li>
+<li>子系统与客户松散耦合</li>
+<li>降低大型软件系统中的编译依赖性，简化了系统在不同平台之间的移植过程</li>
+</ul>
+</li>
+<li>缺点：<ul>
+<li>不能很好地限制客户使用子系统类，而如果对客户访问子系统类做太多的限制则减少了可变性和灵活性</li>
+<li>在不引入抽象外观类的情况下，增加新的子系统可能需要修改外观类或客户端的源代码，违背了开闭原则</li>
+</ul>
+</li>
+<li>扩展：<ul>
+<li>多个外观类</li>
+<li>不要试图通过外观类为子系统增加新行为</li>
+</ul>
+</li>
+</ul>
+<h3 id="享元模式"><a href="#享元模式" class="headerlink" title="享元模式"></a>享元模式</h3><p>通过共享技术有效地支持大量细粒度对象的复用，系统只使用少量的对象，而这些对象都很相似，状态变化很小，可以实现对象的多次复用</p>
+<p><img src="https://design-patterns.readthedocs.io/zh_CN/latest/_images/Flyweight.jpg" alt="../_images/Flyweight.jpg"></p>
+<p><strong>角色：</strong></p>
+<ul>
+<li>Flyweight 抽象享元类</li>
+<li>ConcreteFlyweight 具体享元类</li>
+<li>UnsharedConcreteFlyweight 非共享具体享元类</li>
+<li>FlyweightFactory 享元工厂类：维护一个享元池用于存储具有相同内部状态的享元对象</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">FlyweightFactory</span> &#123;</span><br><span class="line">    <span class="title function_">getFlyweight</span>(<span class="params">type</span>) &#123;</span><br><span class="line">        <span class="comment">// 伪代码...</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">m_mpFlyweight</span>.<span class="title function_">find</span>(type)) &#123;</span><br><span class="line">            <span class="keyword">return</span> exist one</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">const</span> fw = <span class="keyword">new</span> <span class="title class_">ConcreteFlyweight</span>(type)</span><br><span class="line">            <span class="variable language_">this</span>.<span class="property">m_mpFlyweight</span>.<span class="title function_">push</span>(fw)</span><br><span class="line">            <span class="keyword">return</span> fw</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ConcreteFlyweight</span> <span class="keyword">extends</span> <span class="title class_ inherited__">Flyweight</span> &#123;</span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params">state</span>) &#123;</span><br><span class="line">        intrinsicState = state</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="title function_">operation</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="comment">// do operation</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>分析：</strong></p>
+<ul>
+<li>核心在于享元工厂类（维护的享元池）</li>
+<li>以共享的方式高效地支持大量的细粒度对象，享元对象能做到共享的关键是区分内部状态和外部状态<ul>
+<li>内部状态是存储在享元对象内部并且不会随环境改变而改变的状态，因此内部状态可以共享</li>
+<li>外部状态是随环境改变而改变的、不可以共享的状态。享元对象的外部状态必须由客户端保存，并在享元对象被创建之后，在需要使用时再传入到享元对象内部，一个外部状态与另一个外部状态之间是相互独立的</li>
+</ul>
+</li>
+<li>优点：<ul>
+<li>极大减少内存中对象的数量，使得相同对象或相似对象在内存中只保存一份</li>
+<li>外部状态相对独立，不会影响内部状态，从而使得享元对象可以在不同环境中被共享</li>
+</ul>
+</li>
+<li>缺点：<ul>
+<li>使得系统更加复杂，需要分离出内部状态和外部状态</li>
+<li>读取外部状态使得运行时间变长</li>
+</ul>
+</li>
+<li>适用：<ul>
+<li>一个系统有大量相同或者相似的对象，这类对象的大量适用造成内存的大量耗费</li>
+<li>对象的大部分状态都可以外部化，可以将这些外部状态传入对象中</li>
+<li>因为维护享元池会耗费资源，所以应当在多次重复使用享元对象时才值得使用享元模式</li>
+</ul>
+</li>
+<li>扩展：<ul>
+<li>单纯享元模式：所有享元对象都是可以共享的，不存在非共享具体享元类</li>
+<li>复合享元模式：将一些单纯享元使用组合模式加以组合，可以形成复合享元对象，这样的复合享元对象本身不能共享，但它们可以分解成单纯享元对象，而后者则可以共享</li>
+<li>享元工厂类通常只有唯一一个，可以设计成单例</li>
+</ul>
+</li>
+</ul>
+<h3 id="代理模式"><a href="#代理模式" class="headerlink" title="代理模式"></a>代理模式</h3><p>给某一个对象提供一个代理，并由代理对象控制对原对象的引用</p>
+<p>代理对象可以在客户端和目标对象之间起到中介的作用，并且可以通过代理对象去掉客户不能看到的内容和服务，或者添加客户需要的额外服务</p>
+<p><img src="https://design-patterns.readthedocs.io/zh_CN/latest/_images/Proxy.jpg" alt="../_images/Proxy.jpg"></p>
+<p><strong>角色：</strong></p>
+<ul>
+<li>Subject 抽象主题</li>
+<li>Proxy 代理主题</li>
+<li>RealSubject 真实主题</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Proxy</span> <span class="keyword">extends</span> <span class="title class_ inherited__">Subject</span> &#123;</span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">m_pRealSubject</span> = <span class="keyword">new</span> <span class="title class_">RealSubject</span>()</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="title function_">request</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="title function_">preRequest</span>() <span class="comment">// 一些其他行为</span></span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">m_pRealSubject</span>.<span class="title function_">request</span>() <span class="comment">// 真正和原对象交互</span></span><br><span class="line">        <span class="variable language_">this</span>.<span class="title function_">afterRequest</span>() <span class="comment">// 一些其他行为</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>分析：</strong></p>
+<ul>
+<li>优点：协调调用者和被调用者，在一定程度上降低了系统的耦合度</li>
+<li>缺点：有些类型的代理模式可能会造成请求的处理速度变慢；有些代理的实现比较复杂，需要额外的工作</li>
+<li>使用：<ul>
+<li>远程（remote）代理：为一个位于不同的地址空间的对象提供一个本地的代理对象，这个不同的地址空间可以是在同一台主机中，也可是在另一台主机中</li>
+<li>虚拟（virtual）代理：如果需要创建一个资源消耗较大的对象，先创建一个消耗相对较小的对象来表示，真实对象只在需要时才会被真正创建</li>
+<li>Copy-on-Write代理：是虚拟代理的一种，把复制（克隆）操作延迟到只有在客户端真正需要时才执行（因为深克隆是个开销较大的操作，可以使用这个代理让这个操作延迟到只有对象被用到时才被克隆）</li>
+<li>保护（Protect or Access）代理：控制对一个对象的访问，可以给不同的用户提供不同级别的使用权限</li>
+<li>缓冲（Cache）代理：为某一个目标操作的结果提供临时的存储空间，以便多个客户端可以共享这些结果</li>
+<li>防火墙（Firewall）代理：保护目标不让恶意用户接近</li>
+<li>同步化（Synchronization）代理：使几个用户能够同时使用一个对象而没有冲突</li>
+<li>智能引用（Smart Reference）代理：当一个对象被引用时，提供一些额外的操作，如将此对象被调用的次数记录下来等</li>
+</ul>
+</li>
+</ul>
+<h2 id="行为型模式"><a href="#行为型模式" class="headerlink" title="行为型模式"></a>行为型模式</h2><h3 id="命令模式"><a href="#命令模式" class="headerlink" title="命令模式"></a>命令模式</h3><p>将发送者和接受者完全解耦，没有直接引用关系，发送请求的对象只需要知道如何发送请求，而不必知道如何完成请求</p>
+<p>将一个请求封装为一个对象，从而使我们可用不同的请求对客户进行参数化</p>
+<p><img src="https://design-patterns.readthedocs.io/zh_CN/latest/_images/Command.jpg" alt="../_images/Command.jpg"></p>
+<p><strong>角色：</strong></p>
+<ul>
+<li>Command 抽象命令类</li>
+<li>ConcreteCommand 具体命令类</li>
+<li>Invoker 调用者</li>
+<li>Receiver 接受者</li>
+<li>Client 客户类</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Receiver</span> &#123;</span><br><span class="line">    <span class="title function_">action</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="comment">// 定义接收到命令的行为</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Invoker</span> &#123;</span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params">command</span>) &#123;</span><br><span class="line">        <span class="comment">// 这里的 command 是抽象命令接口，发送者针对抽象接口编程</span></span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">m_pCommand</span> = command</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="title function_">call</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="comment">// 发出命令</span></span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">m_pCommand</span>.<span class="title function_">execute</span>()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ConcreteCommand</span> <span class="keyword">extends</span> <span class="title class_ inherited__">Command</span> &#123;</span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params">receiver</span>) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">m_pReceiver</span> = receiver</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="title function_">execute</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">m_pReceiver</span>.<span class="title function_">action</span>()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>分析：</strong></p>
+<ul>
+<li>本质是对命令进行封装，将发出命令的责任和执行命令的责任分割开。</li>
+<li>优点：<ul>
+<li>降低系统耦合度</li>
+<li>新的命令可以很容易地加入到系统中，可以比较容易地设计一个命令队列和宏命令（组合命令），可以方便地实现对请求的 undo 和 redo</li>
+</ul>
+</li>
+<li>缺点：可能会导致系统中有过多的具体命令类</li>
+<li>适用：<ul>
+<li>系统需要将请求调用者和请求接受者解耦，使得调用者和接受者不直接交互</li>
+<li>系统需要在不同的时间指定请求、将请求排队、执行请求</li>
+<li>系统需要支持命令的撤掉和恢复操作</li>
+<li>系统需要将一组操作组合在一起，即支持宏命令</li>
+</ul>
+</li>
+<li>扩展：宏命令</li>
+</ul>
+<h3 id="中介者模式"><a href="#中介者模式" class="headerlink" title="中介者模式"></a>中介者模式</h3><p>用一个中介对象来封装一系列的对象交互，中介者使得各对象不需要显式地相互引用，从而使其耦合松散，而且可以独立地改变它们之间的交互</p>
+<p><img src="https://design-patterns.readthedocs.io/zh_CN/latest/_images/Mediator.jpg" alt="../_images/Mediator.jpg"></p>
+<p><strong>角色：</strong></p>
+<ul>
+<li>Mediator 抽象中介者</li>
+<li>ConcreteMediator 具体中介者</li>
+<li>Colleague 抽象同事类</li>
+<li>ConcreteColleague 具体同事类</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">ConcreteMediator</span> <span class="keyword">extends</span> <span class="title class_ inherited__">Mediator</span> &#123;</span><br><span class="line">    <span class="comment">// 一些伪代码</span></span><br><span class="line">    <span class="title function_">operation</span>(<span class="params">to, msg</span>) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">m_mpColleague</span>.<span class="title function_">find</span>(to).<span class="title function_">receivemsg</span>(msg)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="title function_">registered</span>(<span class="params">colleague</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (!<span class="variable language_">this</span>.<span class="property">m_mpColleague</span>.<span class="title function_">find</span>(colleague)) &#123;</span><br><span class="line">            <span class="variable language_">this</span>.<span class="property">m_mpColleague</span>.<span class="title function_">push</span>(colleague)</span><br><span class="line">            colleague.<span class="title function_">setMediator</span>(<span class="variable language_">this</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ConcreteColleague</span> <span class="keyword">extends</span> <span class="title class_ inherited__">Colleague</span> &#123;</span><br><span class="line">    <span class="title function_">setMediator</span>(<span class="params">mediator</span>) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">m_pMediator</span> = mediator</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="title function_">sendmsg</span>(<span class="params">to, msg</span>) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">m_pMediator</span>.<span class="title function_">operation</span>(to, msg)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="title function_">receviemsg</span>(<span class="params">msg</span>) &#123;</span><br><span class="line">        <span class="comment">// 收到消息的操作</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>分析：</strong></p>
+<ul>
+<li>中介者模式可以使对象之间的关系数量急剧减少，中介者承担两方面职责：中转作用（结构性），协调作用（行为型）</li>
+<li>优点：简化对象之间交互，各同事解耦，减少子类生成，可以简化各同事类的设计和实现</li>
+<li>缺点：在具体中介者类中包含了同事之间的交互细节，可能会导致具体中介者类非常复杂，使得系统难以维护</li>
+<li>适用：<ul>
+<li>系统中对象存在复杂的引用关系，产生的相互依赖关系结构混乱且难以理解</li>
+<li>一个对象由于引用了其他很多对象并直接和这些对象通信，导致难以复用该对象</li>
+<li>想通过一个中间类来封装多个类中的行为，而又不想生成太多的子类，可以通过引入中介者类实现，在中介者中定义对象</li>
+<li>交互的公共行为，如果需要改变行为则可以增加新的中介者类</li>
+</ul>
+</li>
+<li>扩展：<ul>
+<li>例如 MVC 结构中的 Controller，负责控制视图对象 View 和模型对象 Model 之间的交互</li>
+<li>符合迪米特法则</li>
+</ul>
+</li>
+</ul>
+<h3 id="观察者模式"><a href="#观察者模式" class="headerlink" title="观察者模式"></a>观察者模式</h3><p>建立一种对象与对象之间的依赖关系（一对多），一个对象发生改变时将自动通知其他对象，其他对象将相应做出反应</p>
+<p><img src="https://design-patterns.readthedocs.io/zh_CN/latest/_images/Obeserver.jpg" alt="../_images/Obeserver.jpg"></p>
+<p><strong>角色：</strong></p>
+<ul>
+<li>Subject 目标</li>
+<li>ConcreteSubject 具体目标</li>
+<li>Observer 观察者</li>
+<li>ConcreteObserver 具体观察者</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">ConcreteSubject</span> <span class="keyword">extends</span> <span class="title class_ inherited__">Subject</span> &#123;</span><br><span class="line">    <span class="title function_">attach</span>(<span class="params">observer</span>) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">m_vtObj</span>.<span class="title function_">push</span>(observer)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="title function_">detach</span>(<span class="params">observer</span>) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">m_vtObj</span>.<span class="title function_">splice</span>(<span class="variable language_">this</span>.<span class="property">m_vtObj</span>.<span class="title function_">findIndex</span>(<span class="function"><span class="params">e</span> =&gt;</span> e === observer), <span class="number">1</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="title function_">notify</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">m_vtObj</span>.<span class="title function_">forEach</span>(<span class="function"><span class="params">item</span> =&gt;</span> item.<span class="title function_">update</span>(<span class="variable language_">this</span>))</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="title function_">setState</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="comment">// 改变自身状态</span></span><br><span class="line">        <span class="variable language_">this</span>.<span class="title function_">notify</span>()</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="title function_">getState</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="comment">// 方便 observer 调用取得状态</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ConcretObserver</span> <span class="keyword">extends</span> <span class="title class_ inherited__">Observer</span> &#123;</span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params">name</span>) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">m_objName</span> = name</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="title function_">update</span>(<span class="params">subject</span>) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">m_observerState</span> = subject.<span class="title function_">getState</span>()</span><br><span class="line">        <span class="comment">// 一些基于 this.m_objName 和 this.m_observerState 的操作</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>分析：</strong></p>
+<ul>
+<li>一个目标可以有多个观察者（用一个数组存），一旦目标状态发生改变，就遍历数组通知所有观察者；观察者收到通知进行自身更新</li>
+<li>优点：<ul>
+<li>表示层（observer）与数据逻辑层（subject）的分离，定义了稳定的消息更新传递机制，抽象了更新接口，使得可以由各种各样不同的表示层作为具体观察者角色</li>
+<li>观察目标和观察者之间抽象耦合</li>
+<li>支持广播通信</li>
+<li>符合开闭原则</li>
+</ul>
+</li>
+<li>缺点：<ul>
+<li>如果一个 subject 有很多直接和间接的 observer 的话，通知所有 observer 会花费很多时间</li>
+<li>如果 subject 和 observer 之间存在循环依赖，会发生循环调用</li>
+<li>观察者模式没有相应的机制让观察者知道目标对象是怎样发生变化的，而仅仅能知道发生了变化</li>
+</ul>
+</li>
+<li>适用：<ul>
+<li>一个抽象模型有两个方面，其中一个方面依赖于另一个方面</li>
+<li>一个对象的改变将导致其他一个或多个对象也发生改变，而不知道具体有多少对象将发生改变</li>
+<li>一个对象必须通知其他对象，而并不知道这些对象是谁</li>
+<li>需要在系统中创建一个触发链，A对象的行为将影响B，B对象的行为将影响C……</li>
+</ul>
+</li>
+<li>扩展：<ul>
+<li>MVC：model - subject（被观察的目标），view - observer（观察者），controller - 充当两者之间的中介者 mediator，避免两者直接引用</li>
+</ul>
+</li>
+</ul>
+<h3 id="状态模式"><a href="#状态模式" class="headerlink" title="状态模式"></a>状态模式</h3><p>允许一个对象在其内部状态改变时改变它的行为，对象看起来似乎修改了它的类</p>
+<p><img src="https://design-patterns.readthedocs.io/zh_CN/latest/_images/State.jpg" alt="../_images/State.jpg"></p>
+<p><strong>角色：</strong></p>
+<ul>
+<li>Context 环境类：拥有状态的对象，有时候可以充当状态管理器的角色，可以在环境类中对状态进行切换操作。针对抽象状态类进行编程</li>
+<li>State 抽象状态类：专门表示对象的状态，而对象的每一种具体状态类都继承了该类，并在不同具体状态类中实现了不同状态的行为，包括各种状态之间的转换。环境类对象在其内部状态改变时可以改变它的行为，对象看起来似乎修改了它的类，而实际上是由于切换到不同的具体状态类实现的</li>
+<li>ConcreteState 具体状态类</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Context</span> &#123;</span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">m_pState</span> = <span class="keyword">new</span> <span class="title class_">ConcreteState</span>(<span class="variable language_">this</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="title function_">changeState</span>(<span class="params">state</span>) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">m_pState</span> = state</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="title function_">request</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">m_pState</span>.<span class="title function_">handle</span>()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ConcreteState</span> <span class="keyword">extends</span> <span class="title class_ inherited__">State</span> &#123;</span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params">context</span>) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">context</span> = context</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="title function_">handle</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="comment">// doing something in state</span></span><br><span class="line">        <span class="comment">// then change state</span></span><br><span class="line">        context.<span class="title function_">changeState</span>(<span class="keyword">new</span> <span class="title class_">ConcreteStateB</span>(<span class="variable language_">this</span>.<span class="property">context</span>))</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>分析：</strong></p>
+<ul>
+<li>优点：<ul>
+<li>封装了状态转换规则，状态转换逻辑与状态对象合成一体</li>
+<li>枚举可能的状态</li>
+<li>将所有与某个状态有关的行为放到一个类中，并且可以方便地增加新的状态，只需要改变对象状态即可改变对象行为</li>
+<li>可以让多个环境对象共享一个状态对象，从而减少系统中对象的个数</li>
+</ul>
+</li>
+<li>缺点：<ul>
+<li>必然会增加系统类和对象的个数</li>
+<li>结构和实现都较为复杂，如果使用不当将导致程序结构和代码的混乱</li>
+<li>不符合开闭原则，新增状态需要修改那些负责状态转换的代码，而且修改某个状态类的行为也需要修改对应类的代码</li>
+</ul>
+</li>
+<li>适用：<ul>
+<li>对象的行为依赖于它的状态并且可以根据它的状态改变而改变它的相关行为</li>
+<li>代码中包含大量与对象状态有关的条件语句，这些条件语句的出现会导致代码的可维护性和灵活性变差，不能方便地增加和删除状态，使客户类与类库之间的耦合增强；在这些条件语句中包含了对象的行为，而且这些条件对应于对象的各种状态</li>
+</ul>
+</li>
+<li>扩展：<ul>
+<li>多个环境对象共享一个或多个状态对象，需要将这些状态对象定义为环境的静态成员对象</li>
+<li>简单状态模式：状态相互独立，状态之间无需进行转换。此时每个状态类都封装与状态相关的操作，而无需关心状态的切换，客户端直接实例状态类然后把状态对象设置到环境类中即可。遵循开闭原则，客户端针对抽象状态类进行编程，增加新的状态类对原有系统也不造成任何影响</li>
+<li>可切换状态的状态模式：在切换状态时需要在具体状态类内部调用 context.changeState()，因此状态类与环境类之间还存在关联关系或依赖关系，通过在状态类中引用环境类的对象实现调用。这种模式下增加新的状态类可能会需要修改其他状态类甚至环境类的源代码，否则无法切换</li>
+</ul>
+</li>
+</ul>
+<h3 id="策略模式"><a href="#策略模式" class="headerlink" title="策略模式"></a>策略模式</h3><p>定义一系列算法，将每一个算法封装起来，并让它们可以相互替换，策略模式让算法独立于使用它的客户而变化</p>
+<p><img src="https://design-patterns.readthedocs.io/zh_CN/latest/_images/Strategy.jpg" alt="../_images/Strategy.jpg"></p>
+<p><strong>角色：</strong></p>
+<ul>
+<li>Context 环境类</li>
+<li>Strategy 抽象策略类</li>
+<li>ConcreteStrategy 具体策略类</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Context</span> &#123;</span><br><span class="line">    <span class="title function_">algorithm</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">m_pStrategy</span>.<span class="title function_">algorithm</span>()</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="title function_">setStrategy</span>(<span class="params">strategy</span>) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">m_pStrategy</span> = strategy</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ConcreteStrategy</span> <span class="keyword">extends</span> <span class="title class_ inherited__">Strategy</span> &#123;</span><br><span class="line">    <span class="title function_">algorithm</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="comment">// 具体算法</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>分析：</strong></p>
+<ul>
+<li>把算法的责任和算法本身分隔开，委派给不同的对象管理。“准备一组算法，并将每一个算法封装起来，使得它们可以互换”</li>
+<li>客户端自己决定在什么情况下使用什么具体策略角色，策略模式仅仅封装算法</li>
+<li>优点：<ul>
+<li>完美支持“开闭原则”，用户可以在不修改原有系统的基础上选择算法或行为，也可以灵活地增加新的算法或行为</li>
+<li>提供管理相关算法族的办法</li>
+<li>提供可以替换继承关系的办法</li>
+<li>可以避免使用多重条件转移语句</li>
+</ul>
+</li>
+<li>缺点：<ul>
+<li>客户端必须知道所有的策略类，并自行决定使用哪一个策略类</li>
+<li>将造成很多策略类，可以通过享元模式在一定程度上减少对象的数量</li>
+</ul>
+</li>
+<li>适用：<ul>
+<li>如果一个系统里面有许多类，它们之间的区别仅在于它们的行为，那么使用策略模式可以动态地让一个对象在许多行为中选择一种行为</li>
+<li>在具体策略类中封装算法和相关数据结构，提高算法的保密性和安全性</li>
+</ul>
+</li>
+<li>扩展：策略模式与状态模式<ul>
+<li>可以通过环境类状态的个数来决定是使用策略模式还是状态模式</li>
+<li>策略模式的环境类自己选择一个具体策略类，具体策略类无需关心环境类；而状态模式的环境类由于外在因素需要放进一个具体状态中，以便通过其方法实现状态的切换，因此环境类和状态类之间存在一种双向的关联关系</li>
+<li>策略模式客户端需要知道所选的具体策略是哪一个；状态模式客户端无需关心具体状态，环境类的状态会根据用户的操作自动转换</li>
+<li>如果系统中某个类的对象存在多种状态，不同状态下行为有差异，而且这些状态之间可以发生转换时使用状态模式；如果系统中某个类的某一行为存在多种实现方式，而且这些实现方式可以互换时使用策略模式</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/note/" rel="tag"># note</a>
+              <a href="/tags/Design-Pattern/" rel="tag"># Design Pattern</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/04/20/React%E5%85%A5%E9%97%A8/" rel="prev" title="笔记React入门">
+      <i class="fa fa-chevron-left"></i> 笔记React入门
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/06/04/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E6%8C%87%E5%8C%97/" rel="next" title="读书笔记-函数式编程指北">
+      读书笔记-函数式编程指北 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">设计模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9C%8B%E6%87%82UML%E7%B1%BB%E5%9B%BE%E5%92%8C%E6%97%B6%E5%BA%8F%E5%9B%BE"><span class="nav-number">1.1.</span> <span class="nav-text">看懂UML类图和时序图</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#UML%E7%B1%BB%E5%9B%BE"><span class="nav-number">1.1.1.</span> <span class="nav-text">UML类图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%B6%E5%BA%8F%E5%9B%BE"><span class="nav-number">1.1.2.</span> <span class="nav-text">时序图</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99"><span class="nav-number">1.2.</span> <span class="nav-text">设计原则</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E4%B8%80%E8%81%8C%E8%B4%A3%E5%8E%9F%E5%88%99"><span class="nav-number">1.2.1.</span> <span class="nav-text">单一职责原则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%80%E6%94%BE%E5%85%B3%E9%97%AD%E5%8E%9F%E5%88%99"><span class="nav-number">1.2.2.</span> <span class="nav-text">开放关闭原则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8C%E5%BC%8F%E6%9B%BF%E6%8D%A2%E5%8E%9F%E5%88%99"><span class="nav-number">1.2.3.</span> <span class="nav-text">里式替换原则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%9D%E8%B5%96%E5%80%92%E7%BD%AE%E5%8E%9F%E5%88%99"><span class="nav-number">1.2.4.</span> <span class="nav-text">依赖倒置原则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%A5%E5%8F%A3%E9%9A%94%E7%A6%BB%E5%8E%9F%E5%88%99"><span class="nav-number">1.2.5.</span> <span class="nav-text">接口隔离原则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%AA%E7%B1%B3%E7%89%B9%E5%8E%9F%E5%88%99%EF%BC%88%E6%9C%80%E5%B0%8F%E7%9F%A5%E8%AF%86%E5%8E%9F%E5%88%99%EF%BC%89"><span class="nav-number">1.2.6.</span> <span class="nav-text">迪米特原则（最小知识原则）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%84%E5%90%88%E5%A4%8D%E7%94%A8%E5%8E%9F%E5%88%99"><span class="nav-number">1.2.7.</span> <span class="nav-text">组合复用原则</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.3.</span> <span class="nav-text">创建型模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.3.1.</span> <span class="nav-text">简单工厂模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.3.2.</span> <span class="nav-text">工厂方法模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.3.3.</span> <span class="nav-text">抽象工厂模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BB%BA%E9%80%A0%E8%80%85%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.3.4.</span> <span class="nav-text">建造者模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.3.5.</span> <span class="nav-text">单例模式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E6%9E%84%E5%9E%8B%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.4.</span> <span class="nav-text">结构型模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.4.1.</span> <span class="nav-text">适配器模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A1%A5%E6%8E%A5%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.4.2.</span> <span class="nav-text">桥接模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A3%85%E9%A5%B0%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.4.3.</span> <span class="nav-text">装饰模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%96%E8%A7%82%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.4.4.</span> <span class="nav-text">外观模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%AB%E5%85%83%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.4.5.</span> <span class="nav-text">享元模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.4.6.</span> <span class="nav-text">代理模式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A1%8C%E4%B8%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.5.</span> <span class="nav-text">行为型模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.5.1.</span> <span class="nav-text">命令模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%AD%E4%BB%8B%E8%80%85%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.5.2.</span> <span class="nav-text">中介者模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.5.3.</span> <span class="nav-text">观察者模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8A%B6%E6%80%81%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.5.4.</span> <span class="nav-text">状态模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.5.5.</span> <span class="nav-text">策略模式</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">hayahayao</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">hayahayao</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

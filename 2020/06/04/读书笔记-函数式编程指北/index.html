@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="ce">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hayahayao.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="函数式编程 《函数式编程指北》读书笔记 中文版  函数是一等公民和其他对象一样，可以像对待任何其他数据类型一样对待它们——把它们存在数组里，当作参数传递，赋值给变量…等等 非常小心 this 值，特别是以一等公民的方式调用 this… 纯函数相同的输入，永远会得到相同的输出，而且没有任何可观察的副作用 纯函数不依赖外部环境，从而降低了认知负荷；函数能够做到自给自足。更可以用 Object.free">
+<meta property="og:type" content="article">
+<meta property="og:title" content="读书笔记-函数式编程指北">
+<meta property="og:url" content="https://hayahayao.github.io/2020/06/04/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E6%8C%87%E5%8C%97/index.html">
+<meta property="og:site_name" content="さおりのBlog">
+<meta property="og:description" content="函数式编程 《函数式编程指北》读书笔记 中文版  函数是一等公民和其他对象一样，可以像对待任何其他数据类型一样对待它们——把它们存在数组里，当作参数传递，赋值给变量…等等 非常小心 this 值，特别是以一等公民的方式调用 this… 纯函数相同的输入，永远会得到相同的输出，而且没有任何可观察的副作用 纯函数不依赖外部环境，从而降低了认知负荷；函数能够做到自给自足。更可以用 Object.free">
+<meta property="og:locale">
+<meta property="og:image" content="https://llh911001.gitbooks.io/mostly-adequate-guide-chinese/content/images/functormap.png">
+<meta property="og:image" content="https://llh911001.gitbooks.io/mostly-adequate-guide-chinese/content/images/monad_associativity.png">
+<meta property="og:image" content="https://llh911001.gitbooks.io/mostly-adequate-guide-chinese/content/images/triangle_identity.png">
+<meta property="article:published_time" content="2020-06-04T05:26:00.000Z">
+<meta property="article:modified_time" content="2023-08-22T17:35:23.258Z">
+<meta property="article:author" content="hayahayao">
+<meta property="article:tag" content="note">
+<meta property="article:tag" content="Functional Programming">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://llh911001.gitbooks.io/mostly-adequate-guide-chinese/content/images/functormap.png">
+
+<link rel="canonical" href="https://hayahayao.github.io/2020/06/04/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E6%8C%87%E5%8C%97/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'ce'
+  };
+</script>
+
+  <title>读书笔记-函数式编程指北 | さおりのBlog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">さおりのBlog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">燃えて散った花となれ。</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="ce">
+    <link itemprop="mainEntityOfPage" href="https://hayahayao.github.io/2020/06/04/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E6%8C%87%E5%8C%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="hayahayao">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="さおりのBlog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          读书笔记-函数式编程指北
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-06-04 13:26:00" itemprop="dateCreated datePublished" datetime="2020-06-04T13:26:00+08:00">2020-06-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-08-23 01:35:23" itemprop="dateModified" datetime="2023-08-23T01:35:23+08:00">2023-08-23</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="函数式编程"><a href="#函数式编程" class="headerlink" title="函数式编程"></a>函数式编程</h1><blockquote>
+<p>《函数式编程指北》读书笔记</p>
+<p><a target="_blank" rel="noopener" href="https://llh911001.gitbooks.io/mostly-adequate-guide-chinese/content/">中文版</a></p>
+</blockquote>
+<h2 id="函数是一等公民"><a href="#函数是一等公民" class="headerlink" title="函数是一等公民"></a>函数是一等公民</h2><p>和其他对象一样，可以像对待任何其他数据类型一样对待它们——把它们存在数组里，当作参数传递，赋值给变量…等等</p>
+<p>非常小心 <code>this</code> 值，特别是以一等公民的方式调用 this…</p>
+<h2 id="纯函数"><a href="#纯函数" class="headerlink" title="纯函数"></a>纯函数</h2><p>相同的输入，永远会得到相同的输出，而且没有任何可观察的副作用</p>
+<p>纯函数不依赖外部环境，从而降低了认知负荷；函数能够做到自给自足。更可以用 <code>Object.freeze</code> 把对象变成不可变的，从而保留纯粹性，因为状态不会有变化</p>
+<p>副作用是计算结果的过程中，系统状态的一种变化，或者与外部世界进行的可观察的交互</p>
+<p>函数式编程的哲学就是假定副作用是造成不正当行为的主要原因</p>
+<p>纯函数的优点：</p>
+<ul>
+<li>可缓存性（Cacheable）：总能够根据输入来做缓存，一种典型方式是 memoize 技术</li>
+<li>可移植性&#x2F;自文档化（Portable&#x2F;Self-Documenting）：依赖明确（所有的依赖都需用函数的参数传递），纯函数对其依赖必须要诚实，并且参数化能够使应用更加灵活，与环境无关</li>
+<li>可测试性（Testable）：只需要简单地给函数一个输入，然后断言输出就好了</li>
+<li>合理性（Reasonable）：引用透明性（referential transparency，即如果一段代码可以替换成它执行所得的结果，而且是在不改变整个程序行为的前提下替换的）</li>
+<li>并行代码：因为纯函数根本不需要访问共享的内存，也不会因副作用而进入竞争态，所以我们可以并行运行任意纯函数</li>
+</ul>
+<p>可以通过延迟执行的方式把不纯的函数转换为纯函数</p>
+<h2 id="柯里化"><a href="#柯里化" class="headerlink" title="柯里化"></a>柯里化</h2><p>只传递给函数一部分参数来调用它，让它返回一个函数去处理剩下的参数</p>
+<p>lodash 的 curry 方法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">_.<span class="title function_">curry</span>(func, [arity=func.<span class="property">length</span>])</span><br><span class="line"><span class="comment">// 创建一个函数，该函数接受 func 的参数</span></span><br><span class="line"><span class="comment">// 如果全部参数已经提供，则直接返回 func 执行的结果</span></span><br><span class="line"><span class="comment">// 否则返回一个函数，接受余下的参数</span></span><br></pre></td></tr></table></figure>
+
+<p>对于传进去的 <code>func</code> 的参数，需要把要操作的数据放到最后一个参数</p>
+<p>表明了一种“预加载”函数的能力，通过传递一到两个参数调用函数，就能得到一个记住了这些参数的新函数</p>
+<p>只传给函数一部分参数通常也叫作局部调用，能够大量减少样板文件代码</p>
+<p>curry 函数是纯函数</p>
+<h2 id="代码组合"><a href="#代码组合" class="headerlink" title="代码组合"></a>代码组合</h2><p>compose：将两个函数结合起来，得到一个新函数</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> compose = <span class="keyword">function</span>(<span class="params">f, g</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">function</span>(<span class="params">x</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="title function_">f</span>(<span class="title function_">g</span>(x));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>g</code> 先于 <code>f</code> 执行，从右向左的数据流</p>
+<h3 id="结合律"><a href="#结合律" class="headerlink" title="结合律"></a>结合律</h3><p>如何为 <code>compose</code> 的调用分组不重要，结果是一样的</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> associative = <span class="title function_">compose</span>(f, <span class="title function_">compose</span>(g, h)) == <span class="title function_">compose</span>(<span class="title function_">compose</span>(f, g), h); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+<p>因此，可以给 <code>compose</code> 传递很多参数而不必自己手动分组，它自己会决定如何分组（这个时候 <code>compose</code> 就不是上面写的那个只接受两个参数的了，而要写个多个的）</p>
+<p>因为有了结合律，所以任何一个函数分组都可以被拆开来，然后再以它们自己的组合方式打包在一起</p>
+<p>如何组合的最佳实践：让组合可重用</p>
+<h3 id="pointfree"><a href="#pointfree" class="headerlink" title="pointfree"></a>pointfree</h3><p>函数无须提及将要操作的数据是什么样的</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 非 pointfree，因为提到了数据：word</span></span><br><span class="line"><span class="keyword">var</span> snakeCase = <span class="keyword">function</span> (<span class="params">word</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> word.<span class="title function_">toLowerCase</span>().<span class="title function_">replace</span>(<span class="regexp">/\s+/ig</span>, <span class="string">&#x27;_&#x27;</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// pointfree</span></span><br><span class="line"><span class="keyword">var</span> snakeCase = <span class="title function_">compose</span>(<span class="title function_">replace</span>(<span class="regexp">/\s+/ig</span>, <span class="string">&#x27;_&#x27;</span>), toLowerCase);</span><br></pre></td></tr></table></figure>
+
+<p>一等公民的函数+柯里化+组合协作起来，通过<strong>管道</strong>把数据在接受单个参数的函数间传递</p>
+<p>pointfree 模式能够帮助我们减少不必要的命名，让代码保持简洁和通用 </p>
+<p>在组合时注意如果想组合类似 <code>map</code> 这种接受两个参数的函数，需要先对 <code>map</code> 局部调用使得其返回接受一个参数的函数</p>
+<p>在 debug 过程中可以用 <code>trace</code> 函数来追踪代码执行情况，在想要观察的特定点（管道的某一环）观察数据</p>
+<h3 id="范畴学"><a href="#范畴学" class="headerlink" title="范畴学"></a>范畴学</h3><p>把很多数学分支（集合论、类型论、群论、逻辑学等…）中相同的概念加以形式化</p>
+<blockquote>
+<p>…范畴：有以下这些组件（component）的搜集（collection）就构成了一个范畴</p>
+<ul>
+<li>对象的搜集</li>
+<li>态射的搜集</li>
+<li>态射的组合</li>
+<li>indentity 这个独特的态射</li>
+</ul>
+</blockquote>
+<p>对应到编程上：</p>
+<ul>
+<li><p>对象的搜集：数据类型，例如 String Boolean Number Object 等。通常我们把数据类型视作所有可能的值得一个集合，这样可以用集合论处理类型</p>
+</li>
+<li><p>态射的搜集：态射是标准的、普通的纯函数</p>
+</li>
+<li><p>态射的组合：本章介绍的组合 <code>compose</code>。在范畴学中任何组合都适用结合律</p>
+</li>
+<li><p>indentity 这个独特的态射</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> id = <span class="keyword">function</span>(<span class="params">x</span>) &#123; <span class="keyword">return</span> x; &#125;;</span><br></pre></td></tr></table></figure>
+
+<p>有了 <code>id</code> 函数，就可以有单位律（和实数的单位元一样）</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">compose</span>(id, f) = <span class="title function_">compose</span>(f, id) == f;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="示例应用"><a href="#示例应用" class="headerlink" title="示例应用"></a>示例应用</h2><p>声明式代码：指明“做什么“，而不是”怎么做“</p>
+<table>
+<thead>
+<tr>
+<th>命令式</th>
+<th>声明式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>for 循环，硬编码处理迭代累加blabla…</td>
+<td>map</td>
+</tr>
+<tr>
+<td>硬编码顺序调用函数</td>
+<td>compose 组合函数，不指定执行顺序（天然地适合并行运算），为潜在的代码更新提供支持</td>
+</tr>
+</tbody></table>
+<p><strong>map 的组合律</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> law = <span class="title function_">compose</span>(<span class="title function_">map</span>(f), <span class="title function_">map</span>(g)) == <span class="title function_">map</span>(<span class="title function_">compose</span>(f, g));</span><br></pre></td></tr></table></figure>
+
+<p>可以用来重构代码（就像数学推导公式一样）</p>
+<h2 id="类型签名"><a href="#类型签名" class="headerlink" title="类型签名"></a>类型签名</h2><p>Hindley-Milner 系统</p>
+<p>函数写成 <code>a -&gt; b</code> 的样子，表示接受值和返回值</p>
+<p>连续指向</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// map :: (a -&gt; b) -&gt; [a] -&gt; [b]</span></span><br><span class="line"><span class="keyword">var</span> map = <span class="title function_">curry</span>(<span class="keyword">function</span>(<span class="params">f, xs</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> xs.<span class="title function_">map</span>(f);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>最简单的理解：map 接受两个参数，第一个是 <code>f</code>，类型为 <code>a -&gt; b</code>；第二个是 <code>xs</code>，类型为 <code>[a]</code>；返回一个数组 <code>[b]</code></p>
+<p>深入理解：从右向左加括号 <code>(a -&gt; b) -&gt; ([a] -&gt; [b])</code>，外层是输入一个 <code>a -&gt; b</code> 返回 <code>[a] -&gt; [b]</code>，输入一个函数返回一个函数；内层是 <code>[a] -&gt; [b]</code>，输入数组返回数组</p>
+<p>仅仅根据类型签名，就可以理解函数做了什么事情，比如 map 其实就是在每个 <code>a</code> 上调用一次 <code>f</code>(<code>a -&gt; b</code>)，从而得到一个 <code>[b]</code></p>
+<p>另一个例子</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// reduce :: (b -&gt; a -&gt; b) -&gt; b -&gt; [a] -&gt; b</span></span><br><span class="line"><span class="keyword">var</span> reduce = <span class="title function_">curry</span>(<span class="keyword">function</span>(<span class="params">f, x, xs</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> xs.<span class="title function_">reduce</span>(f, x);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>理解：</p>
+<ul>
+<li>第一个参数<code>f</code>：<code>(b -&gt; a -&gt; b)</code>，接受一个 <code>b</code> 一个 <code>a</code>，返回 <code>b</code></li>
+<li>那么这里的 a b 来源于哪里呢，其实就在第二三个参数 <code>b</code> 和 <code>[a]</code>，这里的 b a 会传给 f 作为参数</li>
+<li>reduce 的最终返回结果是一个 <code>b</code>，其实就是 <code>f :: b -&gt; a -&gt; b</code> 的这个输出 <code>b</code></li>
+<li>对照 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce">reduce 的真实定义</a> 来理解：<ul>
+<li><code>f</code> 即要对数组中每个值执行的函数，它的参数实际上是：<code>b</code> 为 <code>accumulator</code> 即累计回调的值，<code>a</code> 为 <code>currentValue</code> 即正在处理的当前数组元素</li>
+<li><code>x</code> 是第一次调用 <code>f</code> 时的初始值</li>
+<li><code>xs</code> 是数组，不用讲了…</li>
+</ul>
+</li>
+</ul>
+<h3 id="Parametricity"><a href="#Parametricity" class="headerlink" title="Parametricity"></a>Parametricity</h3><p><a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Parametricity">wiki</a> （暂时还没理解这个概念啥意思）</p>
+<p>但反正这个特性表明，<strong>函数将会以一种统一的行为作用于所有的类型</strong></p>
+<p>也就是说，在看着类型签名进行函数功能的推断时，要保证函数对每一个可能的类型操作必须保持统一，这样就能缩小可能的功能的范围</p>
+<p>例如，<code>// head :: [a] -&gt; a</code>，a 可能是任意类型，所以函数在对 <code>a</code> 一无所知的情况下，可能对 <code>[a]</code> 进行的操作，只可能是返回数组中的某个元素</p>
+<h3 id="自由定理"><a href="#自由定理" class="headerlink" title="自由定理"></a>自由定理</h3><p>根据（多态）类型签名，可以无需知道函数具体实现的情况就对函数表达式进行推导得到一些普适的重写规则，从而可以重构代码，提高代码效率</p>
+<h3 id="类型约束"><a href="#类型约束" class="headerlink" title="类型约束"></a>类型约束</h3><p>也可以把类型约束为一个特定的接口（interface）</p>
+<h2 id="容器"><a href="#容器" class="headerlink" title="容器"></a>容器</h2><h3 id="Indentity"><a href="#Indentity" class="headerlink" title="Indentity"></a>Indentity</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="title class_">Container</span> = <span class="keyword">function</span>(<span class="params">x</span>) &#123;</span><br><span class="line">    <span class="comment">// 装载任意类型的值</span></span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">__value</span> = x;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 构造器</span></span><br><span class="line"><span class="title class_">Container</span>.<span class="property">of</span> = <span class="keyword">function</span>(<span class="params">x</span>) &#123; </span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Container</span>(x); </span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// 一个让别的函数（f）能操作容器中值的方法</span></span><br><span class="line"><span class="comment">// 这样就可以不离开 Container 而操作容器里面的值</span></span><br><span class="line"><span class="comment">// 可以 Container.of(2).map(blabla).map(blabla) 连续调用</span></span><br><span class="line"><span class="comment">// 啊哈，那 map 就是个组合（compostion）了</span></span><br><span class="line"><span class="title class_">Container</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">map</span> = <span class="keyword">function</span>(<span class="params">f</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title class_">Contain</span>.<span class="title function_">of</span>(<span class="title function_">f</span>(<span class="variable language_">this</span>.<span class="property">__value</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>functor：实现了 <code>map</code> 函数并遵守一些特定规则的容器类型</p>
+</blockquote>
+<p>把值装进一个容器，而且只能使用 <code>map</code> 来处理它——是抽象，对函数运用的抽象（当 <code>map</code> 一个函数的时候，我们请求容器来运行这个函数）</p>
+<h3 id="Maybe"><a href="#Maybe" class="headerlink" title="Maybe"></a>Maybe</h3><p>另一种 functor：处理空值</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="title class_">Maybe</span> = <span class="keyword">function</span>(<span class="params">x</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">__value</span> = x;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="title class_">Maybe</span>.<span class="property">of</span> = <span class="keyword">function</span>(<span class="params">x</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Maybe</span>(x);</span><br><span class="line">&#125;;</span><br><span class="line"><span class="title class_">Maybe</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">isNothing</span> = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> (<span class="variable language_">this</span>.<span class="property">__value</span> === <span class="literal">null</span> || <span class="variable language_">this</span>.<span class="property">__value</span> === <span class="literal">undefined</span>);</span><br><span class="line">&#125;;</span><br><span class="line"><span class="title class_">Maybe</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">map</span> = <span class="keyword">function</span>(<span class="params">f</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="title function_">isNothing</span>()</span><br><span class="line">        ? <span class="title class_">Maybe</span>.<span class="title function_">of</span>(<span class="literal">null</span>)</span><br><span class="line">    	: <span class="title class_">Maybe</span>.<span class="title function_">of</span>(<span class="title function_">f</span>(<span class="variable language_">this</span>.<span class="property">__value</span>));</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>这样我们在使用 <code>map</code> 时代码就不会报错了，而是会得到 <code>Maybe(null)</code></p>
+<p><code>Maybe</code> 最常用在那些可能会无法成功返回结果的函数中，通过（人工或自动）抛出 <code>Maybe(null)</code> 可以实现失败时立即切断执行</p>
+<p><strong>more pointfree…</strong></p>
+<p><code>any_functor_at_all</code> 即为我们上面创建的 <code>Contianer</code>、<code>Maybe</code> 等任意 functor，这样就把 functor 的点记式 map 代理成了 pointfree 的 map 了</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// map :: Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b</span></span><br><span class="line"><span class="keyword">var</span> map = <span class="title function_">curry</span>(<span class="keyword">function</span>(<span class="params">f, any_functor_at_all</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> any_functor_at_all.<span class="title function_">map</span>(f);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>一个帮助函数 <code>maybe</code>，用于返回一个自定义的值然后还能继续执行后面的代码</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// maybe :: b -&gt; (a -&gt; b) -&gt; Maybe a -&gt; b</span></span><br><span class="line"><span class="keyword">var</span> maybe = <span class="title function_">curry</span>(<span class="keyword">function</span>(<span class="params">x, f, m</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> m.<span class="title function_">isNothing</span>() ? x : <span class="title function_">f</span>(m.<span class="property">__value</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="Either"><a href="#Either" class="headerlink" title="Either"></a>Either</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="title class_">Left</span> = <span class="keyword">function</span>(<span class="params">x</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">__value</span> = x;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="title class_">Left</span>.<span class="property">of</span> = <span class="keyword">function</span>(<span class="params">x</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Left</span>(x);</span><br><span class="line">&#125;;</span><br><span class="line"><span class="title class_">Left</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">map</span> = <span class="keyword">function</span>(<span class="params">f</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> <span class="title class_">Right</span> = <span class="keyword">function</span>(<span class="params">x</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">__value</span> = x;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="title class_">Right</span>.<span class="property">of</span> = <span class="keyword">function</span>(<span class="params">x</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Right</span>(x);</span><br><span class="line">&#125;;</span><br><span class="line"><span class="title class_">Right</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">map</span> = <span class="keyword">function</span>(<span class="params">f</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title class_">Right</span>.<span class="title function_">of</span>(<span class="title function_">f</span>(<span class="variable language_">this</span>.<span class="property">__value</span>));</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Right</span>.<span class="title function_">of</span>(<span class="string">&#x27;rain&#x27;</span>).<span class="title function_">map</span>(<span class="keyword">function</span>(<span class="params">str</span>)&#123; <span class="keyword">return</span> <span class="string">&#x27;b&#x27;</span>+str; &#125;);</span><br><span class="line"><span class="comment">// Right(&#x27;brain&#x27;)</span></span><br><span class="line"></span><br><span class="line"><span class="title class_">Left</span>.<span class="title function_">of</span>(<span class="string">&#x27;rain&#x27;</span>).<span class="title function_">map</span>(<span class="keyword">function</span>(<span class="params">str</span>)&#123; <span class="keyword">return</span> <span class="string">&#x27;b&#x27;</span>+str; &#125;);</span><br><span class="line"><span class="comment">// Left(&#x27;rain&#x27;) !here</span></span><br></pre></td></tr></table></figure>
+
+<p><code>Right</code> 就像个 <code>Container</code>，而 <code>Left</code> 无视了我们的 map 请求</p>
+<p><code>Left</code> 可以用来返回错误，让程序短路，比 <code>Maybe(null)</code> 好的是，我们可以在可能错误的地方给 <code>Left</code> 传错误信息了</p>
+<p><code>Left</code> 和 <code>Right</code> 是 <code>Either</code> 抽象类型的两个子类，一个（伪）类型签名可以这样写：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Either(String, Number)</span></span><br><span class="line"><span class="comment">// String 表示左边的值是 String，也就是 Left(String)</span></span><br><span class="line"><span class="comment">// Number 表示右边 Right(Number)</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>lift</strong>：一个函数在调用的时候，如果被 <code>map</code> 包裹了，那么它就会从一个非 functor 函数转换为一个 functor 函数，我们把这个过程叫做 lift。一个比较好的实践是，仍按照普通方式去写（操作普通数据类型的）函数，在必要的时候再通过 lift 变为合适的容器去操作容器类型，这样能得到更简单、重用性更高的函数，它们能够随需求而变，兼容任意 functor</p>
+<p><strong>帮助函数 <code>either</code></strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// either :: (a -&gt; c) -&gt; (b -&gt; c) -&gt; Either a b -&gt; c</span></span><br><span class="line"><span class="keyword">var</span> either = <span class="title function_">curry</span>(<span class="keyword">function</span>(<span class="params">f, g, e</span>) &#123;</span><br><span class="line">    <span class="keyword">switch</span>(e.<span class="property">constructor</span>) &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="title class_">Left</span>: <span class="keyword">return</span> <span class="title function_">f</span>(e.<span class="property">__value</span>);</span><br><span class="line">        <span class="keyword">case</span> <span class="title class_">Right</span>: <span class="keyword">return</span> <span class="title function_">g</span>(e.<span class="property">__value</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="IO"><a href="#IO" class="headerlink" title="IO"></a>IO</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="variable constant_">IO</span> = <span class="keyword">function</span>(<span class="params">f</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">__value</span> = f;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="variable constant_">IO</span>.<span class="property">of</span> = <span class="keyword">function</span>(<span class="params">x</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title function_">IO</span>(<span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> x;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;;</span><br><span class="line"><span class="variable constant_">IO</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">map</span> = <span class="keyword">function</span>(<span class="params">f</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title function_">IO</span>(_.<span class="title function_">compose</span>(f, <span class="variable language_">this</span>.<span class="property">__value</span>));</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><code>IO</code> 把非纯动作捕获到包裹函数里，目的是延迟这个非纯动作。我们可以认为 <code>IO</code> 包含的是被包裹的执行动作的返回值，而不是包裹函数本身（在 of 函数中可以看出，<code>IO(function() &#123; return x; &#125;)</code> 仅仅是为了延迟执行，其实我们得到的是 <code>IO(x)</code></p>
+<p>通过链式调用 <code>map</code>，其实是把传给 <code>map</code> 的函数们压入一个“运行栈”，直到最终调用者调用时才会运行这些（不纯的）函数们</p>
+<h3 id="异步任务"><a href="#异步任务" class="headerlink" title="异步任务"></a>异步任务</h3><p><code>Task</code></p>
+<h3 id="一点理论"><a href="#一点理论" class="headerlink" title="一点理论"></a>一点理论</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// identity 同一律</span></span><br><span class="line"><span class="title function_">map</span>(id) === id;</span><br><span class="line"></span><br><span class="line"><span class="comment">// composition 组合律</span></span><br><span class="line"><span class="title function_">compose</span>(<span class="title function_">map</span>(f), <span class="title function_">map</span>(g)) === <span class="title function_">map</span>(<span class="title function_">compose</span>(f, g));</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>在范畴学中，functor 接受一个范畴的对象和态射（morphism），然后把它们映射（map）到另一个范畴里去</p>
+<p>可以把范畴想象成一个有着多个对象的网络，对象之间靠态射连接。那么 functor 可以把一个范畴映射到另外一个，而且不会破坏原有的网络</p>
+</blockquote>
+<p><img src="https://llh911001.gitbooks.io/mostly-adequate-guide-chinese/content/images/functormap.png" alt="functor diagram"></p>
+<h2 id="Monad"><a href="#Monad" class="headerlink" title="Monad"></a>Monad</h2><h3 id="pointed-functor"><a href="#pointed-functor" class="headerlink" title="pointed functor"></a>pointed functor</h3><blockquote>
+<p>pointed functor 是实现了 <code>of</code> 方法的 functor</p>
+</blockquote>
+<p>关键是用 <code>of</code> 把任意值丢到容器里然后就可以开始到处使用 <code>map</code> 的能力，像这样：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">any_pointed_functor.<span class="title function_">of</span>(any_value).<span class="title function_">map</span>(f)</span><br></pre></td></tr></table></figure>
+
+<p><code>of</code> 方法不是用来避免 <code>new</code> 关键字的，而是用来把值放到默认最小化上下文（default minimal context）中的（我们希望容器类型的任意值都能发生 <code>lift</code>，然后像所有的 functor 那样再 <code>map</code> 出去）</p>
+<h3 id="monad"><a href="#monad" class="headerlink" title="monad"></a>monad</h3><blockquote>
+<p>monad 是可以变扁（flatten）的 pointed functor</p>
+</blockquote>
+<p>因为在连续的 functor 传递中，值会被包成 functor(value) -&gt; 传给下一个函数 -&gt; 而下一个函数是普通函数需要用 map 包一下以处理 functor -&gt; 处理完就变成了 functor(functor(value)) -&gt; 那么再下一个函数就需要包两层 map…</p>
+<p>例如，</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//  safeProp :: Key -&gt; &#123;Key: a&#125; -&gt; Maybe a</span></span><br><span class="line"><span class="keyword">var</span> safeProp = <span class="title function_">curry</span>(<span class="keyword">function</span>(<span class="params">x, obj</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Maybe</span>(obj[x]);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">//  safeHead :: [a] -&gt; Maybe a</span></span><br><span class="line"><span class="keyword">var</span> safeHead = <span class="title function_">safeProp</span>(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//  firstAddressStreet :: User -&gt; Maybe (Maybe (Maybe Street) )</span></span><br><span class="line"><span class="keyword">var</span> firstAddressStreet = <span class="title function_">compose</span>(</span><br><span class="line">  <span class="title function_">map</span>(<span class="title function_">map</span>(<span class="title function_">safeProp</span>(<span class="string">&#x27;street&#x27;</span>))), <span class="title function_">map</span>(safeHead), <span class="title function_">safeProp</span>(<span class="string">&#x27;addresses&#x27;</span>)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="title function_">firstAddressStreet</span>(</span><br><span class="line">  &#123;<span class="attr">addresses</span>: [&#123;<span class="attr">street</span>: &#123;<span class="attr">name</span>: <span class="string">&#x27;Mulburry&#x27;</span>, <span class="attr">number</span>: <span class="number">8402</span>&#125;, <span class="attr">postcode</span>: <span class="string">&quot;WC2N&quot;</span> &#125;]&#125;</span><br><span class="line">);</span><br><span class="line"><span class="comment">// Maybe(Maybe(Maybe(&#123;name: &#x27;Mulburry&#x27;, number: 8402&#125;)))</span></span><br></pre></td></tr></table></figure>
+
+<p>为了解决这个一层一层洋葱一样的嵌套，可以在 functor 上定义一个 <code>join</code> 方法，这个 functor 就成为了一个 monad</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Maybe</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">join</span> = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="title function_">isNothing</span>() ? <span class="title class_">Maybe</span>.<span class="title function_">of</span>(<span class="literal">null</span>) : <span class="variable language_">this</span>.<span class="property">__value</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> mmo = <span class="title class_">Maybe</span>.<span class="title function_">of</span>(<span class="title class_">Maybe</span>.<span class="title function_">of</span>(<span class="string">&#x27;nunchuncks&#x27;</span>));</span><br><span class="line"><span class="comment">// Maybe.of(Maybe.of(&#x27;nunchuncks&#x27;))</span></span><br><span class="line">mmo.<span class="title function_">join</span>();</span><br><span class="line"><span class="comment">// Maybe.of(&#x27;nunchuncks&#x27;) -&gt; flatten!!</span></span><br></pre></td></tr></table></figure>
+
+<p>用 monad 魔法改造上面的 firstAddressStreet 例子，在每次得到嵌套 <code>Maybe</code> 后加一个 <code>join</code> 把它变平</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//  join :: Monad m =&gt; m (m a) -&gt; m a</span></span><br><span class="line"><span class="keyword">var</span> join = <span class="keyword">function</span>(<span class="params">mma</span>) &#123; <span class="keyword">return</span> mma.<span class="title function_">join</span>(); &#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//  firstAddressStreet :: User -&gt; Maybe Street</span></span><br><span class="line"><span class="keyword">var</span> firstAddressStreet = <span class="title function_">compose</span>(join, <span class="title function_">map</span>(<span class="title function_">safeProp</span>(<span class="string">&#x27;street&#x27;</span>)), join, <span class="title function_">map</span>(safeHead), <span class="title function_">safeProp</span>(<span class="string">&#x27;addresses&#x27;</span>)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="title function_">firstAddressStreet</span>(</span><br><span class="line">  &#123;<span class="attr">addresses</span>: [&#123;<span class="attr">street</span>: &#123;<span class="attr">name</span>: <span class="string">&#x27;Mulburry&#x27;</span>, <span class="attr">number</span>: <span class="number">8402</span>&#125;, <span class="attr">postcode</span>: <span class="string">&quot;WC2N&quot;</span> &#125;]&#125;</span><br><span class="line">);</span><br><span class="line"><span class="comment">// Maybe(&#123;name: &#x27;Mulburry&#x27;, number: 8402&#125;)</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="chain"><a href="#chain" class="headerlink" title="chain"></a>chain</h3><p>上面的例子中包含一种模式：我们总是在紧跟着 <code>map</code> 的后面调用 <code>join</code>。我们可以把这个行为抽象到一个叫做 <code>chain</code> 的函数中</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//  chain :: Monad m =&gt; (a -&gt; m b) -&gt; m a -&gt; m b</span></span><br><span class="line"><span class="keyword">var</span> chain = <span class="title function_">curry</span>(<span class="keyword">function</span>(<span class="params">f, m</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> m.<span class="title function_">map</span>(f).<span class="title function_">join</span>(); <span class="comment">// or compose(join, map(f))(m)</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p><code>chain</code> 也叫作 <code>&gt;&gt;=</code> （读作 bind）或者 <code>flatMap</code>，重构一下上面的例子</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// map/join</span></span><br><span class="line"><span class="keyword">var</span> firstAddressStreet = <span class="title function_">compose</span>(join, <span class="title function_">map</span>(<span class="title function_">safeProp</span>(<span class="string">&#x27;street&#x27;</span>)), join, <span class="title function_">map</span>(safeHead), <span class="title function_">safeProp</span>(<span class="string">&#x27;addresses&#x27;</span>)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="comment">// chain</span></span><br><span class="line"><span class="keyword">var</span> firstAddressStreet = <span class="title function_">compose</span>(<span class="title function_">chain</span>(<span class="title function_">safeProp</span>(<span class="string">&#x27;street&#x27;</span>)), <span class="title function_">chain</span>(safeHead), <span class="title function_">safeProp</span>(<span class="string">&#x27;addresses&#x27;</span>)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<p>因为 <code>chain</code> 可以轻松嵌套多个作用，因此我们就能以一种纯函数式的方式来表示 序列（sequence）和 变量赋值（variable assignment）。像这样：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Maybe</span>.<span class="title function_">of</span>(<span class="literal">null</span>).<span class="title function_">chain</span>(<span class="title function_">safeProp</span>(<span class="string">&#x27;address&#x27;</span>)).<span class="title function_">chain</span>(<span class="title function_">safeProp</span>(<span class="string">&#x27;street&#x27;</span>));</span><br><span class="line"><span class="comment">// Maybe(null)</span></span><br></pre></td></tr></table></figure>
+
+<p>使用插入式的 <code>chain</code>，避免了 <code>compose</code> 时还需要几个帮助函数</p>
+<p>记住：返回的如果是“普通”值就用 <code>map</code>，如果是 <code>functor</code> 就用 <code>chain</code></p>
+<h3 id="理论"><a href="#理论" class="headerlink" title="理论"></a>理论</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 结合律</span></span><br><span class="line"><span class="title function_">compose</span>(join, <span class="title function_">map</span>(join)) == <span class="title function_">compose</span>(join, join)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://llh911001.gitbooks.io/mostly-adequate-guide-chinese/content/images/monad_associativity.png" alt="monad associativity law"></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 三角同一律</span></span><br><span class="line"><span class="title function_">compose</span>(join, <span class="keyword">of</span>) == <span class="title function_">compose</span>(join, <span class="title function_">map</span>(<span class="keyword">of</span>)) == id</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://llh911001.gitbooks.io/mostly-adequate-guide-chinese/content/images/triangle_identity.png" alt="monad identity law"></p>
+<h2 id="Applicative-Functor"><a href="#Applicative-Functor" class="headerlink" title="Applicative Functor"></a>Applicative Functor</h2><blockquote>
+<p><code>ap</code> 就是这样一种函数，能够把一个 functor 的函数值应用到另一个 functor 的值上。</p>
+</blockquote>
+<p>比如我们想让两个 <code>Container</code> 的值相加，</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 这样是行不通的, 因为 2 和 3 都藏在 Container 里</span></span><br><span class="line"><span class="title function_">add</span>(<span class="title class_">Container</span>.<span class="title function_">of</span>(<span class="number">2</span>), <span class="title class_">Container</span>.<span class="title function_">of</span>(<span class="number">3</span>));</span><br><span class="line"><span class="comment">// NaN</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用可靠的 map 函数, 得到一个局部调用的 add(2)</span></span><br><span class="line"><span class="keyword">var</span> container_of_add_2 = <span class="title function_">map</span>(add, <span class="title class_">Container</span>.<span class="title function_">of</span>(<span class="number">2</span>));</span><br><span class="line"><span class="comment">// Container(add(2))</span></span><br><span class="line"></span><br><span class="line"><span class="title class_">Container</span>.<span class="title function_">of</span>(<span class="number">2</span>).<span class="title function_">chain</span>(<span class="keyword">function</span>(<span class="params">two</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title class_">Container</span>.<span class="title function_">of</span>(<span class="number">3</span>).<span class="title function_">map</span>(<span class="title function_">add</span>(two));</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>ap 版本</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Container</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">ap</span> = <span class="keyword">function</span>(<span class="params">other_container</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> other_container.<span class="title function_">map</span>(<span class="variable language_">this</span>.<span class="property">__value</span>);</span><br><span class="line">    <span class="comment">// this.__value 是一个函数, 接受另一个 functor 作为参数</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 这样使用</span></span><br><span class="line"><span class="title class_">Container</span>.<span class="title function_">of</span>(<span class="title function_">add</span>(<span class="number">2</span>)).<span class="title function_">ap</span>(<span class="title class_">Container</span>.<span class="title function_">of</span>(<span class="number">3</span>)); <span class="comment">// Container(5)</span></span><br><span class="line"><span class="title class_">Container</span>.<span class="title function_">of</span>(<span class="number">2</span>).<span class="title function_">map</span>(add).<span class="title function_">ap</span>(<span class="title class_">Container</span>.<span class="title function_">of</span>(<span class="number">3</span>)); <span class="comment">// Container(5)</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>applicative functor 是实现了 <code>ap</code> 方法的 pointed functor</p>
+</blockquote>
+<p>一个特性：<code>map</code> 一个 <code>f</code> 等价于 <code>ap</code> 一个值为 <code>f</code> 的 functor</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">F.<span class="title function_">of</span>(x).<span class="title function_">map</span>(f) == F.<span class="title function_">of</span>(f).<span class="title function_">ap</span>(F.<span class="title function_">of</span>(x))</span><br></pre></td></tr></table></figure>
+
+<p>applicative functor 可以使几个（独立的不需要依赖顺序的）函数同时执行</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Http.get :: String -&gt; Task Error HTML</span></span><br><span class="line"><span class="keyword">var</span> renderPage = <span class="title function_">curry</span>(<span class="keyword">function</span>(<span class="params">destions, events</span>) &#123; <span class="comment">/* render page */</span> &#125;);</span><br><span class="line"><span class="title class_">Task</span>.<span class="title function_">of</span>(renderPage).<span class="title function_">ap</span>(<span class="title class_">Http</span>.<span class="title function_">get</span>(<span class="string">&#x27;/destinations&#x27;</span>)).<span class="title function_">ap</span>(<span class="title class_">Http</span>.<span class="title function_">get</span>(<span class="string">&#x27;/events&#x27;</span>))</span><br><span class="line"><span class="comment">// 两个 HTTP 请求会同时执行，当两者的响应都返回之后 renderPage 才会被调用</span></span><br><span class="line"><span class="comment">// 是使用局部调用的函数来达成上述结果的，所以必须保证 renderPage 是 curry 函数（没想明白！）</span></span><br><span class="line"><span class="comment">// 调用了两次 ap，每次调用中 renderPage 就收到一个参数然后运行，直到所有的参数都传进来它也就执行完毕了</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="lift"><a href="#lift" class="headerlink" title="lift"></a>lift</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> liftA2 = <span class="title function_">curry</span>(<span class="keyword">function</span>(<span class="params">f, functor1, functor2</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> functor1.<span class="title function_">map</span>(f).<span class="title function_">ap</span>(functor2);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="keyword">var</span> liftA3 = <span class="title function_">curry</span>(<span class="keyword">function</span>(<span class="params">f, functor1, functor2, functor3</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> functor1.<span class="title function_">map</span>(f).<span class="title function_">ap</span>(functor2).<span class="title function_">ap</span>(functor3);</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// liftA4, etc...</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>让那些小代码块发生 lift，成为 applicative functor 中的一员</p>
+</blockquote>
+<p>一个实际用例：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// checkEmail :: User -&gt; Either String Email</span></span><br><span class="line"><span class="comment">// checkName :: User -&gt; Either String String</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// createUser :: Email -&gt; String -&gt; IO User</span></span><br><span class="line">ver createUser = <span class="title function_">curry</span>(<span class="keyword">function</span>(<span class="params">email, name</span>) &#123; <span class="comment">/* creating */</span> &#125;);</span><br><span class="line"></span><br><span class="line"><span class="title class_">Either</span>.<span class="title function_">of</span>(createUser).<span class="title function_">ap</span>(<span class="title function_">checkEmail</span>(user)).<span class="title function_">ap</span>(<span class="title function_">checkName</span>(user));</span><br><span class="line"></span><br><span class="line"><span class="title function_">liftA2</span>(createUser, <span class="title function_">checkEmail</span>(user), <span class="title function_">checkName</span>(user));</span><br></pre></td></tr></table></figure>
+
+<h3 id="衍生函数"><a href="#衍生函数" class="headerlink" title="衍生函数"></a>衍生函数</h3><p><code>of/ap</code> &#x3D; <code>map</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">X.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">map</span> = <span class="keyword">function</span>(<span class="params">f</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">constructor</span>.<span class="title function_">of</span>(f).<span class="title function_">ap</span>(<span class="variable language_">this</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>chain</code> -&gt; functor applicative（但会失去 <code>ap</code> 并行的能力）</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">X.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">map</span> = <span class="keyword">function</span>(<span class="params">f</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> m = <span class="variable language_">this</span>;</span><br><span class="line">    <span class="keyword">return</span> m.<span class="title function_">chain</span>(<span class="keyword">function</span>(<span class="params">a</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> m.<span class="property">constructor</span>.<span class="title function_">of</span>(<span class="title function_">f</span>(a));</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">X.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">ap</span> = <span class="keyword">function</span>(<span class="params">other</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="title function_">chain</span>(<span class="keyword">function</span>(<span class="params">f</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> other.<span class="title function_">map</span>(f);</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="定律"><a href="#定律" class="headerlink" title="定律"></a>定律</h3><ul>
+<li><p>applicative functor 是组合关闭（closed under composition）的，意味着 <code>ap</code> 永远不会改变容器类型</p>
+</li>
+<li><p>同一律（identity）</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">A.<span class="title function_">of</span>(id).<span class="title function_">ap</span>(v) == v</span><br><span class="line"><span class="title function_">map</span>(id) == id</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>同态（homomorphism）</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">A.<span class="title function_">of</span>(f).<span class="title function_">ap</span>(A.<span class="title function_">of</span>(x)) == A.<span class="title function_">of</span>(<span class="title function_">f</span>(x))</span><br></pre></td></tr></table></figure>
+
+<p>同态就是一个能够保持结构的映射，实际上，functor 就是一个在不同范畴间的同态，因为 functor 在经过映射之后保持了原始范畴的结构</p>
+</li>
+<li><p>互换（interchange）</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">v.<span class="title function_">ap</span>(A.<span class="title function_">of</span>(x)) == A.<span class="title function_">of</span>(<span class="keyword">function</span>(<span class="params">f</span>) &#123; <span class="keyword">return</span> <span class="title function_">f</span>(x) &#125;).<span class="title function_">ap</span>(v)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>组合（composition）</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">A.<span class="title function_">of</span>(compose).<span class="title function_">ap</span>(u).<span class="title function_">ap</span>(v).<span class="title function_">ap</span>(w) == u.<span class="title function_">ap</span>(v.<span class="title function_">ap</span>(w));</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/note/" rel="tag"># note</a>
+              <a href="/tags/Functional-Programming/" rel="tag"># Functional Programming</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/04/30/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-%E5%9B%BE%E8%AF%B4%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="prev" title="读书笔记-图说设计模式">
+      <i class="fa fa-chevron-left"></i> 读书笔记-图说设计模式
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/08/18/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-Javascript%E8%BD%BB%E9%87%8F%E7%BA%A7%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" rel="next" title="读书笔记-Javascript轻量级函数式编程">
+      读书笔记-Javascript轻量级函数式编程 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B"><span class="nav-number">1.</span> <span class="nav-text">函数式编程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E6%98%AF%E4%B8%80%E7%AD%89%E5%85%AC%E6%B0%91"><span class="nav-number">1.1.</span> <span class="nav-text">函数是一等公民</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%AF%E5%87%BD%E6%95%B0"><span class="nav-number">1.2.</span> <span class="nav-text">纯函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%AF%E9%87%8C%E5%8C%96"><span class="nav-number">1.3.</span> <span class="nav-text">柯里化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E7%BB%84%E5%90%88"><span class="nav-number">1.4.</span> <span class="nav-text">代码组合</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E5%90%88%E5%BE%8B"><span class="nav-number">1.4.1.</span> <span class="nav-text">结合律</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pointfree"><span class="nav-number">1.4.2.</span> <span class="nav-text">pointfree</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8C%83%E7%95%B4%E5%AD%A6"><span class="nav-number">1.4.3.</span> <span class="nav-text">范畴学</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B%E5%BA%94%E7%94%A8"><span class="nav-number">1.5.</span> <span class="nav-text">示例应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B1%BB%E5%9E%8B%E7%AD%BE%E5%90%8D"><span class="nav-number">1.6.</span> <span class="nav-text">类型签名</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Parametricity"><span class="nav-number">1.6.1.</span> <span class="nav-text">Parametricity</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E7%94%B1%E5%AE%9A%E7%90%86"><span class="nav-number">1.6.2.</span> <span class="nav-text">自由定理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B1%BB%E5%9E%8B%E7%BA%A6%E6%9D%9F"><span class="nav-number">1.6.3.</span> <span class="nav-text">类型约束</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8"><span class="nav-number">1.7.</span> <span class="nav-text">容器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Indentity"><span class="nav-number">1.7.1.</span> <span class="nav-text">Indentity</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Maybe"><span class="nav-number">1.7.2.</span> <span class="nav-text">Maybe</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Either"><span class="nav-number">1.7.3.</span> <span class="nav-text">Either</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IO"><span class="nav-number">1.7.4.</span> <span class="nav-text">IO</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%82%E6%AD%A5%E4%BB%BB%E5%8A%A1"><span class="nav-number">1.7.5.</span> <span class="nav-text">异步任务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E7%82%B9%E7%90%86%E8%AE%BA"><span class="nav-number">1.7.6.</span> <span class="nav-text">一点理论</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Monad"><span class="nav-number">1.8.</span> <span class="nav-text">Monad</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#pointed-functor"><span class="nav-number">1.8.1.</span> <span class="nav-text">pointed functor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#monad"><span class="nav-number">1.8.2.</span> <span class="nav-text">monad</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#chain"><span class="nav-number">1.8.3.</span> <span class="nav-text">chain</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%90%86%E8%AE%BA"><span class="nav-number">1.8.4.</span> <span class="nav-text">理论</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Applicative-Functor"><span class="nav-number">1.9.</span> <span class="nav-text">Applicative Functor</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#lift"><span class="nav-number">1.9.1.</span> <span class="nav-text">lift</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A1%8D%E7%94%9F%E5%87%BD%E6%95%B0"><span class="nav-number">1.9.2.</span> <span class="nav-text">衍生函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E5%BE%8B"><span class="nav-number">1.9.3.</span> <span class="nav-text">定律</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">hayahayao</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">hayahayao</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
