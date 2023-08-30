@@ -19,16 +19,16 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"hayahayao.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.18.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="Streams API  Service Worker StreamSaver.js JSZip">
+    <meta name="description" content="Stream API, but frontend">
 <meta property="og:type" content="article">
 <meta property="og:title" content="前端大文件下载方案">
 <meta property="og:url" content="https://hayahayao.github.io/2020/09/16/%E5%89%8D%E7%AB%AF%E5%A4%A7%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD%E6%96%B9%E6%A1%88/index.html">
 <meta property="og:site_name" content="さおりのBlog">
-<meta property="og:description" content="Streams API  Service Worker StreamSaver.js JSZip">
+<meta property="og:description" content="Stream API, but frontend">
 <meta property="og:locale">
 <meta property="og:image" content="https://user-gold-cdn.xitu.io/2019/12/23/16f304e310ea9e49?imageslim">
 <meta property="article:published_time" content="2020-09-16T03:26:00.000Z">
-<meta property="article:modified_time" content="2023-08-22T18:32:15.814Z">
+<meta property="article:modified_time" content="2023-08-30T08:30:07.341Z">
 <meta property="article:author" content="hayahayao">
 <meta property="article:tag" content="Stream">
 <meta name="twitter:card" content="summary">
@@ -205,7 +205,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-08-23 02:32:15" itemprop="dateModified" datetime="2023-08-23T02:32:15+08:00">2023-08-23</time>
+      <time title="Modified: 2023-08-30 16:30:07" itemprop="dateModified" datetime="2023-08-30T16:30:07+08:00">2023-08-30</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -227,12 +227,7 @@
     
     
     <div class="post-body" itemprop="articleBody"><blockquote>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/Streams_API">Streams API</a> </li>
-<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/Service_Worker_API">Service Worker</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/jimmywarting/StreamSaver.js">StreamSaver.js</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/Stuk/jszip">JSZip</a></li>
-</ul>
+<p>Stream API, but frontend</p>
 </blockquote>
 <span id="more"></span>
 
@@ -280,6 +275,13 @@
 <li>https 环境限制：如为 http，可以把网站改成 https 然后手动信任下证书</li>
 <li>同源限制：如果不同源，可以采用配置 nginx 代理让它们看上去是同源的</li>
 <li>作用域限制：如果不想修改这两个文件的位置，可以通过 nginx 在 sw.js 的 response header 中加入 <code>Service-Worker-Allowed</code> 这个头</li>
+</ul>
+<p><strong>参考：</strong></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/Streams_API">Streams API</a> </li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/Service_Worker_API">Service Worker</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/jimmywarting/StreamSaver.js">StreamSaver.js</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Stuk/jszip">JSZip</a></li>
 </ul>
 
     </div>

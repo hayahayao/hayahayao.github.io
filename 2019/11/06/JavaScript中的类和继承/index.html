@@ -19,15 +19,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"hayahayao.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.18.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="@[toc]">
+    <meta name="description" content="class &amp; extendES5 &amp; ES6 version">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JavaScript中的类和继承">
 <meta property="og:url" content="https://hayahayao.github.io/2019/11/06/JavaScript%E4%B8%AD%E7%9A%84%E7%B1%BB%E5%92%8C%E7%BB%A7%E6%89%BF/index.html">
 <meta property="og:site_name" content="さおりのBlog">
-<meta property="og:description" content="@[toc]">
+<meta property="og:description" content="class &amp; extendES5 &amp; ES6 version">
 <meta property="og:locale">
 <meta property="article:published_time" content="2019-11-06T14:06:40.000Z">
-<meta property="article:modified_time" content="2023-08-30T08:20:55.837Z">
+<meta property="article:modified_time" content="2023-08-30T08:25:34.004Z">
 <meta property="article:author" content="hayahayao">
 <meta property="article:tag" content="JavaScript">
 <meta name="twitter:card" content="summary">
@@ -203,7 +203,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-08-30 16:20:55" itemprop="dateModified" datetime="2023-08-30T16:20:55+08:00">2023-08-30</time>
+      <time title="Modified: 2023-08-30 16:25:34" itemprop="dateModified" datetime="2023-08-30T16:25:34+08:00">2023-08-30</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -224,8 +224,11 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><p>@[toc]</p>
+    <div class="post-body" itemprop="articleBody"><blockquote>
+<p>class &amp; extend<br>ES5 &amp; ES6 version</p>
+</blockquote>
 <span id="more"></span>
+
 <h2 id="类"><a href="#类" class="headerlink" title="类"></a>类</h2><h3 id="工厂模式"><a href="#工厂模式" class="headerlink" title="工厂模式"></a>工厂模式</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">createPerson</span>(<span class="params">name, age, job</span>) &#123;</span><br><span class="line">	<span class="keyword">var</span> o = <span class="keyword">new</span> <span class="title class_">Object</span>();</span><br><span class="line">	o.<span class="property">name</span> = name;</span><br><span class="line">	o.<span class="property">age</span> = age;</span><br><span class="line">	o.<span class="property">job</span> = job;</span><br><span class="line">	o.<span class="property">sayName</span> = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">		<span class="title function_">alert</span>(<span class="variable language_">this</span>.<span class="property">name</span>);</span><br><span class="line">	&#125;;</span><br><span class="line">	<span class="keyword">return</span> o;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> person1 = <span class="title function_">createPerson</span>(<span class="string">&#x27;Nicholas&#x27;</span>, <span class="number">29</span>, <span class="string">&#x27;Software Engineer&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> person2 = <span class="title function_">createPerson</span>(<span class="string">&#x27;Greg&#x27;</span>, <span class="number">27</span>, <span class="string">&#x27;Doctor&#x27;</span>);</span><br></pre></td></tr></table></figure>
 
 <p>方便创建多个相似对象</p>
