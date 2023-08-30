@@ -19,28 +19,32 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"hayahayao.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.18.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="PDFwriter调用打印功能生成pdf">
+    <meta name="description" content="inline style + css var">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Mac虚拟打印机">
-<meta property="og:url" content="https://hayahayao.github.io/2023/07/16/Mac%E8%99%9A%E6%8B%9F%E6%89%93%E5%8D%B0%E6%9C%BA/index.html">
+<meta property="og:title" content="TailwindCss设置动态样式">
+<meta property="og:url" content="https://hayahayao.github.io/2023/08/30/TailwindCss%E8%AE%BE%E7%BD%AE%E5%8A%A8%E6%80%81%E6%A0%B7%E5%BC%8F/index.html">
 <meta property="og:site_name" content="さおりのBlog">
-<meta property="og:description" content="PDFwriter调用打印功能生成pdf">
+<meta property="og:description" content="inline style + css var">
 <meta property="og:locale">
-<meta property="article:published_time" content="2023-07-15T19:27:00.000Z">
-<meta property="article:modified_time" content="2023-08-30T08:26:27.583Z">
+<meta property="og:image" content="https://hayahayao.github.io/images/iShot_2023-08-30_18.09.23.gif">
+<meta property="article:published_time" content="2023-08-30T10:02:16.000Z">
+<meta property="article:modified_time" content="2023-08-30T10:34:58.850Z">
 <meta property="article:author" content="hayahayao">
-<meta property="article:tag" content="MacOS">
+<meta property="article:tag" content="React">
+<meta property="article:tag" content="Next">
+<meta property="article:tag" content="TailwindCss">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hayahayao.github.io/images/iShot_2023-08-30_18.09.23.gif">
 
 
-<link rel="canonical" href="https://hayahayao.github.io/2023/07/16/Mac%E8%99%9A%E6%8B%9F%E6%89%93%E5%8D%B0%E6%9C%BA/">
+<link rel="canonical" href="https://hayahayao.github.io/2023/08/30/TailwindCss%E8%AE%BE%E7%BD%AE%E5%8A%A8%E6%80%81%E6%A0%B7%E5%BC%8F/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"ce","comments":true,"permalink":"https://hayahayao.github.io/2023/07/16/Mac%E8%99%9A%E6%8B%9F%E6%89%93%E5%8D%B0%E6%9C%BA/","path":"2023/07/16/Mac虚拟打印机/","title":"Mac虚拟打印机"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"ce","comments":true,"permalink":"https://hayahayao.github.io/2023/08/30/TailwindCss%E8%AE%BE%E7%BD%AE%E5%8A%A8%E6%80%81%E6%A0%B7%E5%BC%8F/","path":"2023/08/30/TailwindCss设置动态样式/","title":"TailwindCss设置动态样式"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Mac虚拟打印机 | さおりのBlog</title>
+<title>TailwindCss设置动态样式 | さおりのBlog</title>
   
 
 
@@ -113,7 +117,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E6%96%B9%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">操作方法</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0"><span class="nav-number">2.</span> <span class="nav-text">实现</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -167,7 +171,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="ce">
-    <link itemprop="mainEntityOfPage" href="https://hayahayao.github.io/2023/07/16/Mac%E8%99%9A%E6%8B%9F%E6%89%93%E5%8D%B0%E6%9C%BA/">
+    <link itemprop="mainEntityOfPage" href="https://hayahayao.github.io/2023/08/30/TailwindCss%E8%AE%BE%E7%BD%AE%E5%8A%A8%E6%80%81%E6%A0%B7%E5%BC%8F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -180,12 +184,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="Mac虚拟打印机 | さおりのBlog">
+      <meta itemprop="name" content="TailwindCss设置动态样式 | さおりのBlog">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Mac虚拟打印机
+          TailwindCss设置动态样式
         </h1>
 
         <div class="post-meta-container">
@@ -195,15 +199,9 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
+      
 
-      <time title="Created: 2023-07-16 03:27:00" itemprop="dateCreated datePublished" datetime="2023-07-16T03:27:00+08:00">2023-07-16</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-08-30 16:26:27" itemprop="dateModified" datetime="2023-08-30T16:26:27+08:00">2023-08-30</time>
+      <time title="Created: 2023-08-30 18:02:16 / Modified: 18:34:58" itemprop="dateCreated datePublished" datetime="2023-08-30T18:02:16+08:00">2023-08-30</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -211,7 +209,7 @@
       </span>
       <span class="post-meta-item-text">In</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E9%9B%91%E8%AB%87/" itemprop="url" rel="index"><span itemprop="name">雑談</span></a>
+          <a href="/categories/frontend/" itemprop="url" rel="index"><span itemprop="name">frontend</span></a>
         </span>
     </span>
 
@@ -225,18 +223,31 @@
     
     
     <div class="post-body" itemprop="articleBody"><blockquote>
-<p>PDFwriter<br>调用打印功能生成pdf</p>
+<p>inline style + css var</p>
 </blockquote>
 <span id="more"></span>
 
-<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>因为某些原因必须使用 Acrobat Reader 来填 pdf 格式的表（直接用 Mac 自带的预览填出来字体很怪，编码似乎不是一个系列）</p>
-<p>但是 Acrobat Reader 免费的情况下修改完的文件不能直接导出新 pdf，只支持直接打印</p>
-<p>没有打印机的我，研究了一番发现可以使用虚拟打印机，实现在 Acrobat Reader 中调用打印 → 虚拟打印机映射成本地 pdf 文件</p>
-<h2 id="操作方法"><a href="#操作方法" class="headerlink" title="操作方法"></a>操作方法</h2><ul>
-<li>安装虚拟打印功能的应用，我用的是 <a target="_blank" rel="noopener" href="https://github.com/rodyager/RWTS-PDFwriter">https://github.com/rodyager/RWTS-PDFwriter</a></li>
-<li>安装完之后可选 destination folder，也就是保存 pdf 的位置</li>
-<li>检查系统设置→打印机与扫描仪，应该多出了一个叫做 PDFwriter 的打印机</li>
-<li>Acrobat Reader 那边点打印，打印机选择 PDFwriter，就会直接存到指定的位置啦✌🏻</li>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>Next 13 + React 18 + TailwindCss 3</p>
+<p>不使用 styled-component，想要实现动态的 hover 颜色变化（根据每个 component 的数据展示不同颜色的 hover）</p>
+<p><img src="/../images/iShot_2023-08-30_18.09.23.gif" alt="效果"></p>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><p>[TailwindCss Doc - Custom Styles]</p>
+<p>TailwindCss是预编译型的，而不是实时运行，而想要实现的效果需要实时读取每个组件的数据，无法提前给出所有枚举值</p>
+<p>最初的想法是结合 <a target="_blank" rel="noopener" href="https://react.dev/reference/react/useInsertionEffect#injecting-dynamic-styles-from-css-in-js-libraries">React inline-style</a> 以及 <a target="_blank" rel="noopener" href="https://tailwindcss.com/docs/adding-custom-styles#using-arbitrary-values">TailwindCss Custom Styles</a>，类似如下写法</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;className=&#123;`bg-[$&#123;liver.color&#125;%]`&#125;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>但 hover 效果无法实现，因为 TailwindCss 并没有提供hover 颜色对应的 class。</p>
+<p>但又想要保持代码的简洁，不因为这一点就把整个组件设置成 client(客户端渲染)，调查之后发现可以使用 css var 来实现。</p>
+<p>大致实现如下</p>
+<p>LiverCard.tsx<br>使用 inline style 设置 css var</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span></span></span><br><span class="line"><span class="tag">    <span class="attr">className</span>=<span class="string">&quot;liver&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">style</span>=<span class="string">&#123;&#123;</span></span></span><br><span class="line"><span class="tag">        &#x27;<span class="attr">--liver-main-color</span>&#x27;<span class="attr">:</span> <span class="attr">liver.colorMain</span>,</span></span><br><span class="line"><span class="tag">        &#x27;<span class="attr">--liver-highlight-color</span>&#x27;<span class="attr">:</span> <span class="attr">liver.colorHighlight</span>,</span></span><br><span class="line"><span class="tag">    &#125;&#125;</span></span><br><span class="line"><span class="tag">&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>liver.css<br>引用 css var，分别实现 hover 颜色和头像背景色</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.liver</span><span class="selector-class">.card</span><span class="selector-pseudo">:hover</span> &#123;</span><br><span class="line">  <span class="attribute">background-color</span>: <span class="built_in">var</span>(--liver-highlight-color);</span><br><span class="line">  <span class="attribute">color</span>: <span class="built_in">hsl</span>(<span class="built_in">var</span>(--ac)); // card内文字颜色变化</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.liver</span><span class="selector-class">.card</span> &gt; <span class="selector-class">.avatar</span> &gt; <span class="selector-class">.rounded-full</span> &#123;</span><br><span class="line">  <span class="attribute">background-color</span>: <span class="built_in">var</span>(--liver-main-color);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>参考:</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/70584680/problem-with-arbitrary-values-on-tailwind-with-react">https://stackoverflow.com/questions/70584680/problem-with-arbitrary-values-on-tailwind-with-react</a></li>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/28365233/inline-css-styles-in-react-how-to-implement-ahover">https://stackoverflow.com/questions/28365233/inline-css-styles-in-react-how-to-implement-ahover</a></li>
 </ul>
 
     </div>
@@ -247,21 +258,20 @@
 
     <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/MacOS/" rel="tag"># MacOS</a>
+              <a href="/tags/React/" rel="tag"># React</a>
+              <a href="/tags/Next/" rel="tag"># Next</a>
+              <a href="/tags/TailwindCss/" rel="tag"># TailwindCss</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2023/06/30/%E8%BD%AF%E8%80%83%E7%A8%8B%E5%BA%8F%E5%91%98%E5%A4%87%E8%80%83-%E7%AC%94%E8%AE%B0/" rel="prev" title="软考程序员备考+笔记">
-                  <i class="fa fa-angle-left"></i> 软考程序员备考+笔记
+                <a href="/2023/08/30/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2%E6%97%A5%E6%9C%AC%E8%AA%9E/" rel="prev" title="读书笔记-ソフトウェア日本語">
+                  <i class="fa fa-angle-left"></i> 读书笔记-ソフトウェア日本語
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2023/08/27/%E5%8B%95%E7%94%BB%E7%B7%A8%E9%9B%86%E9%96%A2%E9%80%A3/" rel="next" title="動画編集関連">
-                  動画編集関連 <i class="fa fa-angle-right"></i>
-                </a>
             </div>
           </div>
     </footer>
