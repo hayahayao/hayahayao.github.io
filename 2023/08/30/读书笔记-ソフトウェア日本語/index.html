@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="ce">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#7a586e"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#7a586e">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"hayahayao.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.18.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="《ソフトウェア日本語》读书笔记Export from Anki Cards">
+<meta property="og:type" content="article">
+<meta property="og:title" content="读书笔记-ソフトウェア日本語">
+<meta property="og:url" content="https://hayahayao.github.io/2023/08/30/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2%E6%97%A5%E6%9C%AC%E8%AA%9E/index.html">
+<meta property="og:site_name" content="さおりのBlog">
+<meta property="og:description" content="《ソフトウェア日本語》读书笔记Export from Anki Cards">
+<meta property="og:locale">
+<meta property="article:published_time" content="2023-08-30T09:27:10.000Z">
+<meta property="article:modified_time" content="2023-08-30T09:45:39.030Z">
+<meta property="article:author" content="hayahayao">
+<meta property="article:tag" content="日本語">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://hayahayao.github.io/2023/08/30/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2%E6%97%A5%E6%9C%AC%E8%AA%9E/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"ce","comments":true,"permalink":"https://hayahayao.github.io/2023/08/30/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2%E6%97%A5%E6%9C%AC%E8%AA%9E/","path":"2023/08/30/读书笔记-ソフトウェア日本語/","title":"读书笔记-ソフトウェア日本語"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>读书笔记-ソフトウェア日本語 | さおりのBlog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">さおりのBlog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">燃えて散った花となれ。</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">hayahayao</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/hayahayao" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;hayahayao" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="ce">
+    <link itemprop="mainEntityOfPage" href="https://hayahayao.github.io/2023/08/30/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2%E6%97%A5%E6%9C%AC%E8%AA%9E/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="hayahayao">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="さおりのBlog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="读书笔记-ソフトウェア日本語 | さおりのBlog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          读书笔记-ソフトウェア日本語
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2023-08-30 17:27:10 / Modified: 17:45:39" itemprop="dateCreated datePublished" datetime="2023-08-30T17:27:10+08:00">2023-08-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/note/" itemprop="url" rel="index"><span itemprop="name">note</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><blockquote>
+<p>《ソフトウェア日本語》读书笔记<br>Export from Anki Cards</p>
+</blockquote>
+<span id="more"></span>
+
+<p>2004年度上期には御社から絶大なご厚情を頂き、心から感謝しております。</p>
+<ul>
+<li>上期：かみき</li>
+<li>下期：しもき</li>
+<li>絶大：ぜつだい</li>
+<li>厚情：こうじょう</li>
+</ul>
+<p>既存問題をうまく改善することで、御社からの発注拡大のチャレンジに立ち向かう覚悟でございます。</p>
+<ul>
+<li>発注：はっちゅう</li>
+<li>立ち向かう：ある事柄に対し，正面から解決に取り組む。</li>
+</ul>
+<p>ご提案の＊＊プロジェクト開発における課題などの議論・交流はぜひよろしくお願いいたします。</p>
+<ul>
+<li>〜における：事物涉及的范围&#x2F;地点，“在～”，“于～”，“在～方面”</li>
+<li>〜お願い申し上げます</li>
+<li>〜お願いいたします</li>
+</ul>
+<p>ご連絡どうもありがとうございます。至急原因を調査し、結果が出る次第連絡致します。遅くとも明日は状況を報告します。</p>
+<ul>
+<li>報告：ほうこく</li>
+<li>至急：しきゅう</li>
+</ul>
+<p>先日お願いした資料をまだ頂いておりません。明日まで送付できない場合、テストの進捗に影響を及ぼすことになりますので、至急対応よろしくお願いいたします。</p>
+<p>タスクごとの備考欄には、各担当者の名前を記入し、返送してください。</p>
+<ul>
+<li>備考欄：びこうらん</li>
+<li>返送：へんそう</li>
+</ul>
+<p>今回の開発委託範囲としては、システム設計から、プログラム設計、コーディング、単体テスト、結合テストまでですが、成果物としては、プログラム設計書と結合テスト成績書のみです。</p>
+<ul>
+<li>委託：いたく</li>
+<li>成果物：せいかぶつ</li>
+</ul>
+<p>残業することで遅れを挽回します</p>
+<ul>
+<li>挽回：ばんかい</li>
+</ul>
+<p>先週は主に仕様理解及びドキュメントの習得作業でした。</p>
+<ul>
+<li>習得：しゅうとく</li>
+</ul>
+<p>新しいメンバーが追加されたので、製造方法とスケジュールの見直し及び作業の割り当てなどを行いました。</p>
+<ul>
+<li>割り当て：わりあて。assign。分派、分配。</li>
+</ul>
+<p>今週は某機能の単体試験に着手する予定です。</p>
+<ul>
+<li>着手：ちゃくしゅ。动手，开始。</li>
+</ul>
+<p>日限<br>完了日</p>
+<ul>
+<li>日限：にちげん 截止日</li>
+</ul>
+<p>何かありましたら随時連絡してください。</p>
+<ul>
+<li>随時：ずいじ</li>
+</ul>
+<p>変数を定数に変更する。</p>
+<ul>
+<li>変数：へんすう var</li>
+<li>定数：ていすう const</li>
+</ul>
+<p>全角を半角に変更する</p>
+<ul>
+<li>全角：ぜんかく</li>
+<li>半角：はんかく</li>
+</ul>
+<p>モジュールファイルの先頭に統一にヘッダー情報を記載する</p>
+<ul>
+<li>統一：とういつ</li>
+<li>記載：きさい</li>
+</ul>
+<p>各SQL文にコメントをちゃんと入れること。</p>
+<ul>
+<li>文：ぶん</li>
+</ul>
+<p>画面に表示される文字のフォント・サイズを統一する</p>
+<p>山下さんも早いうちに瀋陽を訪問する予定。</p>
+<ul>
+<li>早いうちに</li>
+</ul>
+<p>4月下旬山下さんと羽柴さんが瀋陽を訪問するように手配したい</p>
+<ul>
+<li>手配：てはい。筹备，安排。</li>
+</ul>
+<p>メンテナンス作業の窓口を設けること。</p>
+<ul>
+<li>設ける：もうける</li>
+</ul>
+<p>概要シートのB_SELECTメソッドが「DOメソッド仕様書」ではC_SELECTになっています</p>
+<ul>
+<li>メソッド：method</li>
+</ul>
+<p>帳票設計書シートにて金額のフィールドフォーマットの「ZZ,ZZZ,ZZZ,ZZ9」は11バイトですが「DOデータ定義仕様書」では12バイトになっています。</p>
+<ul>
+<li>フィールド：field</li>
+<li>バイト：bite 位&amp;</li>
+</ul>
+<p>帳票設計書シートにて、「XXXX年XXXX月度」は和暦ですか、西暦ですか。</p>
+<ul>
+<li>帳票：ちょうひょう</li>
+<li>和暦：われき</li>
+<li>西暦：せいれき</li>
+</ul>
+<p>不正なデータが入力されたのが原因です。</p>
+<ul>
+<li>〜が原因です</li>
+</ul>
+<p>文字化けが原因です。</p>
+<ul>
+<li>文字化け：もじばけ。乱码。</li>
+</ul>
+<p>詳細は以下文中にて。</p>
+<ul>
+<li>文中：ぶんちゅう</li>
+<li>にて：現代語の「で」に相当する語<ul>
+<li>1、場所や時を表す。において。</li>
+<li>2、手段・方法・材料を表す。でもって。</li>
+<li>3、 原因・理由を表す。によって。</li>
+</ul>
+</li>
+</ul>
+<p>仕様書の〇〇ページには〜の記載がありますが、〜どの意味でしょうか。</p>
+<p>概要には休止処理が記載されていますが、画面には対応項目がありません。追加する必要がありますか。</p>
+<p>WebサーバーはNetscapeやApacheを使用し、DBとのデータの連携はSQL netを使用します。</p>
+<ul>
+<li>連携:れんけい</li>
+</ul>
+<p>ホームディレクトリ</p>
+<ul>
+<li>ディレクトリ：directory</li>
+</ul>
+<p>テンポラリファイル用</p>
+<ul>
+<li>テンポラリファイル: temporary file</li>
+</ul>
+<p>バーションを1.0とする</p>
+<ul>
+<li>〜を〜とする：把…作为…</li>
+</ul>
+<p>ワーク表へデータ格納</p>
+<ul>
+<li>格納：かくのう</li>
+</ul>
+<p>ログイン画面に遷移する。</p>
+<ul>
+<li>遷移：せんい</li>
+</ul>
+<p>パスワード更新処理。更新処理後成功か失敗のメッセージページを出力する。<br><br>ログイン認証処理、失敗の場合メッセージページを出力、認証できた場合はログイン者の権限によりメニュー + お知らせページを出力する。</p>
+<ul>
+<li>〜により（よって、よる）：表示事物产生的原因、方式，具有“由于<del>”、“取决于</del>”、“根据~” 等意思</li>
+</ul>
+<p>	</p>
+<p>Excel マクロ起動に失敗した場合にはエラー(ERR_No. 249)を表示し、シャシ番号にフォーカスを移し、画面のロック解除を行い処理を終了します。</p>
+<ul>
+<li>シャシ：車台。車輛的車底主框架。<br></li>
+<li>フォーカス：焦点</li>
+</ul>
+<p>債務者への交付については、送達&#x2F; 送付&#x2F; 交付しないを選択可能とします。</p>
+<p>アップロード用テーブルから正規部品テーブルにデータを登録する。登録済みデータはなにもしない。<br><br>REN_PAR.TS_MSTに登録する。それぞれのテーブルに登録したしコード数を表示する。「戻る」アンカーを1つもうけ、戻り先はファイル指定画面を指定する。</p>
+<ul>
+<li>アンカー：⚓️。锚点。</li>
+<li>もうけ：設け。</li>
+</ul>
+<p>項目：ステータス<br><br>説明：未調査は部品登録したばかりのデータで、調査済は一回以上調査結果をアップロードした部品を意味する。</p>
+<ul>
+<li>ステータス：status。</li>
+</ul>
+<p>新パスワードと新パスワードの確認は同じであること。</p>
+<ul>
+<li>〜こと：命令</li>
+</ul>
+<p>画面を非表示にする。</p>
+<ul>
+<li>〜にする：使～变为，使～成为</li>
+</ul>
+<p>コンポの一覧は前画面の条件をみたした取引先一覧。<br><br>取引先をチェンジすることにより、その取引先のデータを表示する。	</p>
+<ul>
+<li>コンポ：复选框</li>
+<li>満たす：みたす</li>
+</ul>
+<p>カレントの取引先</p>
+<ul>
+<li>カレント：current</li>
+</ul>
+<p>保存の時はボディーフレームの項目をヘッダーフレームの隠しフィールドに値をコピーしてからサブミットすれば情報が全て送信できる。</p>
+<ul>
+<li>隠しフィールド</li>
+</ul>
+<p>エントリ業務ポタンを押下した場合は、帳票読み取りを実行し、対応するエントリ画面を表示します。</p>
+<ul>
+<li>押下：おうか</li>
+</ul>
+<p>アンカー：成功した時は一覧画面に戻る。失敗した時は詳細画面に戻る。（ヒストリーバック）</p>
+<ul>
+<li>ヒストリーバック：history back</li>
+</ul>
+<p>項目長はD&#x2F;Bに合わせる。	</p>
+<ul>
+<li>〜に合わせる：使～一致</li>
+</ul>
+<p>なお、限界試験などはデモシステムのため割愛する。</p>
+<ul>
+<li>デモ：demo</li>
+<li>割愛：かつあい。惜しいと思うものを、思いきって手放したり省略したりすること。</li>
+</ul>
+<p>負荷試験(ヒートラン) 。要求定義で連続実行は行わないと指定しているデモシステムであり、検査対象外とする。</p>
+<ul>
+<li>負荷：ふか。</li>
+<li>ヒートラン：heat run。</li>
+</ul>
+<p>インクリメント試験</p>
+<ul>
+<li>インクリメント：increment。増量。</li>
+</ul>
+<p>目視確認</p>
+<ul>
+<li>もくしかくにん。目测。</li>
+</ul>
+<p>試験項目：予約番号に番号が自動発番される（新規予約からリンクしてきた時のみ）<br><br>試験方法：新規予約からリンクしてきたときに表示された番号が、DBのテーブルに無いことを確認。		</p>
+<p>全ての画面において「プレビュー」ボタンを押すと、新しいテンプレートを利用した帳票が表示されることを確認します。</p>
+<ul>
+<li>プレビュー：preview</li>
+</ul>
+<p>試験項目：予約名称への入力<br><br>試験方法：文字数制限を越えて入力された時入力されないことを確認。</p>
+<p>データベースには新規に追加するデータと重複するものが有る状態で、新規に追加する基本予約、施設、備品予約情報を入力し、予約基本情報入力画面において「登録・更新」ボタンを押す。<br><br>基本予約を除き、施設、備品のうち、重複するものについては、重複の旨を伝える情報を表示し、DBには変化を与えず、重複しないものについては、登録が完了し、DBにも追加されて、その旨結果が通知される。</p>
+<ul>
+<li>旨：むね。宗旨、目的</li>
+<li>与える：あたえる。</li>
+</ul>
+<p>自動計算された「残額」の値がマイナスの場合、数字が赤色になることを確認します。</p>
+<p>太線で表示された部分が、今回の開発範囲である。</p>
+<ul>
+<li>太線：ふとせん</li>
+</ul>
+<p>システム構成図を参照する。以下のマシンは、Internetを経由して接続されている。<br><br>DB サーパ(各店の集計機)、Web サーパ、ユーザブラウザマシン。</p>
+<ul>
+<li>マシン：machine</li>
+</ul>
+<p>Web サーパでのディレクトリ構成は、以下のとおり。</p>
+<ul>
+<li>以下の通り</li>
+</ul>
+<p>契約書上の無償保証期間の対応を前提として、当該プロジェクト(フェーズ1)の開発作業をここまでに終了させて頂いても構わないのでしょうか。</p>
+<ul>
+<li>〜てもかまわない</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%97%A5%E6%9C%AC%E8%AA%9E/" rel="tag"># 日本語</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/08/29/Anki%E4%BD%BF%E7%94%A8/" rel="prev" title="Anki使用">
+                  <i class="fa fa-angle-left"></i> Anki使用
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">hayahayao</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
