@@ -19,28 +19,30 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"hayahayao.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.18.0","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="版本号规则, node versionpackage.json, package-lock.jsonnvm, npm, yarn">
+    <meta name="description" content="命令行操作GUI">
 <meta property="og:type" content="article">
-<meta property="og:title" content="关于npm版本管理的坑">
-<meta property="og:url" content="https://hayahayao.github.io/2020/04/29/%E5%85%B3%E4%BA%8Enpm%E7%89%88%E6%9C%AC%E7%AE%A1%E7%90%86%E7%9A%84%E5%9D%91/index.html">
+<meta property="og:title" content="Mac-MySQL常用操作">
+<meta property="og:url" content="https://hayahayao.github.io/2023/08/31/Mac-MySQL%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/index.html">
 <meta property="og:site_name" content="hayahayao blog">
-<meta property="og:description" content="版本号规则, node versionpackage.json, package-lock.jsonnvm, npm, yarn">
+<meta property="og:description" content="命令行操作GUI">
 <meta property="og:locale">
-<meta property="article:published_time" content="2020-04-29T02:56:06.000Z">
-<meta property="article:modified_time" content="2023-08-30T08:37:56.037Z">
+<meta property="article:published_time" content="2023-08-31T06:44:29.000Z">
+<meta property="article:modified_time" content="2023-08-31T06:56:59.925Z">
 <meta property="article:author" content="hayahayao">
-<meta property="article:tag" content="npm">
+<meta property="article:tag" content="MySQL">
+<meta property="article:tag" content="Database">
+<meta property="article:tag" content="MacOS">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="https://hayahayao.github.io/2020/04/29/%E5%85%B3%E4%BA%8Enpm%E7%89%88%E6%9C%AC%E7%AE%A1%E7%90%86%E7%9A%84%E5%9D%91/">
+<link rel="canonical" href="https://hayahayao.github.io/2023/08/31/Mac-MySQL%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"ce","comments":true,"permalink":"https://hayahayao.github.io/2020/04/29/%E5%85%B3%E4%BA%8Enpm%E7%89%88%E6%9C%AC%E7%AE%A1%E7%90%86%E7%9A%84%E5%9D%91/","path":"2020/04/29/关于npm版本管理的坑/","title":"关于npm版本管理的坑"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"ce","comments":true,"permalink":"https://hayahayao.github.io/2023/08/31/Mac-MySQL%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/","path":"2023/08/31/Mac-MySQL常用操作/","title":"Mac-MySQL常用操作"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>关于npm版本管理的坑 | hayahayao blog</title>
+<title>Mac-MySQL常用操作 | hayahayao blog</title>
   
 
 
@@ -113,7 +115,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#npm-%E7%89%88%E6%9C%AC%E5%8F%B7%E8%A7%84%E5%88%99"><span class="nav-number">1.</span> <span class="nav-text">npm 版本号规则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#package-json%E3%80%81package-lock-json%E3%80%81yarn"><span class="nav-number">2.</span> <span class="nav-text">package.json、package-lock.json、yarn</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#node-sass-%E7%BB%8F%E5%B8%B8%E4%BA%A7%E7%94%9F%E7%9A%84-node-%E7%89%88%E6%9C%AC%E9%97%AE%E9%A2%98"><span class="nav-number">3.</span> <span class="nav-text">node-sass 经常产生的 node 版本问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#nvm"><span class="nav-number">4.</span> <span class="nav-text">nvm</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="nav-number">2.</span> <span class="nav-text">常用命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GUI"><span class="nav-number">3.</span> <span class="nav-text">GUI</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -175,7 +177,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="ce">
-    <link itemprop="mainEntityOfPage" href="https://hayahayao.github.io/2020/04/29/%E5%85%B3%E4%BA%8Enpm%E7%89%88%E6%9C%AC%E7%AE%A1%E7%90%86%E7%9A%84%E5%9D%91/">
+    <link itemprop="mainEntityOfPage" href="https://hayahayao.github.io/2023/08/31/Mac-MySQL%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -188,12 +190,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="关于npm版本管理的坑 | hayahayao blog">
+      <meta itemprop="name" content="Mac-MySQL常用操作 | hayahayao blog">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          关于npm版本管理的坑
+          Mac-MySQL常用操作
         </h1>
 
         <div class="post-meta-container">
@@ -203,15 +205,9 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
+      
 
-      <time title="Created: 2020-04-29 10:56:06" itemprop="dateCreated datePublished" datetime="2020-04-29T10:56:06+08:00">2020-04-29</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-08-30 16:37:56" itemprop="dateModified" datetime="2023-08-30T16:37:56+08:00">2023-08-30</time>
+      <time title="Created: 2023-08-31 14:44:29 / Modified: 14:56:59" itemprop="dateCreated datePublished" datetime="2023-08-31T14:44:29+08:00">2023-08-31</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -219,7 +215,7 @@
       </span>
       <span class="post-meta-item-text">In</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/frontend/" itemprop="url" rel="index"><span itemprop="name">frontend</span></a>
+          <a href="/categories/backend/" itemprop="url" rel="index"><span itemprop="name">backend</span></a>
         </span>
     </span>
 
@@ -233,55 +229,27 @@
     
     
     <div class="post-body" itemprop="articleBody"><blockquote>
-<p>版本号规则, node version<br>package.json, package-lock.json<br>nvm, npm, yarn</p>
+<p>命令行操作<br>GUI</p>
 </blockquote>
 <span id="more"></span>
 
-<h2 id="npm-版本号规则"><a href="#npm-版本号规则" class="headerlink" title="npm 版本号规则"></a>npm 版本号规则</h2><p>参考：<span class="exturl" data-url="aHR0cHM6Ly9ub2RlanMuZGV2L3NlbWFudGljLXZlcnNpb25pbmctdXNpbmctbnBt">Semantic Versioning<i class="fa fa-external-link-alt"></i></span></p>
-<p>所有的 npm 包都采用以下规则定义版本号（称为语义化版本）：</p>
-<blockquote>
-<p>所有的版本号都用三个数字进行标记：<code>x.y.z</code></p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install mysql</span><br></pre></td></tr></table></figure>
+
+<p>安装之后根据说明依次：</p>
 <ul>
-<li>第一位 x 代表主版本（major version）：更新API（不兼容）</li>
-<li>第二位 y 代表副版本（minor version）：增加功能（向下兼容）</li>
-<li>第三位 z 代表补丁版本（patch version）：修复 bug（向下兼容）</li>
+<li>环境变量</li>
+<li><code>mysql_secure_installation</code> 配置密码</li>
+<li><code>mysql -u root -p</code> 启动</li>
 </ul>
-</blockquote>
-<p>那么，我们在 <code>package.json</code> 中常见的 <code>^x.y.z</code>、<code>~x.y.z</code> 之类的规则就容易解释了：</p>
-<blockquote>
-<ul>
-<li><code>^</code>：<code>^0.13.0</code> 代表同意 patch 和 minor 版本的更新，也就是当 <code>npm update</code> 时该版本可以更新到 <code>0.13.1</code>、<code>0.14.0</code> 等</li>
-<li><code>~</code>：<code>^0.13.0</code> 代表同意 patch 版本的更新，也就是当 <code>npm update</code> 时该版本可以更新到 <code>0.13.1</code>，但不会更新到 <code>0.14.0</code></li>
-<li><code>&gt;</code> &#x2F; <code>&gt;=</code> &#x2F; <code>&lt;</code> &#x2F; <code>&lt;=</code> &#x2F; <code>=</code>：语义较为直接，不赘述</li>
-<li><code>-</code>：可以指定接受的版本范围，如 <code>2.1.0-2.6.2</code></li>
-<li><code>||</code>：可以给规则集取并，如 <code>&lt; 2.1 || &gt; 2.6</code></li>
-<li>无符号标记：指定某个确定版本</li>
-<li>latest：最新的可用版本</li>
-</ul>
-</blockquote>
-<h2 id="package-json、package-lock-json、yarn"><a href="#package-json、package-lock-json、yarn" class="headerlink" title="package.json、package-lock.json、yarn"></a>package.json、package-lock.json、yarn</h2><p>经常会出现按照同一个 <code>package.json</code> 在不同人的机器上 <code>npm install</code> 出的环境不一致的问题，这其中一部分原因就是由于上面所描述的版本号规则，导致不同时间下载的包版本可能不同。</p>
-<p>那么，在 <code>package.json</code> 中把所有包的版本都严格指定就好了？</p>
-<p>很遗憾，还是不行。</p>
-<p>因为这些包自己的 <code>package.json</code> 中又引用了别的包，还是无法保证第二层第三层…包的版本一致。</p>
-<p>于是 npm 引入了 <code>package-lock.json</code> 这个文件，正如它的名字“锁”，它严格锁定了所有包的版本号（包括第二层第三层…的包），甚至还指定了每个包的下载地址。如果项目中存在 <code>package-lock.json</code> ，<code>npm install</code> 会按照它而不是 <code>package.json</code> 进行安装。</p>
-<p>所以一个比较好的实践是，多人协作时把 <code>package-lock.json</code> 也放到 git 上。</p>
-<p>再之后，yarn 出现了，yarn 用一个 <code>yarn.lock</code> 文件做了和上面 <code>package-lock.json</code> 同样的锁定版本工作，而且这个文件是默认创建更新的，也就解决了需要维护 <code>package.json</code> 和 <code>package-lock.json</code> 两个文件的问题。</p>
-<p>yarn 还有一堆优点，这里就不赘述了，总之新项目用 yarn 肯定要比用 npm 方便，但对于一些没有用 yarn 的老项目，就要注意上面的版本管理问题了。</p>
-<h2 id="node-sass-经常产生的-node-版本问题"><a href="#node-sass-经常产生的-node-版本问题" class="headerlink" title="node-sass 经常产生的 node 版本问题"></a>node-sass 经常产生的 node 版本问题</h2><p>对于老项目，还有个很痛的地方，node-sass，特别是 node-sass 在 windows 上安装。需要下载的东西多且要翻墙、需要 gyp、需要 windows-build-tools……中途万一哪里卡住想要推倒重来，却会发现 <code>npm uninstall</code> 不能完全卸载 windows-build-tools，还要手工卸载手工重装，python27 还好，寻找老版本的 visual studio c++ 简直是噩梦……</p>
-<p>而当你搞定了以上一切，以为终于能顺利安装时，又遇到了一堆堆的 <code>Build failed with error code: 1</code> ……</p>
-<p>其中一个问题坑了我一天时间，最终在 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3Nhc3Mvbm9kZS1zYXNzL2lzc3Vlcy8yNjYy">[Unsupported] Installing node-sass 4.11.0 with Node 12<i class="fa fa-external-link-alt"></i></span> 找到了答案。</p>
-<p><strong>node-sass 4.11.0，不兼容 node 12！</strong></p>
-<p>升 node-sass 版本，别的开发者可能会受影响；降 node 版本，强迫症浑身难受……</p>
-<p>然后我就找到了下面这个神器：</p>
-<h2 id="nvm"><a href="#nvm" class="headerlink" title="nvm"></a>nvm</h2><p>没错，Node Version Manager，管理 node 版本的工具！windows 版的地址：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2NvcmV5YnV0bGVyL252bS13aW5kb3dz">nvm-windows<i class="fa fa-external-link-alt"></i></span>。</p>
-<p>按照说明下载安装就行了，需要注意的几个小地方：</p>
-<ul>
-<li>安装前需要删除本地已经安装的 node 和 npm（如何彻底卸载请自行 google），如果有一些 npm config 可以先备份 <code>npmrc</code></li>
-<li>如果你有多个版本的 node，需要对每个版本都重新安装全局包们，它们不会在不同 node 版本中共享</li>
-<li>勤用 <code>node -v</code> 检查版本，如果第一条没搞好可能 nvm 根本不会起效…</li>
-</ul>
-<p>于是我把 node 版本切到 11 再去跑老项目，终于一路通畅无阻啦！</p>
-<p>一点点反思：<code>package.json</code> 中其实可以指定 node 版本号，我感觉这才是最根本的解决方案，不然只能靠口耳相传“你用的啥版本”、“我咋跑不起来呢”……</p>
+<h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><p>后台服务（stop可能有不彻底的情况，可能需要杀进程彻底关闭服务）</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">启动后台服务</span></span><br><span class="line">mysql.server start</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">关闭后台服务</span></span><br><span class="line">mysql.server stop</span><br></pre></td></tr></table></figure>
+
+<p>命令行客户端</p>
+<p>连接之后有简单的命令，先省略…</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">连接，启动客户端</span></span><br><span class="line">mysql -u root -p</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">结束连接</span></span><br><span class="line"><span class="meta prompt_">mysql&gt; </span><span class="language-bash"><span class="built_in">exit</span></span></span><br></pre></td></tr></table></figure>
+
+<h2 id="GUI"><a href="#GUI" class="headerlink" title="GUI"></a>GUI</h2><p><span class="exturl" data-url="aHR0cHM6Ly9zZXF1ZWxwcm8uY29tL3Rlc3QtYnVpbGRz">Sequel Pro<i class="fa fa-external-link-alt"></i></span><br>（直接下载的版本有bug，替换成test build）</p>
+<p>IntelliJ IDEA自带…</p>
 
     </div>
 
@@ -299,7 +267,7 @@
   </li>
   <li class="post-copyright-link">
       <strong>Post link: </strong>
-      <a href="https://hayahayao.github.io/2020/04/29/%E5%85%B3%E4%BA%8Enpm%E7%89%88%E6%9C%AC%E7%AE%A1%E7%90%86%E7%9A%84%E5%9D%91/" title="关于npm版本管理的坑">https://hayahayao.github.io/2020/04/29/关于npm版本管理的坑/</a>
+      <a href="https://hayahayao.github.io/2023/08/31/Mac-MySQL%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/" title="Mac-MySQL常用操作">https://hayahayao.github.io/2023/08/31/Mac-MySQL常用操作/</a>
   </li>
   <li class="post-copyright-license">
       <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> unless stating additionally.
@@ -308,21 +276,20 @@
 </div>
 
           <div class="post-tags">
-              <a href="/tags/npm/" rel="tag"># npm</a>
+              <a href="/tags/MySQL/" rel="tag"># MySQL</a>
+              <a href="/tags/Database/" rel="tag"># Database</a>
+              <a href="/tags/MacOS/" rel="tag"># MacOS</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2020/04/20/React%E5%85%A5%E9%97%A8/" rel="prev" title="React入门">
-                  <i class="fa fa-angle-left"></i> React入门
+                <a href="/2023/08/30/TailwindCss%E8%AE%BE%E7%BD%AE%E5%8A%A8%E6%80%81%E6%A0%B7%E5%BC%8F/" rel="prev" title="TailwindCss设置动态样式">
+                  <i class="fa fa-angle-left"></i> TailwindCss设置动态样式
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2020/04/30/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-%E5%9B%BE%E8%AF%B4%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="next" title="读书笔记-图说设计模式">
-                  读书笔记-图说设计模式 <i class="fa fa-angle-right"></i>
-                </a>
             </div>
           </div>
     </footer>
