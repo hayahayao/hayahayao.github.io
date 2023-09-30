@@ -19,28 +19,29 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"hayahayao.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.18.0","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="Javascript引擎区分套壳浏览器识别">
+    <meta name="description" content="学习了个SpringBoot CRUD小项目，大致总结下项目结构和流程https:&#x2F;&#x2F;github.com&#x2F;hayahayao&#x2F;demo-user-management">
 <meta property="og:type" content="article">
-<meta property="og:title" content="浏览器识别">
-<meta property="og:url" content="https://hayahayao.github.io/2020/11/12/%E6%B5%8F%E8%A7%88%E5%99%A8%E8%AF%86%E5%88%AB/index.html">
+<meta property="og:title" content="SpringBoot笔记">
+<meta property="og:url" content="https://hayahayao.github.io/2023/10/01/SpringBoot%E7%AC%94%E8%AE%B0/index.html">
 <meta property="og:site_name" content="hayahayao blog">
-<meta property="og:description" content="Javascript引擎区分套壳浏览器识别">
+<meta property="og:description" content="学习了个SpringBoot CRUD小项目，大致总结下项目结构和流程https:&#x2F;&#x2F;github.com&#x2F;hayahayao&#x2F;demo-user-management">
 <meta property="og:locale">
-<meta property="article:published_time" content="2020-11-12T09:47:00.000Z">
-<meta property="article:modified_time" content="2023-08-30T08:32:04.511Z">
+<meta property="article:published_time" content="2023-09-30T15:31:06.000Z">
+<meta property="article:modified_time" content="2023-09-30T16:15:27.601Z">
 <meta property="article:author" content="hayahayao">
-<meta property="article:tag" content="Browser">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="SpringBoot">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="https://hayahayao.github.io/2020/11/12/%E6%B5%8F%E8%A7%88%E5%99%A8%E8%AF%86%E5%88%AB/">
+<link rel="canonical" href="https://hayahayao.github.io/2023/10/01/SpringBoot%E7%AC%94%E8%AE%B0/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"ce","comments":true,"permalink":"https://hayahayao.github.io/2020/11/12/%E6%B5%8F%E8%A7%88%E5%99%A8%E8%AF%86%E5%88%AB/","path":"2020/11/12/浏览器识别/","title":"浏览器识别"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"ce","comments":true,"permalink":"https://hayahayao.github.io/2023/10/01/SpringBoot%E7%AC%94%E8%AE%B0/","path":"2023/10/01/SpringBoot笔记/","title":"SpringBoot笔记"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>浏览器识别 | hayahayao blog</title>
+<title>SpringBoot笔记 | hayahayao blog</title>
   
 
 
@@ -113,7 +114,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Javascript-%E5%BC%95%E6%93%8E-%E6%B5%8F%E8%A7%88%E5%99%A8%E5%BC%95%E6%93%8E"><span class="nav-number">1.</span> <span class="nav-text">Javascript 引擎 &amp; 浏览器引擎</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A5%97%E5%A3%B3%E6%B5%8F%E8%A7%88%E5%99%A8"><span class="nav-number">2.</span> <span class="nav-text">套壳浏览器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-number">3.</span> <span class="nav-text">代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-number">4.</span> <span class="nav-text">其他</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E4%BA%9BJava%E5%9F%BA%E7%A1%80"><span class="nav-number">1.</span> <span class="nav-text">一些Java基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B3%A8%E8%A7%A3"><span class="nav-number">1.1.</span> <span class="nav-text">注解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%8D%E5%B0%84"><span class="nav-number">1.2.</span> <span class="nav-text">反射</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SpringBoot%E5%9F%BA%E6%9C%AC%E6%80%9D%E6%83%B3"><span class="nav-number">2.</span> <span class="nav-text">SpringBoot基本思想</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -175,7 +176,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="ce">
-    <link itemprop="mainEntityOfPage" href="https://hayahayao.github.io/2020/11/12/%E6%B5%8F%E8%A7%88%E5%99%A8%E8%AF%86%E5%88%AB/">
+    <link itemprop="mainEntityOfPage" href="https://hayahayao.github.io/2023/10/01/SpringBoot%E7%AC%94%E8%AE%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -188,12 +189,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="浏览器识别 | hayahayao blog">
+      <meta itemprop="name" content="SpringBoot笔记 | hayahayao blog">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          浏览器识别
+          SpringBoot笔记
         </h1>
 
         <div class="post-meta-container">
@@ -204,14 +205,14 @@
       </span>
       <span class="post-meta-item-text">Posted on</span>
 
-      <time title="Created: 2020-11-12 17:47:00" itemprop="dateCreated datePublished" datetime="2020-11-12T17:47:00+08:00">2020-11-12</time>
+      <time title="Created: 2023-09-30 23:31:06" itemprop="dateCreated datePublished" datetime="2023-09-30T23:31:06+08:00">2023-09-30</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-08-30 16:32:04" itemprop="dateModified" datetime="2023-08-30T16:32:04+08:00">2023-08-30</time>
+      <time title="Modified: 2023-10-01 00:15:27" itemprop="dateModified" datetime="2023-10-01T00:15:27+08:00">2023-10-01</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -219,7 +220,7 @@
       </span>
       <span class="post-meta-item-text">In</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/frontend/" itemprop="url" rel="index"><span itemprop="name">frontend</span></a>
+          <a href="/categories/backend/" itemprop="url" rel="index"><span itemprop="name">backend</span></a>
         </span>
     </span>
 
@@ -233,40 +234,31 @@
     
     
     <div class="post-body" itemprop="articleBody"><blockquote>
-<p>Javascript引擎区分<br>套壳浏览器识别</p>
+<p>学习了个SpringBoot CRUD小项目，大致总结下项目结构和流程<br><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2hheWFoYXlhby9kZW1vLXVzZXItbWFuYWdlbWVudA==">https://github.com/hayahayao/demo-user-management<i class="fa fa-external-link-alt"></i></span></p>
 </blockquote>
 <span id="more"></span>
 
-<h2 id="Javascript-引擎-浏览器引擎"><a href="#Javascript-引擎-浏览器引擎" class="headerlink" title="Javascript 引擎 &amp; 浏览器引擎"></a>Javascript 引擎 &amp; 浏览器引擎</h2><p><span class="exturl" data-url="aHR0cHM6Ly9lbi53aWtpcGVkaWEub3JnL3dpa2kvSmF2YVNjcmlwdF9lbmdpbmU=">Javascript 引擎<i class="fa fa-external-link-alt"></i></span></p>
+<p>（因为只是想学 CRUD 的部分所以没有前后端分离，虽然我知道 SpringBoot 的初衷是为了前后端分离，后端写接口方便）</p>
+<h2 id="一些Java基础"><a href="#一些Java基础" class="headerlink" title="一些Java基础"></a>一些Java基础</h2><h3 id="注解"><a href="#注解" class="headerlink" title="注解"></a>注解</h3><p>对代码进行说明，可以对包、类、接口、字段、方法参数、局部变量等进行注解。</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9wZGFpLnRlY2gvbWQvamF2YS9iYXNpYy9qYXZhLWJhc2ljLXgtYW5ub3RhdGlvbi5odG1s">https://pdai.tech/md/java/basic/java-basic-x-annotation.html<i class="fa fa-external-link-alt"></i></span></p>
+<h3 id="反射"><a href="#反射" class="headerlink" title="反射"></a>反射</h3><p>JAVA反射机制是在运行状态中，对于任意一个类，都能够知道这个类的所有属性和方法；对于任意一个对象，都能够调用它的任意一个方法和属性；这种动态获取的信息以及动态调用对象的方法的功能称为java语言的反射机制。</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9wZGFpLnRlY2gvbWQvamF2YS9iYXNpYy9qYXZhLWJhc2ljLXgtcmVmbGVjdGlvbi5odG1s">https://pdai.tech/md/java/basic/java-basic-x-reflection.html<i class="fa fa-external-link-alt"></i></span></p>
+<h2 id="SpringBoot基本思想"><a href="#SpringBoot基本思想" class="headerlink" title="SpringBoot基本思想"></a>SpringBoot基本思想</h2><p>配置化 -&gt; 注解化</p>
+<p>pom.xml: maven包管理</p>
+<p>MVC</p>
 <ul>
-<li>V8: chrome, chromium, edge</li>
-<li>SpiderMonkey: firefox</li>
-<li>JavaScriptCore: safari, other webkit-based browser</li>
-<li>chakra: ie</li>
+<li>表现层 UI</li>
+<li>业务逻辑层 Business Logic</li>
+<li>数据访问层 Data Access</li>
 </ul>
-<p><span class="exturl" data-url="aHR0cHM6Ly9lbi53aWtpcGVkaWEub3JnL3dpa2kvQnJvd3Nlcl9lbmdpbmU=">浏览器引擎<i class="fa fa-external-link-alt"></i></span></p>
-<p>layout&#x2F;rendering 引擎 + js 引擎</p>
+<p>项目分层结构：</p>
 <ul>
-<li>gecko: firefox</li>
-<li>webkit: safari, 以前的 chrome</li>
-<li>blink: 现在的 chrome</li>
-<li>trident: ie</li>
-<li>presto: opera</li>
+<li>controller: 表示层，对请求进行处理</li>
+<li>service: 业务逻辑层</li>
+<li>dao: 数据访问层</li>
+<li>entity: model实体层</li>
 </ul>
-<p>通过全局对象 <code>navigator.userAgent</code> 可以获得关于浏览器引擎的信息</p>
-<h2 id="套壳浏览器"><a href="#套壳浏览器" class="headerlink" title="套壳浏览器"></a>套壳浏览器</h2><ul>
-<li>国内浏览器基本都是所谓套壳浏览器，即在 chrome &amp; ie 基础上加点东西，一般极速模式对应 chrome，兼容模式对应 ie</li>
-<li>但是套壳浏览器可能用的不是最新版内核，或者某些 api 表现不一样..</li>
-<li>一般套壳浏览器会在 <code>userAgent</code> 上加上自己的厂商标识，不过目前发现 360 没有（后面给出一种暂时可用的 hack）</li>
-<li>ps. 调试过程中发现 360 还可以换 ie11&#x2F;10&#x2F;9&#x2F;8… 的内核，用来测试兼容性还是挺好用的</li>
-</ul>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p>发现 360 的 <code>navigator.mimeTypes</code> 与 chrome 有很大不同，其中有一些项带着 360 标识，应该别的浏览器不会有吧..</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> mime = navigator.<span class="property">mimeTypes</span>;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> key <span class="keyword">in</span> mime) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="regexp">/360/</span>.<span class="title function_">test</span>(mime[key].<span class="property">type</span>)) &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;360&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ul>
-<li>注意低版本浏览器可能不支持 es6 甚至 es5 语法</li>
-<li>如果整合进项目中，最好将这部分与其他部分分离，不然为了兼容低版本和 ie 需要 webpack 加很多 babel 配置，而且可能还不行…</li>
-</ul>
+<p><span class="exturl" data-url="aHR0cHM6Ly9wZGFpLnRlY2gvbWQvc3ByaW5nL3NwcmluZ2Jvb3Qvc3ByaW5nYm9vdC14LWhlbGxvLXdvcmxkLW12Yy5odG1s">https://pdai.tech/md/spring/springboot/springboot-x-hello-world-mvc.html<i class="fa fa-external-link-alt"></i></span></p>
 
     </div>
 
@@ -284,7 +276,7 @@
   </li>
   <li class="post-copyright-link">
       <strong>Post link: </strong>
-      <a href="https://hayahayao.github.io/2020/11/12/%E6%B5%8F%E8%A7%88%E5%99%A8%E8%AF%86%E5%88%AB/" title="浏览器识别">https://hayahayao.github.io/2020/11/12/浏览器识别/</a>
+      <a href="https://hayahayao.github.io/2023/10/01/SpringBoot%E7%AC%94%E8%AE%B0/" title="SpringBoot笔记">https://hayahayao.github.io/2023/10/01/SpringBoot笔记/</a>
   </li>
   <li class="post-copyright-license">
       <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> unless stating additionally.
@@ -293,21 +285,19 @@
 </div>
 
           <div class="post-tags">
-              <a href="/tags/Browser/" rel="tag"># Browser</a>
+              <a href="/tags/Java/" rel="tag"># Java</a>
+              <a href="/tags/SpringBoot/" rel="tag"># SpringBoot</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2020/09/16/%E5%89%8D%E7%AB%AF%E5%A4%A7%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD%E6%96%B9%E6%A1%88/" rel="prev" title="前端大文件下载方案">
-                  <i class="fa fa-angle-left"></i> 前端大文件下载方案
+                <a href="/2023/08/31/Mac-MySQL%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/" rel="prev" title="Mac-MySQL常用操作">
+                  <i class="fa fa-angle-left"></i> Mac-MySQL常用操作
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2022/04/12/%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" rel="next" title="前端性能优化">
-                  前端性能优化 <i class="fa fa-angle-right"></i>
-                </a>
             </div>
           </div>
     </footer>
