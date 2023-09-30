@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://hayahayao.github.io/2023/10/01/%E7%BB%99%E5%A4%A7%E5%BF%99%E4%BA%BA%E5%86%99%E7%9A%84%E4%B8%8B%E8%BD%BD%E5%9B%BE%E7%89%87%E6%95%99%E7%A8%8B/</loc>
+    
+    <lastmod>2023-09-30</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://hayahayao.github.io/2023/10/01/Discord-bot%E5%BC%80%E5%8F%91/</loc>
     
     <lastmod>2023-09-30</lastmod>
@@ -263,14 +272,14 @@
 
   
   <url>
-    <loc>https://hayahayao.github.io/tags/Anki/</loc>
+    <loc>https://hayahayao.github.io/tags/CSS/</loc>
     <lastmod>2023-09-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://hayahayao.github.io/tags/CSS/</loc>
+    <loc>https://hayahayao.github.io/tags/Git/</loc>
     <lastmod>2023-09-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -285,13 +294,6 @@
   
   <url>
     <loc>https://hayahayao.github.io/tags/JavaScript/</loc>
-    <lastmod>2023-09-30</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://hayahayao.github.io/tags/Git/</loc>
     <lastmod>2023-09-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -319,7 +321,7 @@
   </url>
   
   <url>
-    <loc>https://hayahayao.github.io/tags/Python/</loc>
+    <loc>https://hayahayao.github.io/tags/Anki/</loc>
     <lastmod>2023-09-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -327,6 +329,13 @@
   
   <url>
     <loc>https://hayahayao.github.io/tags/Soft-Skills/</loc>
+    <lastmod>2023-09-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hayahayao.github.io/tags/Python/</loc>
     <lastmod>2023-09-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -368,6 +377,13 @@
   </url>
   
   <url>
+    <loc>https://hayahayao.github.io/tags/npm/</loc>
+    <lastmod>2023-09-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://hayahayao.github.io/tags/Next/</loc>
     <lastmod>2023-09-30</lastmod>
     <changefreq>weekly</changefreq>
@@ -382,21 +398,14 @@
   </url>
   
   <url>
-    <loc>https://hayahayao.github.io/tags/Stream/</loc>
-    <lastmod>2023-09-30</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://hayahayao.github.io/tags/npm/</loc>
-    <lastmod>2023-09-30</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://hayahayao.github.io/tags/Performance/</loc>
+    <lastmod>2023-09-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hayahayao.github.io/tags/Stream/</loc>
     <lastmod>2023-09-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -431,7 +440,14 @@
   </url>
   
   <url>
-    <loc>https://hayahayao.github.io/tags/%E6%97%A5%E6%9C%AC%E8%AA%9E/</loc>
+    <loc>https://hayahayao.github.io/tags/Safari/</loc>
+    <lastmod>2023-09-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hayahayao.github.io/tags/Chrome/</loc>
     <lastmod>2023-09-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -445,7 +461,7 @@
   </url>
   
   <url>
-    <loc>https://hayahayao.github.io/tags/Design-Pattern/</loc>
+    <loc>https://hayahayao.github.io/tags/%E6%97%A5%E6%9C%AC%E8%AA%9E/</loc>
     <lastmod>2023-09-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -458,14 +474,14 @@
     <priority>0.2</priority>
   </url>
   
-
-  
   <url>
-    <loc>https://hayahayao.github.io/categories/%E9%9B%91%E8%AB%87/</loc>
+    <loc>https://hayahayao.github.io/tags/Design-Pattern/</loc>
     <lastmod>2023-09-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
+  
+
   
   <url>
     <loc>https://hayahayao.github.io/categories/frontend/</loc>
@@ -476,6 +492,13 @@
   
   <url>
     <loc>https://hayahayao.github.io/categories/note/</loc>
+    <lastmod>2023-09-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hayahayao.github.io/categories/%E9%9B%91%E8%AB%87/</loc>
     <lastmod>2023-09-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
