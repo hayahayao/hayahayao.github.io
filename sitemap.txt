@@ -34,8 +34,8 @@ https://hayahayao.github.io/tags/MySQL/
 https://hayahayao.github.io/tags/Database/
 https://hayahayao.github.io/tags/MacOS/
 https://hayahayao.github.io/tags/Python/
-https://hayahayao.github.io/tags/Soft-Skills/
 https://hayahayao.github.io/tags/React/
+https://hayahayao.github.io/tags/Soft-Skills/
 https://hayahayao.github.io/tags/Java/
 https://hayahayao.github.io/tags/SpringBoot/
 https://hayahayao.github.io/tags/%E8%B3%87%E6%A0%BC/
