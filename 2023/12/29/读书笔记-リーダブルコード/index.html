@@ -27,7 +27,7 @@
 <meta property="og:description" content="《リーダブルコード》读书笔记The Art of Readable Code">
 <meta property="og:locale">
 <meta property="article:published_time" content="2023-12-29T07:13:22.000Z">
-<meta property="article:modified_time" content="2023-12-29T06:15:51.288Z">
+<meta property="article:modified_time" content="2023-12-29T08:24:40.144Z">
 <meta property="article:author" content="hayahayao">
 <meta property="article:tag" content="日本語">
 <meta property="article:tag" content="System Engineering">
@@ -101,7 +101,7 @@
   
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           Table of Contents
@@ -114,6 +114,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E7%90%86%E8%A7%A3%E3%81%97%E3%82%84%E3%81%99%E3%81%84%E3%82%B3%E3%83%BC%E3%83%89"><span class="nav-number">1.</span> <span class="nav-text">1 理解しやすいコード</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%90%8D%E5%89%8D%E3%81%AB%E6%83%85%E5%A0%B1%E3%82%92%E8%A9%B0%E3%82%81%E8%BE%BC%E3%82%80"><span class="nav-number">2.</span> <span class="nav-text">2 名前に情報を詰め込む</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E8%AA%A4%E8%A7%A3%E3%81%95%E3%82%8C%E3%81%AA%E3%81%84%E5%90%8D%E5%89%8D"><span class="nav-number">3.</span> <span class="nav-text">3 誤解されない名前</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -205,7 +206,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2023-12-29 15:13:22 / Modified: 14:15:51" itemprop="dateCreated datePublished" datetime="2023-12-29T15:13:22+08:00">2023-12-29</time>
+      <time title="Created: 2023-12-29 15:13:22 / Modified: 16:24:40" itemprop="dateCreated datePublished" datetime="2023-12-29T15:13:22+08:00">2023-12-29</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -230,6 +231,37 @@
 <p>《リーダブルコード》读书笔记<br>The Art of Readable Code</p>
 </blockquote>
 <span id="more"></span>
+
+<h2 id="1-理解しやすいコード"><a href="#1-理解しやすいコード" class="headerlink" title="1 理解しやすいコード"></a>1 理解しやすいコード</h2><p>読みやすさの基本定理：コードは他人が最短時間で理解できるように書かなければいけない。</p>
+<h2 id="2-名前に情報を詰め込む"><a href="#2-名前に情報を詰め込む" class="headerlink" title="2 名前に情報を詰め込む"></a>2 名前に情報を詰め込む</h2><p>明確な単語を選ぶ</p>
+<ul>
+<li>気取った言い回しよりも明確で正確な方がいい</li>
+</ul>
+<p>汎用的な名前を避ける</p>
+<ul>
+<li>tmp&#x2F;retvalなど空虚な名前</li>
+<li>あるいは、使う状況を選ぶ</li>
+<li>ループイテレータ：i&#x2F;j&#x2F;k&#x2F;iterなどより、もっと明確な説明的な名前のほうがよい(e.g. users_i, members_i)</li>
+</ul>
+<p>抽象的な名前よりも具体的な名前を使う</p>
+<p>名前に情報を追加する</p>
+<ul>
+<li>名前は短いコメントのようなものだ</li>
+<li>追加する情報例：フォーマット、単位、危険や注意喚起する情報など</li>
+</ul>
+<p>名前の長さを決める</p>
+<ul>
+<li>スコープが小さなければ短い名前でもいい</li>
+<li>長い名前を入力するのは問題じゃない</li>
+<li>頭文字と省略形(新しいチームメイトはその名前の意味を理解できるだろうか？)</li>
+<li>不要な単語を投げ捨てる</li>
+</ul>
+<p>名前のフォーマットで情報を伝える</p>
+<ul>
+<li>CamelCase、lower_separated、CONSTANT_NAMEなど</li>
+</ul>
+<h2 id="3-誤解されない名前"><a href="#3-誤解されない名前" class="headerlink" title="3 誤解されない名前"></a>3 誤解されない名前</h2><p>名前が「他の意味と間違えられることはないだろうか？」と何度も自問自答する</p>
+
     </div>
 
     
