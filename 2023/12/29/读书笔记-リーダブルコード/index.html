@@ -27,7 +27,7 @@
 <meta property="og:description" content="《リーダブルコード》读书笔记The Art of Readable Code">
 <meta property="og:locale">
 <meta property="article:published_time" content="2023-12-29T07:13:22.000Z">
-<meta property="article:modified_time" content="2023-12-29T08:24:40.144Z">
+<meta property="article:modified_time" content="2024-01-04T04:44:02.637Z">
 <meta property="article:author" content="hayahayao">
 <meta property="article:tag" content="日本語">
 <meta property="article:tag" content="System Engineering">
@@ -114,7 +114,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E7%90%86%E8%A7%A3%E3%81%97%E3%82%84%E3%81%99%E3%81%84%E3%82%B3%E3%83%BC%E3%83%89"><span class="nav-number">1.</span> <span class="nav-text">1 理解しやすいコード</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%90%8D%E5%89%8D%E3%81%AB%E6%83%85%E5%A0%B1%E3%82%92%E8%A9%B0%E3%82%81%E8%BE%BC%E3%82%80"><span class="nav-number">2.</span> <span class="nav-text">2 名前に情報を詰め込む</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E8%AA%A4%E8%A7%A3%E3%81%95%E3%82%8C%E3%81%AA%E3%81%84%E5%90%8D%E5%89%8D"><span class="nav-number">3.</span> <span class="nav-text">3 誤解されない名前</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E7%90%86%E8%A7%A3%E3%81%97%E3%82%84%E3%81%99%E3%81%84%E3%82%B3%E3%83%BC%E3%83%89"><span class="nav-number">1.</span> <span class="nav-text">1 理解しやすいコード</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%90%8D%E5%89%8D%E3%81%AB%E6%83%85%E5%A0%B1%E3%82%92%E8%A9%B0%E3%82%81%E8%BE%BC%E3%82%80"><span class="nav-number">2.</span> <span class="nav-text">2 名前に情報を詰め込む</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E8%AA%A4%E8%A7%A3%E3%81%95%E3%82%8C%E3%81%AA%E3%81%84%E5%90%8D%E5%89%8D"><span class="nav-number">3.</span> <span class="nav-text">3 誤解されない名前</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E7%BE%8E%E3%81%97%E3%81%95"><span class="nav-number">4.</span> <span class="nav-text">4 美しさ</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E3%82%B3%E3%83%A1%E3%83%B3%E3%83%88%E3%81%99%E3%81%B9%E3%81%8D%E3%81%93%E3%81%A8%E3%82%92%E7%9F%A5%E3%82%8B"><span class="nav-number">5.</span> <span class="nav-text">5 コメントすべきことを知る</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -204,9 +204,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2023-12-29 15:13:22 / Modified: 16:24:40" itemprop="dateCreated datePublished" datetime="2023-12-29T15:13:22+08:00">2023-12-29</time>
+      <time title="Created: 2023-12-29 15:13:22" itemprop="dateCreated datePublished" datetime="2023-12-29T15:13:22+08:00">2023-12-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-01-04 12:44:02" itemprop="dateModified" datetime="2024-01-04T12:44:02+08:00">2024-01-04</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -261,6 +267,41 @@
 <li>CamelCase、lower_separated、CONSTANT_NAMEなど</li>
 </ul>
 <h2 id="3-誤解されない名前"><a href="#3-誤解されない名前" class="headerlink" title="3 誤解されない名前"></a>3 誤解されない名前</h2><p>名前が「他の意味と間違えられることはないだろうか？」と何度も自問自答する</p>
+<p>範囲について</p>
+<ul>
+<li>限界値を含めるときは min&#x2F;max を使う</li>
+<li>範囲を指定するときは first&#x2F;last を使う <code>[first, last]</code></li>
+<li>包含／排他的範囲には begin&#x2F;end を使う <code>[begin, end)</code></li>
+</ul>
+<p>ブール値の変数名は頭に is&#x2F;has&#x2F;can&#x2F;should などをつけてわかりやすくする</p>
+<h2 id="4-美しさ"><a href="#4-美しさ" class="headerlink" title="4 美しさ"></a>4 美しさ</h2><p>一貫性と意味のあるやり方でコードを整形する</p>
+<ul>
+<li>複数のコードブロックで同じようなことをしていたら、シルエットも同じようなものにする</li>
+<li>コードの「列」を整列すれば、概要が把握しやすくなる</li>
+<li>ある場所でA&#x2F;B&#x2F;Cのように並んでいたものを、他の場所でB&#x2F;C&#x2F;Aのように並べではいけない。意味のある順番を選んで、常にその順番を守る</li>
+<li>空行を使って大きなブロックを論理的な「段落」に分ける</li>
+</ul>
+<h2 id="5-コメントすべきことを知る"><a href="#5-コメントすべきことを知る" class="headerlink" title="5 コメントすべきことを知る"></a>5 コメントすべきことを知る</h2><blockquote>
+<p>コメントの目的は、書き手の意図を読み手に知らせることである。</p>
+</blockquote>
+<p>コメントするべきでは「ない」こと</p>
+<ul>
+<li>コードからすぐにわかること</li>
+<li>ひどいコードを補う「補助的なコメント」。コメントを書くのではなくコードを修正すべき（優れたコード&gt;ひどいコード+優れたコメント）</li>
+</ul>
+<p>記録すべき自分の考え</p>
+<ul>
+<li>なぜコードが他のやり方ではなくこうなっているのか</li>
+<li>コードの欠陥を<code>TODO:</code>などの記法を使って示す</li>
+<li>定数の値にまつわる「背景」</li>
+</ul>
+<p>読み手の立場になって考える</p>
+<ul>
+<li>コードを読んだ人が「えっ？」と思うところを予想してコメントを付ける</li>
+<li>ハマりそうな罠を告知する、平均的な読み手が驚くような動作は文書化しておく</li>
+<li>ファイルやクラスには「全体像」のコメントを書く</li>
+<li>要約コメント。読み手が細部に捕まられないように、コードブロックにコメントをつけて概要をまとめる</li>
+</ul>
 
     </div>
 
@@ -319,7 +360,7 @@
 
   <div class="copyright">
     &copy; 
-    <span itemprop="copyrightYear">2023</span>
+    <span itemprop="copyrightYear">2024</span>
     <span class="with-love">
       <i class="fa fa-heart"></i>
     </span>
