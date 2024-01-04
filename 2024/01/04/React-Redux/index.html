@@ -21,28 +21,29 @@
 
     <meta name="description" content="Redux概念Redux Toolkit">
 <meta property="og:type" content="article">
-<meta property="og:title" content="React-Redux">
+<meta property="og:title" content="React Redux">
 <meta property="og:url" content="https://hayahayao.github.io/2024/01/04/React-Redux/index.html">
 <meta property="og:site_name" content="hayahayao blog">
 <meta property="og:description" content="Redux概念Redux Toolkit">
 <meta property="og:locale">
-<meta property="og:image" content="https://hayahayao.github.io/images/ReduxDataFlowDiagram-49fa8c3968371d9ef6f2a1486bd40a26.gif">
+<meta property="og:image" content="https://hayahayao.github.io/images/redux-1.gif">
+<meta property="og:image" content="https://hayahayao.github.io/images/redux-2.png">
 <meta property="article:published_time" content="2024-01-04T05:46:55.000Z">
-<meta property="article:modified_time" content="2024-01-04T05:31:34.490Z">
+<meta property="article:modified_time" content="2024-01-04T07:19:57.760Z">
 <meta property="article:author" content="hayahayao">
 <meta property="article:tag" content="React">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://hayahayao.github.io/images/ReduxDataFlowDiagram-49fa8c3968371d9ef6f2a1486bd40a26.gif">
+<meta name="twitter:image" content="https://hayahayao.github.io/images/redux-1.gif">
 
 
 <link rel="canonical" href="https://hayahayao.github.io/2024/01/04/React-Redux/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"ce","comments":true,"permalink":"https://hayahayao.github.io/2024/01/04/React-Redux/","path":"2024/01/04/React-Redux/","title":"React-Redux"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"ce","comments":true,"permalink":"https://hayahayao.github.io/2024/01/04/React-Redux/","path":"2024/01/04/React-Redux/","title":"React Redux"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>React-Redux | hayahayao blog</title>
+<title>React Redux | hayahayao blog</title>
   
 
 
@@ -115,7 +116,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Redux%E3%81%AE%E7%8A%B6%E6%85%8B%E7%AE%A1%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">Reduxの状態管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Store-Action-Reducer-Dispatch%E3%81%AE%E6%A6%82%E5%BF%B5"><span class="nav-number">2.</span> <span class="nav-text">Store&#x2F;Action&#x2F;Reducer&#x2F;Dispatchの概念</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Redux%E3%81%AE%E7%8A%B6%E6%85%8B%E7%AE%A1%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">Reduxの状態管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Data-Flow"><span class="nav-number">2.</span> <span class="nav-text">Data Flow</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redux-Toolkit"><span class="nav-number">3.</span> <span class="nav-text">Redux Toolkit</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -190,12 +191,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="React-Redux | hayahayao blog">
+      <meta itemprop="name" content="React Redux | hayahayao blog">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          React-Redux
+          React Redux
         </h1>
 
         <div class="post-meta-container">
@@ -207,7 +208,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2024-01-04 13:46:55 / Modified: 13:31:34" itemprop="dateCreated datePublished" datetime="2024-01-04T13:46:55+08:00">2024-01-04</time>
+      <time title="Created: 2024-01-04 13:46:55 / Modified: 15:19:57" itemprop="dateCreated datePublished" datetime="2024-01-04T13:46:55+08:00">2024-01-04</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -235,7 +236,40 @@
 
 <h2 id="Reduxの状態管理"><a href="#Reduxの状態管理" class="headerlink" title="Reduxの状態管理"></a>Reduxの状態管理</h2><p>状態を監視することによって操作を変えることができる</p>
 <p>Reduxを用いて、とある<strong>1か所</strong>で状態管理しておけば、楽になれる</p>
-<h2 id="Store-Action-Reducer-Dispatchの概念"><a href="#Store-Action-Reducer-Dispatchの概念" class="headerlink" title="Store&#x2F;Action&#x2F;Reducer&#x2F;Dispatchの概念"></a>Store&#x2F;Action&#x2F;Reducer&#x2F;Dispatchの概念</h2><p><img src="/../images/ReduxDataFlowDiagram-49fa8c3968371d9ef6f2a1486bd40a26.gif" alt="Redux Data Flow"></p>
+<blockquote>
+<p>Core Concepts</p>
+<ol>
+<li><p>Single source of truth</p>
+</li>
+<li><p>State is read-only</p>
+</li>
+<li><p>Changes are made with pure functions</p>
+</li>
+</ol>
+</blockquote>
+<h2 id="Data-Flow"><a href="#Data-Flow" class="headerlink" title="Data Flow"></a>Data Flow</h2><p><img src="/../images/redux-1.gif" alt="Redux Data Flow"></p>
+<ul>
+<li>Store: state を保存しておく要素、内部に Reducer を保持する</li>
+<li>Reducer: Action を受け取り、既存の state と Action を利用して新たな state を作成する</li>
+<li>Dispatch: View などから Action を受け取り、Store（正しくは内部の Reducer）へ送信する</li>
+<li>Action: 変更内容を内部に含む要素であり、Dispatch によって送信される。（基本的にオブジェクト形式）</li>
+</ul>
+<blockquote>
+<p>In a React + Redux app, your global state should go in the Redux store, and your local state should stay in React components.</p>
+</blockquote>
+<h2 id="Redux-Toolkit"><a href="#Redux-Toolkit" class="headerlink" title="Redux Toolkit"></a>Redux Toolkit</h2><p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3ZlcmNlbC9uZXh0LmpzL3RyZWUvY2FuYXJ5L2V4YW1wbGVzL3dpdGgtcmVkdXg=">Next.js Template<i class="fa fa-external-link-alt"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9yZWR1eC5qcy5vcmcvdHV0b3JpYWxzL2Vzc2VudGlhbHMvcGFydC0yLWFwcC1zdHJ1Y3R1cmU=">Redux Essentials, Part 2: Redux Toolkit App Structure<i class="fa fa-external-link-alt"></i></span></p>
+<p>Slice概念<br><img src="/../images/redux-2.png" alt="Redux Slice"></p>
+<blockquote>
+<p>Redux Slices: A “slice” is a collection of Redux reducer logic and actions for a single feature in your app, typically defined together in a single file. The name comes from splitting up the root Redux state object into multiple “slices” of state.</p>
+</blockquote>
+<p>Redux Toolkit App Structure</p>
+<ul>
+<li>Create store: <code>configureStore()</code></li>
+<li>Provide store to components: <code>&lt;Provider&gt;</code></li>
+<li>Slice: <code>createSlice()</code>, generate “name, initialState, reducers, action” in one function</li>
+<li>Thunk: <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3JlZHV4anMvcmVkdXgtdGh1bms=">redux-thunk<i class="fa fa-external-link-alt"></i></span>, async logic</li>
+</ul>
 
     </div>
 
@@ -253,7 +287,7 @@
   </li>
   <li class="post-copyright-link">
       <strong>Post link: </strong>
-      <a href="https://hayahayao.github.io/2024/01/04/React-Redux/" title="React-Redux">https://hayahayao.github.io/2024/01/04/React-Redux/</a>
+      <a href="https://hayahayao.github.io/2024/01/04/React-Redux/" title="React Redux">https://hayahayao.github.io/2024/01/04/React-Redux/</a>
   </li>
   <li class="post-copyright-license">
       <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> unless stating additionally.
