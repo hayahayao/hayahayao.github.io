@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="ce">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#7a586e"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="mask-icon" href="/favicon/safari-pinned-tab.svg" color="#7a586e">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"hayahayao.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.18.0","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="JavaScript闭包概念React闭包应用useEffectEvent">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Closures and React">
+<meta property="og:url" content="https://hayahayao.github.io/2025/01/23/Closures-and-React/index.html">
+<meta property="og:site_name" content="hayahayao blog">
+<meta property="og:description" content="JavaScript闭包概念React闭包应用useEffectEvent">
+<meta property="og:locale">
+<meta property="article:published_time" content="2025-01-22T16:10:58.000Z">
+<meta property="article:modified_time" content="2025-01-22T16:02:16.684Z">
+<meta property="article:author" content="hayahayao">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="React">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://hayahayao.github.io/2025/01/23/Closures-and-React/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"ce","comments":true,"permalink":"https://hayahayao.github.io/2025/01/23/Closures-and-React/","path":"2025/01/23/Closures-and-React/","title":"Closures and React"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Closures and React | hayahayao blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">hayahayao blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">燃えて散った花となれ。</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Understanding-Closures-in-JavaScript"><span class="nav-number">1.</span> <span class="nav-text">Understanding Closures in JavaScript</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AD%E5%8C%85%E7%9A%84%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0"><span class="nav-number">1.1.</span> <span class="nav-text">闭包的底层实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Applying-Closures-in-React"><span class="nav-number">2.</span> <span class="nav-text">Applying Closures in React</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#React%E6%B8%B2%E6%9F%93%E6%9C%BA%E5%88%B6%E4%B8%8E%E9%97%AD%E5%8C%85"><span class="nav-number">2.1.</span> <span class="nav-text">React渲染机制与闭包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#useEffect%E7%9A%84%E6%89%A7%E8%A1%8C%E4%B8%8E%E9%97%AD%E5%8C%85"><span class="nav-number">2.2.</span> <span class="nav-text">useEffect的执行与闭包</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8D%E6%96%B0%E7%90%86%E8%A7%A3React%E7%9A%84%E4%B8%80%E4%BA%9B%E8%AF%AD%E6%B3%95-%E8%A7%84%E5%88%99"><span class="nav-number">3.</span> <span class="nav-text">重新理解React的一些语法&#x2F;规则</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#useState-set-functions"><span class="nav-number">3.1.</span> <span class="nav-text">useState: set functions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#useEffect-Dependency-Array"><span class="nav-number">3.2.</span> <span class="nav-text">useEffect: Dependency Array</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#useEffectEvent"><span class="nav-number">3.3.</span> <span class="nav-text">useEffectEvent</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">hayahayao</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">38</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2hheWFoYXlhbw==" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;hayahayao"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmF6dXJlY2hvMTNAZ21haWwuY29t" title="E-Mail → mailto:azurecho13@gmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="ce">
+    <link itemprop="mainEntityOfPage" href="https://hayahayao.github.io/2025/01/23/Closures-and-React/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="hayahayao">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="hayahayao blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Closures and React | hayahayao blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Closures and React
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2025-01-23 00:10:58 / Modified: 00:02:16" itemprop="dateCreated datePublished" datetime="2025-01-23T00:10:58+08:00">2025-01-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/frontend/" itemprop="url" rel="index"><span itemprop="name">frontend</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><blockquote>
+<p>JavaScript闭包概念<br>React闭包应用<br><code>useEffectEvent</code></p>
+</blockquote>
+<span id="more"></span>
+
+<h2 id="Understanding-Closures-in-JavaScript"><a href="#Understanding-Closures-in-JavaScript" class="headerlink" title="Understanding Closures in JavaScript"></a>Understanding Closures in JavaScript</h2><blockquote>
+<p>A closure is the combination of a function bundled together (enclosed) with references to its surrounding state (the lexical environment). In other words, a closure gives a function access to its outer scope. In JavaScript, closures are created every time a function is created, at function creation time.<br><span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXIubW96aWxsYS5vcmcvZW4tVVMvZG9jcy9XZWIvSmF2YVNjcmlwdC9DbG9zdXJlcw==">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<p>简单来说，闭包就是指一个函数能够“记住”并访问它的词法作用域（也叫环境或上下文），即使这个函数是在它原始定义的作用域之外执行。</p>
+<p>核心特性：</p>
+<ul>
+<li>闭包可以保存外部函数作用域中的变量，即使外部函数已经返回。</li>
+<li>这些变量不会被销毁，因为闭包持有了对它们的引用。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">outer</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> a = <span class="number">10</span>; <span class="comment">// 外层作用域变量</span></span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">inner</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(a); <span class="comment">// 内层函数可以访问 a</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> inner;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> innerFunc = <span class="title function_">outer</span>(); <span class="comment">// outer 执行并返回 inner</span></span><br><span class="line"><span class="title function_">innerFunc</span>(); <span class="comment">// 输出 10</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="闭包的底层实现"><a href="#闭包的底层实现" class="headerlink" title="闭包的底层实现"></a>闭包的底层实现</h3><p>作用域链（Scope Chain）：</p>
+<ul>
+<li>每个函数在创建时，会附带它的词法作用域（外部函数的变量环境）。</li>
+<li>闭包通过作用域链，逐层查找变量。</li>
+</ul>
+<p>变量存储和垃圾回收：</p>
+<ul>
+<li>局部变量通常存储在栈中，当函数执行完毕会被销毁。</li>
+<li>如果闭包引用了这些变量，它们会被移到堆内存中，直到闭包被销毁才会被回收。</li>
+</ul>
+<h2 id="Applying-Closures-in-React"><a href="#Applying-Closures-in-React" class="headerlink" title="Applying Closures in React"></a>Applying Closures in React</h2><h3 id="React渲染机制与闭包"><a href="#React渲染机制与闭包" class="headerlink" title="React渲染机制与闭包"></a>React渲染机制与闭包</h3><p><strong>每次渲染创建一个闭包。</strong></p>
+<p>每次渲染的 snapshot 是独立的，与其他渲染互不干扰。</p>
+<p>React 的函数式组件在每次渲染时：</p>
+<ol>
+<li>会执行整个函数组件。</li>
+<li>捕获当前渲染时的 state 和 props。</li>
+<li>对于函数组件内部定义的所有函数（包括 event handler 和 <code>useEffect</code> 中的回调），这些函数都会捕获<em>当前渲染时的 state 和 props</em>。</li>
+</ol>
+<h3 id="useEffect的执行与闭包"><a href="#useEffect的执行与闭包" class="headerlink" title="useEffect的执行与闭包"></a>useEffect的执行与闭包</h3><p>每次执行 <code>useEffect</code> 时：</p>
+<ol>
+<li>React 会捕获当前渲染时的 state 和 props。</li>
+<li>如果 <code>useEffect</code> 的依赖数组中有变化，React 会重新执行这个 useEffect。</li>
+<li><code>useEffect</code> 内部定义的函数会捕获<em>当前渲染时的 state 值</em>。</li>
+</ol>
+<h2 id="重新理解React的一些语法-规则"><a href="#重新理解React的一些语法-规则" class="headerlink" title="重新理解React的一些语法&#x2F;规则"></a>重新理解React的一些语法&#x2F;规则</h2><p><strong>闭包陷阱 Closure Trap</strong></p>
+<p>在 JavaScript 中使用闭包时，由于闭包捕获了当前作用域中的变量或状态的“快照”，而不是随时访问变量的最新值，导致程序行为与预期不符的一种情况。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Counter</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> [count, setCount] = <span class="title function_">useState</span>(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">  <span class="title function_">useEffect</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> interval = <span class="built_in">setInterval</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(count); <span class="comment">// 始终输出初始值 0</span></span><br><span class="line">    &#125;, <span class="number">1000</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="function">() =&gt;</span> <span class="built_in">clearInterval</span>(interval);</span><br><span class="line">  &#125;, []); <span class="comment">// 空依赖数组</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;()</span> =&gt;</span> setCount(count + 1)&#125;&gt;Increment<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="useState-set-functions"><a href="#useState-set-functions" class="headerlink" title="useState: set functions"></a><code>useState</code>: set functions</h3><p><code>setState((prevState) =&gt; prevState + 1)</code></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9yZWFjdC5kZXYvcmVmZXJlbmNlL3JlYWN0L3VzZVN0YXRlI3NldHN0YXRl">https://react.dev/reference/react/useState#setstate<i class="fa fa-external-link-alt"></i></span></p>
+<p>函数式更新确保状态更新逻辑基于最新的状态，而不是捕获的旧值。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">handleClick</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="title function_">setCount</span>(<span class="function">(<span class="params">prevCount</span>) =&gt;</span> prevCount + <span class="number">1</span>); <span class="comment">// 使用最新的 prevCount</span></span><br><span class="line">  &#125;, <span class="number">1000</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="useEffect-Dependency-Array"><a href="#useEffect-Dependency-Array" class="headerlink" title="useEffect: Dependency Array"></a><code>useEffect</code>: Dependency Array</h3><p><span class="exturl" data-url="aHR0cHM6Ly9yZWFjdC5kZXYvcmVmZXJlbmNlL3JlYWN0L3VzZUVmZmVjdCNzcGVjaWZ5aW5nLXJlYWN0aXZlLWRlcGVuZGVuY2llcw==">https://react.dev/reference/react/useEffect#specifying-reactive-dependencies<i class="fa fa-external-link-alt"></i></span></p>
+<p>在 <code>useEffect</code> 的依赖数组中明确列出所有依赖项，确保闭包始终访问最新的状态或变量。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">useEffect</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> interval = <span class="built_in">setInterval</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(count); <span class="comment">// 始终访问最新的 count</span></span><br><span class="line">  &#125;, <span class="number">1000</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="function">() =&gt;</span> <span class="built_in">clearInterval</span>(interval);</span><br><span class="line">&#125;, [count]); <span class="comment">// 在依赖数组中加入 count</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="useEffectEvent"><a href="#useEffectEvent" class="headerlink" title="useEffectEvent"></a><code>useEffectEvent</code></h3><p><span class="exturl" data-url="aHR0cHM6Ly9yZWFjdC5kZXYvcmVmZXJlbmNlL3JlYWN0L2V4cGVyaW1lbnRhbF91c2VFZmZlY3RFdmVudA==">https://react.dev/reference/react/experimental_useEffectEvent<i class="fa fa-external-link-alt"></i></span></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Counter</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> [count, setCount] = <span class="title function_">useState</span>(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> logCount = <span class="title function_">useEffectEvent</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(count); <span class="comment">// 始终访问最新的 count</span></span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="title function_">useEffect</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> interval = <span class="built_in">setInterval</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="title function_">logCount</span>(); <span class="comment">// 自动访问最新状态</span></span><br><span class="line">    &#125;, <span class="number">1000</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="function">() =&gt;</span> <span class="built_in">clearInterval</span>(interval);</span><br><span class="line">  &#125;, []); <span class="comment">// 不需要手动管理依赖</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>在 <code>useEffect</code> 中定义普通函数和使用 <code>useEffectEvent</code> 的区别？</strong></p>
+<p>普通函数 + <code>useEffect</code></p>
+<ul>
+<li>函数引用不稳定，每次渲染都会重新创建</li>
+<li>可能访问到旧的 state 和 props（需要显式管理依赖数组，否则就可能因为陷入其他闭包取到旧的值）</li>
+</ul>
+<p>useEffectEvent</p>
+<ul>
+<li>自动获取最新状态，无需手动管理依赖</li>
+</ul>
+<p><strong><code>useEffectEvent</code> 代替案</strong></p>
+<ul>
+<li><code>useRef</code> to maintain stable references that persist across renders</li>
+<li><code>useCallback</code> to memoize functions, ensuring they have stable references</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>hayahayao
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://hayahayao.github.io/2025/01/23/Closures-and-React/" title="Closures and React">https://hayahayao.github.io/2025/01/23/Closures-and-React/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+              <a href="/tags/React/" rel="tag"># React</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/01/06/SoftSkills-2/" rel="prev" title="SoftSkills-2">
+                  <i class="fa fa-angle-left"></i> SoftSkills-2
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">hayahayao</span>
+  </div>
+  <div class="powered-by">Powered by <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9waXNjZXMv">NexT.Pisces</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
