@@ -388,14 +388,14 @@
   </url>
   
   <url>
-    <loc>https://hayahayao.github.io/tags/Anki/</loc>
+    <loc>https://hayahayao.github.io/tags/CSS/</loc>
     <lastmod>2025-01-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://hayahayao.github.io/tags/CSS/</loc>
+    <loc>https://hayahayao.github.io/tags/Anki/</loc>
     <lastmod>2025-01-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -416,14 +416,14 @@
   </url>
   
   <url>
-    <loc>https://hayahayao.github.io/tags/Discord/</loc>
+    <loc>https://hayahayao.github.io/tags/Git/</loc>
     <lastmod>2025-01-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://hayahayao.github.io/tags/Git/</loc>
+    <loc>https://hayahayao.github.io/tags/Discord/</loc>
     <lastmod>2025-01-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -563,13 +563,6 @@
   </url>
   
   <url>
-    <loc>https://hayahayao.github.io/tags/Browser/</loc>
-    <lastmod>2025-01-29</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://hayahayao.github.io/tags/Safari/</loc>
     <lastmod>2025-01-29</lastmod>
     <changefreq>weekly</changefreq>
@@ -585,6 +578,13 @@
   
   <url>
     <loc>https://hayahayao.github.io/tags/Functional-Programming/</loc>
+    <lastmod>2025-01-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hayahayao.github.io/tags/Browser/</loc>
     <lastmod>2025-01-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>

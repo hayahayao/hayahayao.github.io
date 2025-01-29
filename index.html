@@ -198,7 +198,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2025-01-30 02:29:26 / Modified: 01:43:47" itemprop="dateCreated datePublished" datetime="2025-01-30T02:29:26+08:00">2025-01-30</time>
+      <time title="Created: 2025-01-30 02:29:26 / Modified: 01:45:52" itemprop="dateCreated datePublished" datetime="2025-01-30T02:29:26+08:00">2025-01-30</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -223,25 +223,9 @@
           <blockquote>
 <p>なぜアロー関数 or useCallback がベストか</p>
 </blockquote>
-<h2 id="通常-vs-アロー関数"><a href="#通常-vs-アロー関数" class="headerlink" title="通常 vs アロー関数"></a>通常 vs アロー関数</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">handleClick</span>(<span class="params"></span>) &#123;&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const handleClick = () =&gt; &#123;&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="✅-コンポーネントの再レンダリングごとに関数が新しく生成される"><a href="#✅-コンポーネントの再レンダリングごとに関数が新しく生成される" class="headerlink" title="✅ コンポーネントの再レンダリングごとに関数が新しく生成される"></a>✅ コンポーネントの再レンダリングごとに関数が新しく生成される</h3><ul>
-<li>共通のデメリット</li>
-<li>ただし、エンジンの最適化もあり、ほとんどの場合、関数が再生成されても処理コストはほぼゼロ。</li>
-</ul>
-<h3 id="❌-React-memo-を使う場合"><a href="#❌-React-memo-を使う場合" class="headerlink" title="❌ React.memo() を使う場合"></a>❌ <code>React.memo()</code> を使う場合</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title class_">Child</span> = <span class="title class_">React</span>.<span class="title function_">memo</span>(<span class="function">(<span class="params">&#123; onClick &#125;</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;Child rendered&quot;</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;onClick&#125;</span>&gt;</span>Click me<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span>;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">Parent</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">handleClick</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;Clicked!&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">Child</span> <span class="attr">onClick</span>=<span class="string">&#123;handleClick&#125;</span> /&gt;</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>Parent が再レンダリングされるたびに <code>handleClick()</code> が新しく作られるため、Child に渡される <code>onClick</code> が毎回異なるものとみなされる。</p>
-<p>これにより、<code>React.memo()</code> が無駄に再レンダリングされてしまう。</p>
-<h3 id="❌-useEffect-の依存配列に関数を入れる場合"><a href="#❌-useEffect-の依存配列に関数を入れる場合" class="headerlink" title="❌ useEffect の依存配列に関数を入れる場合"></a>❌ <code>useEffect</code> の依存配列に関数を入れる場合</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">App</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">handleClick</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;Clicked!&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">useEffect</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;Effect runs!&quot;</span>);</span><br><span class="line">  &#125;, [handleClick]); <span class="comment">// `handleClick` が毎回新しくなると、`useEffect` が毎回実行される</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;handleClick&#125;</span>&gt;</span>Click me<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><code>handleClick</code> は App の再レンダリング時に毎回新しい関数となる。</p>
-<p>その結果、<code>useEffect</code> の依存配列に <code>handleClick</code> を含めると毎回実行されてしまう。</p>
-<h2 id="useCallback"><a href="#useCallback" class="headerlink" title="useCallback"></a>useCallback</h2><p>✅ 関数インスタンスが固定される</p>
-<p>✅ React.memo や useEffect の最適化に有効</p>
-
+          <!--noindex-->
+          <!--/noindex-->
+        
       
     </div>
 
