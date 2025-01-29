@@ -120,7 +120,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-count">35</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -159,6 +159,105 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://hayahayao.github.io/2025/01/30/React%E3%81%AE%E9%96%A2%E6%95%B0%E5%AE%9A%E7%BE%A9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="hayahayao">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="hayahayao blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | hayahayao blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/01/30/React%E3%81%AE%E9%96%A2%E6%95%B0%E5%AE%9A%E7%BE%A9/" class="post-title-link" itemprop="url">Reactの関数定義</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2025-01-30 02:29:26 / Modified: 01:43:47" itemprop="dateCreated datePublished" datetime="2025-01-30T02:29:26+08:00">2025-01-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/frontend/" itemprop="url" rel="index"><span itemprop="name">frontend</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <blockquote>
+<p>なぜアロー関数 or useCallback がベストか</p>
+</blockquote>
+<h2 id="通常-vs-アロー関数"><a href="#通常-vs-アロー関数" class="headerlink" title="通常 vs アロー関数"></a>通常 vs アロー関数</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">handleClick</span>(<span class="params"></span>) &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const handleClick = () =&gt; &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="✅-コンポーネントの再レンダリングごとに関数が新しく生成される"><a href="#✅-コンポーネントの再レンダリングごとに関数が新しく生成される" class="headerlink" title="✅ コンポーネントの再レンダリングごとに関数が新しく生成される"></a>✅ コンポーネントの再レンダリングごとに関数が新しく生成される</h3><ul>
+<li>共通のデメリット</li>
+<li>ただし、エンジンの最適化もあり、ほとんどの場合、関数が再生成されても処理コストはほぼゼロ。</li>
+</ul>
+<h3 id="❌-React-memo-を使う場合"><a href="#❌-React-memo-を使う場合" class="headerlink" title="❌ React.memo() を使う場合"></a>❌ <code>React.memo()</code> を使う場合</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title class_">Child</span> = <span class="title class_">React</span>.<span class="title function_">memo</span>(<span class="function">(<span class="params">&#123; onClick &#125;</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;Child rendered&quot;</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;onClick&#125;</span>&gt;</span>Click me<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span>;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">Parent</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">handleClick</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;Clicked!&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">Child</span> <span class="attr">onClick</span>=<span class="string">&#123;handleClick&#125;</span> /&gt;</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Parent が再レンダリングされるたびに <code>handleClick()</code> が新しく作られるため、Child に渡される <code>onClick</code> が毎回異なるものとみなされる。</p>
+<p>これにより、<code>React.memo()</code> が無駄に再レンダリングされてしまう。</p>
+<h3 id="❌-useEffect-の依存配列に関数を入れる場合"><a href="#❌-useEffect-の依存配列に関数を入れる場合" class="headerlink" title="❌ useEffect の依存配列に関数を入れる場合"></a>❌ <code>useEffect</code> の依存配列に関数を入れる場合</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">App</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">handleClick</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;Clicked!&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">useEffect</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;Effect runs!&quot;</span>);</span><br><span class="line">  &#125;, [handleClick]); <span class="comment">// `handleClick` が毎回新しくなると、`useEffect` が毎回実行される</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;handleClick&#125;</span>&gt;</span>Click me<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>handleClick</code> は App の再レンダリング時に毎回新しい関数となる。</p>
+<p>その結果、<code>useEffect</code> の依存配列に <code>handleClick</code> を含めると毎回実行されてしまう。</p>
+<h2 id="useCallback"><a href="#useCallback" class="headerlink" title="useCallback"></a>useCallback</h2><p>✅ 関数インスタンスが固定される</p>
+<p>✅ React.memo や useEffect の最適化に有効</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -928,89 +1027,6 @@
     <div class="post-body" itemprop="articleBody">
           <blockquote>
 <p>Better than nvm?<br><span class="exturl" data-url="aHR0cHM6Ly92b2x0YS5zaC8=">https://volta.sh/<i class="fa fa-external-link-alt"></i></span></p>
-</blockquote>
-          <!--noindex-->
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://hayahayao.github.io/2023/10/01/%E7%BB%99%E5%A4%A7%E5%BF%99%E4%BA%BA%E5%86%99%E7%9A%84%E4%B8%8B%E8%BD%BD%E5%9B%BE%E7%89%87%E6%95%99%E7%A8%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="hayahayao">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="hayahayao blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | hayahayao blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/10/01/%E7%BB%99%E5%A4%A7%E5%BF%99%E4%BA%BA%E5%86%99%E7%9A%84%E4%B8%8B%E8%BD%BD%E5%9B%BE%E7%89%87%E6%95%99%E7%A8%8B/" class="post-title-link" itemprop="url">给大忙人写的下载图片教程</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2023-10-01 02:15:05 / Modified: 01:20:16" itemprop="dateCreated datePublished" datetime="2023-10-01T02:15:05+08:00">2023-10-01</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E9%9B%91%E8%AB%87/" itemprop="url" rel="index"><span itemprop="name">雑談</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <blockquote>
-<p>太长不看版：直接使用 Chrome 插件 <span class="exturl" data-url="aHR0cHM6Ly9jaHJvbWUuZ29vZ2xlLmNvbS93ZWJzdG9yZS9kZXRhaWwvaW1hZ2UtZG93bmxvYWRlci1pbWFnZXllL2FnaW9uYm9tbWVhaWZuZ2JoaW5jYWhnbW9mbGNpa2htL3JlbGF0ZWQ=">Imageye<i class="fa fa-external-link-alt"></i></span></p>
 </blockquote>
           <!--noindex-->
           <!--/noindex-->
